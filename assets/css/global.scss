@@ -1,0 +1,45 @@
+*,
+*::before,
+*::after {
+   margin: 0;
+   padding: 0;
+   box-sizing: border-box;
+}
+
+@font-face {
+   font-family: "Inter";
+   src: url("/public//fonts/Inter-VariableFont_slnt,wght.ttf") format("woff");
+   font-weight: normal;
+   font-style: normal;
+   font-display: swap;
+}
+
+html {
+   font-family: "Inter", sans-serif;
+   font-size: 10px;
+}
+
+body {
+   background-color: rgb(121, 120, 120);
+}
+
+ul > li {
+   list-style: none;
+}
+
+a,
+button {
+   font-size: 1.6rem;
+   @media (width >= 768px) {
+      cursor: pointer;
+   }
+}
+
+a {
+   text-decoration: none;
+}
+
+button {
+   background-color: transparent;
+   border: 0;
+}
