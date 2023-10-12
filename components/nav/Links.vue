@@ -1,15 +1,13 @@
 <template>
-  <ul>
-    <li>
-      <a href="#">calendar</a>
-    </li>
-    <li>
-      <a href="#">note</a>
-    </li>
-    <li>
-      <a href="#">list</a>
-    </li>
-  </ul>
+  <li>
+    <a href="#">calendar</a>
+  </li>
+  <li>
+    <a href="#">note</a>
+  </li>
+  <li>
+    <a href="#">list</a>
+  </li>
 </template>
 
 <script setup lang="ts"></script>

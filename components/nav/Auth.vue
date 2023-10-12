@@ -1,21 +1,15 @@
 <template>
-   <ul>
-      <li>
-        <a href="#">log in</a>
-      </li>
-      <li>
-        <a href="#">sign up</a>
-      </li>
-      <li>
-        <button href="#">sign out</button>
-      </li>
-    </ul>
+  <li>
+    <a href="#">log in</a>
+  </li>
+  <li>
+    <a href="#">sign up</a>
+  </li>
+  <li>
+    <button href="#">sign out</button>
+  </li>
 </template>
 
-<script setup lang="ts">
+<script setup lang="ts"></script>
 
-</script>
-
-<style scoped lang="scss">
-
-</style>
+<style scoped lang="scss"></style>

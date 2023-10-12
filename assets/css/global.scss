@@ -20,6 +20,8 @@ html {
 }
 
 body {
+   width: 100%;
+   min-height: 100vh;
    background-color: rgb(121, 120, 120);
 }
 
@@ -43,3 +45,10 @@ button {
    background-color: transparent;
    border: 0;
 }
+
+// .header-container,
+// .nav-container,
+// .nav-links,
+// .nav-auth-list{
+//    @include default-flex;
+// }

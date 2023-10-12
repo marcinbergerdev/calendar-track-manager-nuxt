@@ -1,13 +1,11 @@
 <template>
-  <section>
-    <button>
-      <img src="@/public/icons/moon.svg" alt="moon" />
-    </button>
+  <button>
+    <img src="@/public/icons/moon.svg" alt="moon" />
+  </button>
 
-    <button class="hamburger">
-      <div class="hamburger-inner"></div>
-    </button>
-  </section>
+  <button class="hamburger">
+    <div class="hamburger-inner"></div>
+  </button>
 </template>
 
 <script setup lang="ts"></script>
