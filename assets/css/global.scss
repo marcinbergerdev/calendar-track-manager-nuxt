@@ -46,9 +46,11 @@ button {
    border: 0;
 }
 
-// .header-container,
-// .nav-container,
-// .nav-links,
-// .nav-auth-list{
-//    @include default-flex;
-// }
+.header-container,
+.desktop-nav-container,
+.nav-container,
+.nav-links,
+.nav-auth-list {
+   @include default-flex;
+}
+

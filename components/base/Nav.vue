@@ -1,5 +1,5 @@
 <template>
-  <nav class="nav-container">
+  <nav :class="`${view}-nav-container`">
     <ul class="nav-links">
       <NavLinks />
     </ul>
@@ -18,27 +18,55 @@
   </nav>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const { view } = defineProps<{
+  view: string;
+}>();
+</script>
 
 <style scoped lang="scss">
-.nav-container,
-.nav-links {
-  // flex: 1;
+.desktop-nav-container {
+  flex: 1;
+  .nav-links {
+    flex: 1;
+  }
+
+  .nav-container {
+  }
+
+  .nav-links {
+    // align-items: baseline;
+  }
+
+  .nav-options {
+  }
+
+  .nav-auth-list {
+  }
+
+  .nav-settings {
+  }
 }
 
-.nav-container {
-}
+.mobile-nav-container {
+  .nav-links {
+    // flex: 1;
+  }
 
-.nav-links {
-  // align-items: baseline;
-}
+  .nav-container {
+  }
 
-.nav-options {
-}
+  .nav-links {
+    // align-items: baseline;
+  }
 
-.nav-auth-list {
-}
+  .nav-options {
+  }
 
-.nav-settings {
+  .nav-auth-list {
+  }
+
+  .nav-settings {
+  }
 }
 </style>

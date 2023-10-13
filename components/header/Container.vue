@@ -1,7 +1,12 @@
 <template>
   <header class="header-container">
     <HeaderLogo />
-    <BaseNav />
+
+    <!-- <Teleport to="body">
+      <BaseNav view="mobile" />
+    </Teleport> -->
+
+    <BaseNav view="desktop" />
   </header>
 </template>
 
@@ -9,6 +14,7 @@
 
 <style scoped lang="scss">
 .header-container {
-  // justify-content: space-between;
+  justify-content: space-between;
+  background-color: var(--yellow);
 }
 </style>
