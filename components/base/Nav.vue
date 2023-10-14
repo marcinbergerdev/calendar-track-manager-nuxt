@@ -1,54 +1,80 @@
 <template>
-  <nav :class="`${view}-nav-container`">
-    <ul class="nav-links">
-      <NavLinks />
-    </ul>
+  <ClientOnly>
+    <nav :class="`${view}-nav-container`">
+      <ul class="nav-links" v-if="isDesktop || isMobile">
+        <NavLinks />
+      </ul>
 
-    <section class="nav-options">
-      <NavOptions />
-    </section>
+      <section class="nav-options">
+        <NavOptions :is-hamburger="isDesktop" :is-moon="isMobile"/>
+      </section>
 
-    <ul class="nav-auth-list">
-      <NavAuth />
-    </ul>
+      <ul class="nav-auth-list" v-if="isDesktop || isMobile">
+        <NavAuth />
+      </ul>
 
-    <section class="nav-settings">
-      <NavSettings />
-    </section>
-  </nav>
+      <section class="nav-settings" v-if="isDesktop || isMobile">
+        <NavSettings />
+      </section>
+    </nav>
+  </ClientOnly>
 </template>
 
 <script setup lang="ts">
-const { view } = defineProps<{
+import { useUserWidthSize } from "~/store/userWidthSize";
+
+const userWidth = useUserWidthSize();
+
+const { view, isDesktopView, isMobileView } = defineProps<{
   view: string;
+  isDesktopView?: boolean;
+  isMobileView?: boolean;
 }>();
+
+const isDesktop = computed<boolean>(() => {
+  const width = userWidth.desktopWidth;
+
+  return isDesktopView && width;
+});
+
+const isMobile = computed<boolean>(() => {
+  const width = userWidth.mobileWidth;
+  return isMobileView && width;
+});
 </script>
 
 <style scoped lang="scss">
 .desktop-nav-container {
   flex: 1;
-  .nav-links {
-    flex: 1;
-  }
+  justify-content: flex-end;
+}
 
-  .nav-container {
-  }
+.nav-links {
+  flex: 1;
+}
 
-  .nav-links {
-    // align-items: baseline;
-  }
+.nav-container {
+}
 
-  .nav-options {
-  }
+.nav-links {
+}
 
-  .nav-auth-list {
-  }
+.nav-options {
+}
 
-  .nav-settings {
-  }
+.nav-auth-list {
+}
+
+.nav-settings {
 }
 
 .mobile-nav-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: var(--yellow);
   .nav-links {
     // flex: 1;
   }

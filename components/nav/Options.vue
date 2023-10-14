@@ -1,14 +1,19 @@
 <template>
-  <button>
+  <button v-if="!isMoon">
     <img src="@/public/icons/moon.svg" alt="moon" />
   </button>
 
-  <button class="hamburger">
+  <button class="hamburger" v-if="!isHamburger">
     <div class="hamburger-inner"></div>
   </button>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const { isHamburger, isMoon } = defineProps<{
+  isHamburger?: boolean;
+  isMoon?: boolean;
+}>();
+</script>
 
 <style scoped lang="scss">
 .hamburger {

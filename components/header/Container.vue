@@ -2,15 +2,22 @@
   <header class="header-container">
     <HeaderLogo />
 
-    <!-- <Teleport to="body">
-      <BaseNav view="mobile" />
-    </Teleport> -->
+    <!-- Nav menu for mobile and teleported to body -->
+    <!-- <ClientOnly>
+      <Teleport to="body" v-if="width.mobileWidth">
+        <BaseNav view="mobile" :is-mobile-view="true" />
+      </Teleport>
+    </ClientOnly> -->
 
-    <BaseNav view="desktop" />
+    <!-- Nav menu for desktop -->
+    <BaseNav view="desktop" :is-desktop-view="true" />
   </header>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useUserWidthSize } from "~/store/userWidthSize";
+const width = useUserWidthSize();
+</script>
 
 <style scoped lang="scss">
 .header-container {
