@@ -1,6 +1,6 @@
 <template>
-  <button v-if="!isMoon">
-    <img src="@/public/icons/moon.svg" alt="moon" />
+  <button class="dark-mode-button" v-if="!isMoon">
+    <img class="dark-mode-button__icon" src="@/public/icons/moon.svg" alt="moon" />
   </button>
 
   <button class="hamburger" v-if="!isHamburger">
@@ -16,11 +16,27 @@ const { isHamburger, isMoon } = defineProps<{
 </script>
 
 <style scoped lang="scss">
+.dark-mode-button {
+  width: 3rem;
+  height: 3rem;
+  &__icon {
+    width: 100%;
+    height: 100%;
+  }
+}
+
 .hamburger {
   position: relative;
   padding: 1rem;
+  width: 3rem;
+  height: 3rem; 
   color: var(--white);
   opacity: 0.7;
+
+  @media(width >= 768px){
+    width: 0;
+    height: 0;
+  }
 }
 
 .hamburger-inner {
@@ -31,6 +47,8 @@ const { isHamburger, isMoon } = defineProps<{
   width: 100%;
   height: 2px;
   background-color: var(--white);
+
+
 
   &::before,
   &::after {
@@ -43,11 +61,11 @@ const { isHamburger, isMoon } = defineProps<{
   }
 
   &::before {
-    top: 7px;
+    top: 1rem;
   }
 
   &::after {
-    top: -7px;
+    top: -1rem;
   }
 }
 </style>

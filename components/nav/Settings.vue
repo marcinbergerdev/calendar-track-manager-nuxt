@@ -1,11 +1,11 @@
 <template>
-  <NuxtLink class="settings-link">
+  <NuxtLink class="settings-link nav-animation" to="#">
     <svg
       class="settings-link__icon"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
-      width="1em"
-      height="1em"
+      width="4rem"
+      height="4rem"
     >
       <g
         class="color"
@@ -27,9 +27,6 @@
 
 <style scoped lang="scss">
 .settings-link {
-  color: var(--white);
-  opacity: 0.7;
-
   &__icon {
     pointer-events: none;
     .color {

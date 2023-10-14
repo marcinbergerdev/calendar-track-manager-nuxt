@@ -1,15 +1,30 @@
 <template>
-  <li>
-    <a href="#">log in</a>
+  <li class="auth-item" v-for="({path, name}, id) in authLinks" :key="id">
+    <NuxtLink class="auth-item__link nav-animation" :to="path" >{{ name }}</NuxtLink>
   </li>
-  <li>
-    <a href="#">sign up</a>
-  </li>
-  <li>
-    <button href="#">sign out</button>
+  <li class="auth-item">
+    <button class="auth-item__link nav-animation" href="#">sign out</button>
   </li>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const authLinks = ref([
+  { path: "#", name: "log in" },
+  { path: "#", name: "sign up" },
+]);
 
-<style scoped lang="scss"></style>
+
+
+</script>
+
+<style scoped lang="scss">
+.auth-item{
+
+  &__link{
+
+  }
+}
+
+
+
+</style>
