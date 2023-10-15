@@ -1,17 +1,36 @@
 <template>
-  <li v-for="({ path, name }, id) in authLinks" :key="id">
-    <NuxtLink class="nav-animation" :to="path">{{ name }}</NuxtLink>
+  <li class="auth-item" v-if="!isUserLogged">
+    <NuxtLink to="/" class="nav-animation" @click="logIn">log in</NuxtLink>
   </li>
-  <li>
-    <button class="nav-animation" href="#">sign out</button>
+  <li class="auth-item" v-if="!isUserLogged">
+    <NuxtLink to="/" class="nav-animation" @click="signUp">sign up</NuxtLink>
+  </li>
+  <li class="auth-item" v-if="isUserLogged">
+    <button class="nav-animation" @click="signOut">sign out</button>
   </li>
 </template>
 
 <script setup lang="ts">
-const authLinks = ref([
-  { path: "#", name: "log in" },
-  { path: "#", name: "sign up" },
-]);
+const isUserLogged = useUserLogStatus();
+
+const email = ref("test@test.com");
+const password = ref("test123456");
+
+const logIn = () => {
+  signInUser(email.value, password.value);
+};
+
+const signUp = () => {
+  createUserAccount(email.value, password.value);
+};
+
+const signOut = () => {
+  signOutUser();
+};
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.auth-item {
+  margin: 0 1rem;
+}
+</style>

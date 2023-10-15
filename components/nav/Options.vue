@@ -3,7 +3,7 @@
     <img class="dark-mode-button__icon" src="@/public/icons/moon.svg" alt="moon" />
   </button>
 
-  <button class="hamburger" v-if="!isHamburger">
+  <button class="hamburger" v-if="!isHamburger" @click="openMobileMenu">
     <div class="hamburger-inner"></div>
   </button>
 </template>
@@ -13,6 +13,11 @@ const { isHamburger, isMoon } = defineProps<{
   isHamburger?: boolean;
   isMoon?: boolean;
 }>();
+
+const openMobileMenu = () => {
+  const isMobileMenu = useMenuVisibility();
+  isMobileMenu.value = !isMobileMenu.value;
+};
 </script>
 
 <style scoped lang="scss">

@@ -1,6 +1,6 @@
 <template>
   <ClientOnly>
-    <nav :class="`${view}-nav-container`">
+    <nav :class="[`${view}-nav-container`, { opened: menuVisibility }]">
       <ul class="nav-links" v-if="isDesktop || isMobile">
         <NavLinks />
       </ul>
@@ -29,11 +29,11 @@ const { view, isDesktopView, isMobileView } = defineProps<{
   view: string;
   isDesktopView?: boolean;
   isMobileView?: boolean;
+  menuVisibility?: boolean;
 }>();
 
 const isDesktop = computed<boolean>(() => {
   const width = userWidth.desktopWidth;
-
   return isDesktopView && width;
 });
 
@@ -65,12 +65,13 @@ const isMobile = computed<boolean>(() => {
 .mobile-nav-container {
   position: absolute;
   top: 0;
-  left: 0;
+  left: -100%;
 
   padding: 0.5rem 2rem;
   width: 100%;
   height: 100vh;
   background-color: var(--yellow);
+  transition: transform 0.3s ease-in-out;
 
   @include default-grid;
   grid-template-areas:
@@ -98,6 +99,10 @@ const isMobile = computed<boolean>(() => {
     align-self: flex-end;
   }
 }
+.opened {
+  transform: translateX(100%);
+  transition: 0.3s ease-in-out;
+}
 
 .desktop-nav-container {
   flex: 1;
@@ -117,10 +122,6 @@ const isMobile = computed<boolean>(() => {
     @media (width >= 768px) {
       gap: 0;
     }
-  }
-
-  .nav-auth-list {
-    gap: 2rem;
   }
 }
 </style>

@@ -3,11 +3,11 @@
     <HeaderLogo />
 
     <!-- Nav menu for mobile and teleported to body -->
-    <!-- <ClientOnly>
+    <ClientOnly>
       <Teleport to="body" v-if="width.mobileWidth">
-        <BaseNav view="mobile" :is-mobile-view="true" />
+        <BaseNav view="mobile" :menu-visibility="isMenu" :is-mobile-view="true" />
       </Teleport>
-    </ClientOnly> -->
+    </ClientOnly>
 
     <!-- Nav menu for desktop -->
     <BaseNav view="desktop" :is-desktop-view="true" />
@@ -17,6 +17,7 @@
 <script setup lang="ts">
 import { useUserWidthSize } from "~/store/userWidthSize";
 const width = useUserWidthSize();
+const isMenu = useMenuVisibility();
 </script>
 
 <style scoped lang="scss">
@@ -27,8 +28,6 @@ const width = useUserWidthSize();
 
   @media(width >= 768px){
     padding: 0.5rem 1rem;
-    
   }
-
 }
 </style>
