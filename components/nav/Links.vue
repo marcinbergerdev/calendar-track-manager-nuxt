@@ -1,6 +1,6 @@
 <template>
-  <li class="link-item " v-for="({path, name}, id) in menuLinks" :key="id">
-    <NuxtLink class="link-item__link nav-animation" :to="path">{{ name }}</NuxtLink>
+  <li v-for="({ path, name }, id) in menuLinks" :key="id">
+    <NuxtLink class="nav-animation" :to="path">{{ name }}</NuxtLink>
   </li>
 </template>
 
@@ -12,15 +12,4 @@ const menuLinks = ref([
 ]);
 </script>
 
-<style scoped lang="scss">
-
-.link-item{
-
-  &__link{
-    font-size: 2.7rem;
-  }
-
-}
-
-
-</style>
+<style scoped lang="scss"></style>

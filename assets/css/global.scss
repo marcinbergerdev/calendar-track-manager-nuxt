@@ -31,9 +31,10 @@ ul > li {
 
 a,
 button {
-   font-size: 1.6rem;
+   font-size: 2.7rem;
    @media (width >= 768px) {
       cursor: pointer;
+      font-size: 2rem;
    }
 }
 
@@ -44,6 +45,9 @@ a {
 button {
    background-color: transparent;
    border: 0;
+
+
+
 }
 
 .nav-animation {
@@ -62,6 +66,7 @@ button {
 .nav-container,
 .nav-links,
 .nav-options,
-.nav-auth-list {
+.nav-auth-list,
+.settings-link {
    @include default-flex;
 }

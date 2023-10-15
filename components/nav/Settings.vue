@@ -4,8 +4,6 @@
       class="settings-link__icon"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
-      width="4rem"
-      height="4rem"
     >
       <g
         class="color"
@@ -27,8 +25,15 @@
 
 <style scoped lang="scss">
 .settings-link {
+
   &__icon {
     pointer-events: none;
+
+    @media (width >= 768px) {
+      width: 3rem;
+      height: 3rem;
+    }
+
     .color {
       stroke: #fff;
     }

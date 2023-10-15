@@ -91,6 +91,7 @@ const isMobile = computed<boolean>(() => {
   }
 
   .nav-auth-list {
+    gap: 0 3rem;
   }
 
   .nav-settings {
@@ -101,10 +102,15 @@ const isMobile = computed<boolean>(() => {
 .desktop-nav-container {
   flex: 1;
   justify-content: flex-end;
+  gap: 2rem;
 
   .nav-links {
     flex: 1;
+    gap: 3rem;
+    @media (width >= 768px) {
+    }
   }
+
   .nav-options {
     gap: 0 2rem;
 
@@ -114,9 +120,7 @@ const isMobile = computed<boolean>(() => {
   }
 
   .nav-auth-list {
-  }
-
-  .nav-settings {
+    gap: 2rem;
   }
 }
 </style>

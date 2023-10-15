@@ -19,6 +19,12 @@ const { isHamburger, isMoon } = defineProps<{
 .dark-mode-button {
   width: 3rem;
   height: 3rem;
+
+  @media (width >= 768px) {
+    width: 2.7rem;
+    height: 2.7rem;
+  }
+
   &__icon {
     width: 100%;
     height: 100%;
@@ -29,11 +35,11 @@ const { isHamburger, isMoon } = defineProps<{
   position: relative;
   padding: 1rem;
   width: 3rem;
-  height: 3rem; 
+  height: 3rem;
   color: var(--white);
   opacity: 0.7;
 
-  @media(width >= 768px){
+  @media (width >= 768px) {
     width: 0;
     height: 0;
   }
@@ -47,8 +53,6 @@ const { isHamburger, isMoon } = defineProps<{
   width: 100%;
   height: 2px;
   background-color: var(--white);
-
-
 
   &::before,
   &::after {

@@ -27,6 +27,8 @@ const width = useUserWidthSize();
 
   @media(width >= 768px){
     padding: 0.5rem 1rem;
+    
   }
+
 }
 </style>
