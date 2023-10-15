@@ -25,13 +25,16 @@
 
 <style scoped lang="scss">
 .settings-link {
+  display: flex;
 
   &__icon {
     pointer-events: none;
+    width: 5rem;
+    height: 5rem;
 
     @media (width >= 768px) {
-      width: 3rem;
-      height: 3rem;
+      width: 2.7rem;
+      height: 2.7rem;
     }
 
     .color {
