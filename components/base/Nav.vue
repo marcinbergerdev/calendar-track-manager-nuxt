@@ -71,7 +71,7 @@ const isMobile = computed<boolean>(() => {
   width: 100%;
   height: 100vh;
   background-color: var(--yellow);
-  transition: transform 0.3s ease-in-out;
+  transition: transform .35s ease-in-out;
 
   @include default-grid;
   grid-template-areas:
@@ -101,7 +101,7 @@ const isMobile = computed<boolean>(() => {
 }
 .opened {
   transform: translateX(100%);
-  transition: 0.3s ease-in-out;
+  transition: .35s ease-in-out;
 }
 
 .desktop-nav-container {

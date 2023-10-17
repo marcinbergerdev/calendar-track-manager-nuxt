@@ -3,16 +3,27 @@
     <img class="dark-mode-button__icon" src="@/public/icons/moon.svg" alt="moon" />
   </button>
 
-  <button class="hamburger" v-if="!isHamburger" @click="openMobileMenu">
+  <button
+    class="hamburger"
+    :class="isHamburgerActive"
+    v-if="!isHamburger"
+    @click="openMobileMenu"
+  >
     <div class="hamburger-inner"></div>
   </button>
 </template>
 
 <script setup lang="ts">
+const menuActivity = useMenuVisibility();
+
 const { isHamburger, isMoon } = defineProps<{
   isHamburger?: boolean;
   isMoon?: boolean;
 }>();
+
+const isHamburgerActive = computed(() => {
+  return { active: menuActivity.value };
+});
 
 const openMobileMenu = () => {
   const isMobileMenu = useMenuVisibility();
@@ -36,6 +47,7 @@ const openMobileMenu = () => {
   }
 }
 
+// default style for hamburger
 .hamburger {
   position: relative;
   padding: 1rem;
@@ -75,6 +87,44 @@ const openMobileMenu = () => {
 
   &::after {
     top: -1rem;
+  }
+}
+// default style for hamburger
+
+// hamburger animation only mobile site (menu mobile)
+.mobile-nav-container {
+  .nav-options {
+    .hamburger-inner {
+      transition: 0.1s 0.3s ease-in-out;
+
+      &::before,
+      &::after {
+        transition: 0.5s ease-in-out;
+      }
+    }
+
+    .active {
+      .hamburger-inner {
+        background-color: transparent;
+        transition: 0.1s ease-in-out;
+
+        &::before,
+        &::after {
+          top: 0;
+          height: 3px;
+          background-color: var(--black);
+          transition: 0.5s ease-in-out;
+        }
+
+        &::before {
+          transform: rotate(-45deg);
+        }
+
+        &::after {
+          transform: rotate(45deg);
+        }
+      }
+    }
   }
 }
 </style>
