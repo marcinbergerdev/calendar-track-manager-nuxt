@@ -1,46 +1,28 @@
 <template>
-  <ClientOnly>
-    <nav :class="[`${view}-nav-container`, { opened: menuVisibility }]">
-      <ul class="nav-links" v-if="isDesktop || isMobile">
-        <NavLinks />
-      </ul>
+  <nav :class="[`${view}-nav-container`, { opened: menuVisibility }]">
+    <ul class="nav-links">
+      <NavLinks />
+    </ul>
 
-      <section class="nav-options">
-        <NavOptions :is-hamburger="isDesktop" :is-moon="isMobile" />
-      </section>
+    <section class="nav-options">
+      <NavOptions />
+    </section>
 
-      <ul class="nav-auth-list" v-if="isDesktop || isMobile">
-        <NavAuth />
-      </ul>
+    <ul class="nav-auth-list">
+      <NavAuth />
+    </ul>
 
-      <section class="nav-settings" v-if="isDesktop || isMobile">
-        <NavSettings />
-      </section>
-    </nav>
-  </ClientOnly>
+    <section class="nav-settings">
+      <NavSettings />
+    </section>
+  </nav>
 </template>
 
 <script setup lang="ts">
-import { useUserWidthSize } from "~/store/userWidthSize";
-
-const userWidth = useUserWidthSize();
-
-const { view, isDesktopView, isMobileView } = defineProps<{
+defineProps<{
   view: string;
-  isDesktopView?: boolean;
-  isMobileView?: boolean;
   menuVisibility?: boolean;
 }>();
-
-const isDesktop = computed<boolean>(() => {
-  const width = userWidth.desktopWidth;
-  return isDesktopView && width;
-});
-
-const isMobile = computed<boolean>(() => {
-  const width = userWidth.mobileWidth;
-  return isMobileView && width;
-});
 </script>
 
 <style scoped lang="scss">
@@ -66,12 +48,17 @@ const isMobile = computed<boolean>(() => {
   position: absolute;
   top: 0;
   left: -100%;
+  z-index: 100;
 
   padding: 0.5rem 2rem;
   width: 100%;
   height: 100vh;
   background-color: var(--yellow);
-  transition: transform .35s ease-in-out;
+  transition: transform 0.35s ease-in-out;
+
+  @media (width >= 768px) {
+    display: none;
+  }
 
   @include default-grid;
   grid-template-areas:
@@ -101,7 +88,7 @@ const isMobile = computed<boolean>(() => {
 }
 .opened {
   transform: translateX(100%);
-  transition: .35s ease-in-out;
+  transition: 0.35s ease-in-out;
 }
 
 .desktop-nav-container {
@@ -110,9 +97,12 @@ const isMobile = computed<boolean>(() => {
   gap: 2rem;
 
   .nav-links {
-    flex: 1;
-    gap: 3rem;
+    display: none;
+
     @media (width >= 768px) {
+      display: flex;
+      flex: 1;
+      gap: 3rem;
     }
   }
 
@@ -121,6 +111,21 @@ const isMobile = computed<boolean>(() => {
 
     @media (width >= 768px) {
       gap: 0;
+    }
+  }
+
+  .nav-auth-list {
+    display: none;
+    @media (width >= 768px) {
+      display: flex;
+      gap: 0;
+    }
+  }
+
+  .nav-settings {
+    display: none;
+    @media (width >= 768px) {
+      display: block;
     }
   }
 }

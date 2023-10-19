@@ -39,5 +39,5 @@ export default defineNuxtConfig({
          messagingSenderId: process.env.NUXT_MESSAGING_SENDER_ID,
          appId: process.env.NUXT_APP_ID,
       },
-   },
+   }
 });

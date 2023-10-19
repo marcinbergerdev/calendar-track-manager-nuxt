@@ -1,4 +1,5 @@
 import { initializeApp } from "firebase/app";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 export default defineNuxtPlugin((nuxtApp) => {
    const runtimeConfig = useRuntimeConfig();
@@ -12,7 +13,6 @@ export default defineNuxtPlugin((nuxtApp) => {
       appId: runtimeConfig.public.appId,
    };
 
-   
    initializeApp(firebaseConfig);
    userUpdateStatus();
 });

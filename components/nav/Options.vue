@@ -1,25 +1,15 @@
 <template>
-  <button class="dark-mode-button" v-if="!isMoon">
+  <button class="dark-mode-button">
     <img class="dark-mode-button__icon" src="@/public/icons/moon.svg" alt="moon" />
   </button>
 
-  <button
-    class="hamburger"
-    :class="isHamburgerActive"
-    v-if="!isHamburger"
-    @click="openMobileMenu"
-  >
+  <button class="hamburger" :class="isHamburgerActive" @click="openMobileMenu">
     <div class="hamburger-inner"></div>
   </button>
 </template>
 
 <script setup lang="ts">
 const menuActivity = useMenuVisibility();
-
-const { isHamburger, isMoon } = defineProps<{
-  isHamburger?: boolean;
-  isMoon?: boolean;
-}>();
 
 const isHamburgerActive = computed(() => {
   return { active: menuActivity.value };
@@ -57,6 +47,7 @@ const openMobileMenu = () => {
   opacity: 0.7;
 
   @media (width >= 768px) {
+    display: none;
     width: 0;
     height: 0;
   }
@@ -91,7 +82,7 @@ const openMobileMenu = () => {
 }
 // default style for hamburger
 
-// hamburger animation only mobile site (menu mobile)
+// hamburger animation only mobile side (menu mobile)
 .mobile-nav-container {
   .nav-options {
     .hamburger-inner {
@@ -126,5 +117,13 @@ const openMobileMenu = () => {
       }
     }
   }
+
+  .dark-mode-button {
+    display: none;
+    @media (width >= 768px) {
+      display: block;
+    }
+  }
 }
+// hamburger animation only mobile side (menu mobile)
 </style>
