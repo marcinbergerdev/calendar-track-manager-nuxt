@@ -4,7 +4,7 @@
 
     <!-- Nav menu for mobile and teleported to body -->
     <Teleport to="body">
-      <BaseNav view="mobile" v-if="userDevice" :menu-visibility="isMenu"/>
+      <BaseNav view="mobile"  :menu-visibility="isMenu"/>
     </Teleport>
 
     <!-- Nav menu for desktop -->
@@ -13,7 +13,6 @@
 </template>
 
 <script setup lang="ts">
-const userDevice = useUserDeviceStatus();
 const isMenu = useMenuVisibility();
 </script>
 

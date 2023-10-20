@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-// const { isMobile } = useDevice();
+
 
 
 </script>
