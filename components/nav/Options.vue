@@ -45,12 +45,6 @@ const openMobileMenu = () => {
   height: 3rem;
   color: var(--white);
   opacity: 0.7;
-
-  @media (width >= 768px) {
-    display: none;
-    width: 0;
-    height: 0;
-  }
 }
 
 .hamburger-inner {
@@ -115,13 +109,6 @@ const openMobileMenu = () => {
           transform: rotate(45deg);
         }
       }
-    }
-  }
-
-  .dark-mode-button {
-    display: none;
-    @media (width >= 768px) {
-      display: block;
     }
   }
 }

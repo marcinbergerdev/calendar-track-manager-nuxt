@@ -1,7 +1,7 @@
 <template>
   <NuxtLink class="settings-link nav-animation" to="#">
     <svg
-      class="settings-link__icon"
+      class="settings-link__icon" 
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
     >

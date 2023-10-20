@@ -28,9 +28,6 @@ export const signInUser = async (email: string, password: string) => {
       .then((userCredential) => {
          const user = userCredential.user;
          console.log(user);
-
-         // const userStatus = useCookie("userStatus");
-         // userStatus.value = user.uid;
       })
       .catch((error) => {
          const errorCode = error.code;
@@ -41,17 +38,7 @@ export const signInUser = async (email: string, password: string) => {
 
 export const userUpdateStatus = () => {
    const auth = getAuth();
-   // const userStatus = useUserLogStatus();
-
-   // onAuthStateChanged(auth, (user) => {
-   //    if (user) {
-   //       userStatus.value = true;
-   //       console.log(user.uid);
-   //    } else {
-   //       console.log("nie działa");
-   //    }
-   // });
-
+   
    onAuthStateChanged(auth, (user) => {
       const userStatus = useUserLogStatus();
 
@@ -60,7 +47,7 @@ export const userUpdateStatus = () => {
          return;
       }
 
-      console.log(userStatus.value);
+      // console.log(userStatus.value);
    });
 };
 

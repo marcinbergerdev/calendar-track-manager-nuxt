@@ -6,7 +6,7 @@ export default defineNuxtConfig({
       host: "http//localhost",
    },
 
-   modules: ["@pinia/nuxt", "@vueuse/nuxt"],
+   modules: ["@pinia/nuxt", "@vueuse/nuxt",'@nuxtjs/device',],
    pinia: {
       autoImports: ["defineStore", ["defineStore", "definePiniaStore"]],
    },

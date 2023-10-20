@@ -1,11 +1,11 @@
 <template>
-  <li class="auth-item" v-if="!userStatus">
+  <li class="auth-item">
     <NuxtLink to="/" class="nav-animation" @click="logIn">log in</NuxtLink>
   </li>
-  <li class="auth-item" v-if="!userStatus">
+  <li class="auth-item">
     <NuxtLink to="/" class="nav-animation" @click="signUp">sign up</NuxtLink>
   </li>
-  <li class="auth-item" v-if="!!userStatus">
+  <li class="auth-item">
     <button class="nav-animation" @click="signOut">sign out</button>
   </li>
 </template>

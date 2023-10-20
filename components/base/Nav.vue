@@ -19,7 +19,7 @@
 </template>
 
 <script setup lang="ts">
-defineProps<{
+const { view } = defineProps<{
   view: string;
   menuVisibility?: boolean;
 }>();
@@ -55,10 +55,6 @@ defineProps<{
   height: 100vh;
   background-color: var(--yellow);
   transition: transform 0.35s ease-in-out;
-
-  @media (width >= 768px) {
-    display: none;
-  }
 
   @include default-grid;
   grid-template-areas:
@@ -97,13 +93,9 @@ defineProps<{
   gap: 2rem;
 
   .nav-links {
-    display: none;
-
-    @media (width >= 768px) {
-      display: flex;
-      flex: 1;
-      gap: 3rem;
-    }
+    display: flex;
+    flex: 1;
+    gap: 3rem;
   }
 
   .nav-options {
@@ -115,18 +107,8 @@ defineProps<{
   }
 
   .nav-auth-list {
-    display: none;
-    @media (width >= 768px) {
-      display: flex;
-      gap: 0;
-    }
-  }
-
-  .nav-settings {
-    display: none;
-    @media (width >= 768px) {
-      display: block;
-    }
+    display: flex;
+    gap: 0;
   }
 }
 </style>
