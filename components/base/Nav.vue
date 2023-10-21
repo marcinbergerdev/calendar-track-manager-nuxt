@@ -5,7 +5,7 @@
     </ul>
 
     <section class="nav-options">
-      <NavOptions />
+      <NavOptions :is-moon="isMoon"/>
     </section>
 
     <ul class="nav-auth-list">
@@ -22,6 +22,7 @@
 const { view } = defineProps<{
   view: string;
   menuVisibility?: boolean;
+  isMoon?: boolean;
 }>();
 </script>
 
@@ -93,9 +94,13 @@ const { view } = defineProps<{
   gap: 2rem;
 
   .nav-links {
-    display: flex;
-    flex: 1;
-    gap: 3rem;
+    display: none;
+
+    @media (width >= 768px) {
+      display: flex;
+      flex: 1;
+      gap: 3rem;
+    }
   }
 
   .nav-options {
@@ -106,9 +111,13 @@ const { view } = defineProps<{
     }
   }
 
-  .nav-auth-list {
-    display: flex;
-    gap: 0;
+  .nav-auth-list, .nav-settings {
+    display: none;
+    @media (width >= 768px) {
+      display: flex;
+      gap: 0;
+    }
+
   }
 }
 </style>

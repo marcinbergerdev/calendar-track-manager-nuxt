@@ -1,5 +1,5 @@
 <template>
-  <button class="dark-mode-button">
+  <button class="dark-mode-button" v-if="!isMoon">
     <img class="dark-mode-button__icon" src="@/public/icons/moon.svg" alt="moon" />
   </button>
 
@@ -10,6 +10,10 @@
 
 <script setup lang="ts">
 const menuActivity = useMenuVisibility();
+
+defineProps<{
+  isMoon?: boolean;
+}>();
 
 const isHamburgerActive = computed(() => {
   return { active: menuActivity.value };
@@ -108,6 +112,23 @@ const openMobileMenu = () => {
         &::after {
           transform: rotate(45deg);
         }
+      }
+    }
+
+    // .dark-mode-button {
+    //   display: none;
+    //   @media (width >= 768px) {
+    //     display: block;
+    //   }
+    // }
+  }
+}
+.desktop-nav-container {
+  .nav-options {
+    .hamburger {
+      display: block;
+      @media (width >= 768px) {
+        display: none;
       }
     }
   }

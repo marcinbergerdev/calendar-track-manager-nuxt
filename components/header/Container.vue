@@ -3,16 +3,26 @@
     <HeaderLogo />
 
     <!-- Nav menu for mobile and teleported to body -->
-    <Teleport to="body">
-      <BaseNav view="mobile"  :menu-visibility="isMenu"/>
-    </Teleport>
+
+    <ClientOnly>
+      <Teleport to="body">
+        <BaseNav
+          view="mobile"
+          v-if="menu.mobile"
+          :menu-visibility="isMenu"
+          :is-moon="menu.mobile"
+        />
+      </Teleport>
+    </ClientOnly>
 
     <!-- Nav menu for desktop -->
-    <BaseNav view="desktop"/>
+    <BaseNav view="desktop" />
   </header>
 </template>
 
 <script setup lang="ts">
+import { useUserWidthSize } from "~/store/userWidthSize";
+const menu = useUserWidthSize();
 const isMenu = useMenuVisibility();
 </script>
 
