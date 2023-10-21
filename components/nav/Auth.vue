@@ -1,17 +1,18 @@
 <template>
-  <li class="auth-item">
+ 
+  <li class="auth-item" v-if="!userStatus">
     <NuxtLink to="/" class="nav-animation" @click="logIn">log in</NuxtLink>
   </li>
-  <li class="auth-item">
+  <li class="auth-item" v-if="!userStatus">
     <NuxtLink to="/" class="nav-animation" @click="signUp">sign up</NuxtLink>
   </li>
-  <li class="auth-item">
+  <li class="auth-item" v-if="!!userStatus">
     <button class="nav-animation" @click="signOut">sign out</button>
   </li>
 </template>
 
 <script setup lang="ts">
-const userStatus = useUserLogStatus();
+const userStatus = useCookie('userUidStatus');
 
 const email = ref("test@test.com");
 const password = ref("test123456");

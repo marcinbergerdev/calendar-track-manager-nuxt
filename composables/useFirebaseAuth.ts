@@ -27,7 +27,10 @@ export const signInUser = async (email: string, password: string) => {
    await signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
          const user = userCredential.user;
+         const userUidStatus = useCookie('userUidStatus');
+         userUidStatus.value = user.uid
          console.log(user);
+
       })
       .catch((error) => {
          const errorCode = error.code;
@@ -52,9 +55,10 @@ export const userUpdateStatus = () => {
 };
 
 export const signOutUser = () => {
-   const userStatus = useUserLogStatus();
    const auth = getAuth();
+   const userUidStatus = useCookie('userUidStatus');
    auth.signOut();
-   userStatus.value = false;
+   userUidStatus.value = "false"
+
    console.log("log out");
 };
