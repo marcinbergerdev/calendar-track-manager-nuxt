@@ -1,4 +1,3 @@
-import { useUserLogStatus } from "./useState";
 import {
    getAuth,
    createUserWithEmailAndPassword,
@@ -27,10 +26,9 @@ export const signInUser = async (email: string, password: string) => {
    await signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
          const user = userCredential.user;
-         const userUidStatus = useCookie('userUidStatus');
-         userUidStatus.value = user.uid
+         const userUidStatus = useCookie("userUidStatus");
+         userUidStatus.value = user.uid;
          console.log(user);
-
       })
       .catch((error) => {
          const errorCode = error.code;
@@ -41,24 +39,25 @@ export const signInUser = async (email: string, password: string) => {
 
 export const userUpdateStatus = () => {
    const auth = getAuth();
-   
-   onAuthStateChanged(auth, (user) => {
-      const userStatus = useUserLogStatus();
 
+   onAuthStateChanged(auth, (user) => {
       if (user) {
-         userStatus.value = user.uid;
-         return;
+         // console.log(user);
+       
+      }else {
+
+         // console.log('error');
       }
 
-      // console.log(userStatus.value);
    });
 };
 
 export const signOutUser = () => {
    const auth = getAuth();
-   const userUidStatus = useCookie('userUidStatus');
-   auth.signOut();
-   userUidStatus.value = "false"
+   const userUidStatus = useCookie("userUidStatus");
 
+   userUidStatus.value = "false";
    console.log("log out");
+   auth.signOut();
+   
 };
