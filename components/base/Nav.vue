@@ -59,12 +59,11 @@ const { view } = defineProps<{
 
   @include default-grid;
   grid-template-areas:
-    "options"
-    "links"
-    "settings"
-    "auth";
-  grid-template-columns: 1fr;
-  grid-template-rows: 1fr 2fr 1fr 2fr;
+    "settings options"
+    "links links"
+    "auth auth";
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 2fr 1fr;
 
   .nav-links {
     flex-direction: column;
@@ -80,7 +79,8 @@ const { view } = defineProps<{
   }
 
   .nav-settings {
-    align-self: flex-end;
+    align-self: center;
+    justify-self: flex-start;
   }
 }
 .opened {
