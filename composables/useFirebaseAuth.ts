@@ -55,9 +55,6 @@ export const userUpdateStatus = () => {
 export const signOutUser = () => {
    const auth = getAuth();
    const userUidStatus = useCookie("userUidStatus");
-
    userUidStatus.value = "false";
-   console.log("log out");
-   auth.signOut();
-   
+   auth.signOut(); 
 };
