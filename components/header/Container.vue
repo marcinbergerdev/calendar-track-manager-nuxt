@@ -33,7 +33,7 @@ const isMenu = useMenuVisibility();
   background-color: var(--yellow);
 
   @media (width >= 768px) {
-    padding: 0.5rem 1rem;
+    padding: 1.150rem 1rem;
   }
 }
 </style>

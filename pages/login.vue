@@ -1,9 +1,7 @@
 <template>
-  <div>
-    <li class="auth-item">
-      <button to="/" class="nav-animation" @click="logIn">log in</button>
-    </li>
-  </div>
+    <form>
+    
+    </form>
 </template>
 
 <script setup lang="ts">
