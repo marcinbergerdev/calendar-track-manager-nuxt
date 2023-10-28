@@ -22,7 +22,7 @@ export default defineNuxtConfig({
          preprocessorOptions: {
             scss: {
                additionalData:
-                  '@import "@/assets/css/_variables.scss"; @import "@/assets/css/_mixins.scss"; @import "@/assets/css/_auth.scss";',
+                  '@import "@/assets/css/_variables.scss"; @import "@/assets/css/_mixins.scss"; @import "@/assets/css/_form.scss";',
             },
          },
       },

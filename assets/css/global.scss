@@ -45,9 +45,6 @@ a {
 button {
    background-color: transparent;
    border: 0;
-
-
-
 }
 
 .nav-animation {
@@ -67,6 +64,8 @@ button {
 .nav-links,
 .nav-options,
 .nav-auth-list,
-.settings-link {
+.settings-link,
+.auth-container,
+.auth-box {
    @include default-flex;
 }

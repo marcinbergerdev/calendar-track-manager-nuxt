@@ -10,13 +10,14 @@
           view="mobile"
           v-if="menu.mobile"
           :menu-visibility="isMenu"
-          :is-moon="menu.mobile"
+          :is-moon="false"
+          :is-hamburger="true"
         />
       </Teleport>
     </ClientOnly>
 
     <!-- Nav menu for desktop -->
-    <BaseNav view="desktop" />
+    <BaseNav view="desktop" :is-moon="true" :is-hamburger="true"/>
   </header>
 </template>
 

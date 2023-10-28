@@ -18,28 +18,42 @@
 
 <style scoped lang="scss">
 .auth-container {
+  flex-direction: column;
+  width: 100%;
   height: 100vh;
+  overflow: auto;
   background-color: var(--white);
 
-  @media (width >= 768) {
+  @media (width >= 768px) {
   }
 }
 
 .auth-content-container {
-  @media (width >= 768) {
+  flex: 1;
+  width: 100%;
+  justify-content: center;
+  display: flex;
+  @media (width >= 768px) {
   }
 }
 
 .auth-box {
-  @media (width >= 768) {
+  width: min(90%, 50rem);
+  flex-direction: column;
+  justify-content: space-evenly;
+
+  @media (width >= 768px) {
   }
 }
 
 .auth-box-header {
-  @media (width >= 768) {
+  display: flex;
+  align-self: flex-end;
+  @media (width >= 768px) {
   }
+
   &__title {
-    @media (width >= 768) {
+    @media (width >= 768px) {
     }
   }
 }

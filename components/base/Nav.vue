@@ -5,7 +5,7 @@
     </ul>
 
     <section class="nav-options">
-      <NavOptions :is-moon="isMoon" :is-hamburger="true"/>
+      <NavOptions :is-moon="isMoon" :is-hamburger="isHamburger"/>
     </section>
 
     <ul class="nav-auth-list">
@@ -23,6 +23,7 @@ const { view } = defineProps<{
   view: string;
   menuVisibility?: boolean;
   isMoon?: boolean;
+  isHamburger?: boolean;
 }>();
 </script>
 

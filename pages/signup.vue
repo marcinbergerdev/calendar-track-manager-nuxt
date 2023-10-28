@@ -21,6 +21,13 @@
       validation-label="Password confirmation"
     />
   </FormKit>
+
+
+  <div class="redirect-box">
+    <p class="redirect-box__text">If you have an account log in here!</p>
+    <NuxtLink class="redirect-box__link" to="/login">Log in</NuxtLink>
+  </div>
+
 </template>
 
 <script setup lang="ts">

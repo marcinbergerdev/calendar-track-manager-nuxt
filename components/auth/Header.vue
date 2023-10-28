@@ -1,43 +1,30 @@
 <template>
   <header class="auth-header">
     <h1 class="auth-header__title">Calendar Track Manager</h1>
-    <NavOptions :is-hamburger="false"></NavOptions>
-    <NuxtLink class="auth-header__link" to="/login" v-if="isRedirectionLink">
-      <img src="@/public/icons/back.svg" alt="back" />
-    </NuxtLink>
+
+    <NavOptions :is-moon="true" :is-hamburger="false"></NavOptions>
   </header>
 </template>
 
-<script setup lang="ts">
-const route = useRoute();
-const isRedirectionLink = ref(false);
-
-watch(
-  () => route.path,
-  (path) => {
-    if (path === "/signup") {
-      isRedirectionLink.value = true;
-      return;
-    }
-    isRedirectionLink.value = false;
-  },
-  { deep: true, immediate: true }
-);
-</script>
+<script setup lang="ts"></script>
 
 <style scoped lang="scss">
 .auth-header {
-  @media (width >= 768) {
+
+  display: flex;
+
+
+
+  @media (width >= 768px) {
   }
 
   &__title {
-    @media (width >= 768) {
+    @media (width >= 768px) {
     }
   }
 
   &__link {
-    display: inline-blockk;
-    @media (width >= 768) {
+    @media (width >= 768px) {
     }
   }
 }

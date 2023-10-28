@@ -1,9 +1,14 @@
 <template>
-  <button class="dark-mode-button" v-if="!isMoon">
+  <button class="dark-mode-button" v-if="isMoon">
     <img class="dark-mode-button__icon" src="@/public/icons/moon.svg" alt="moon" />
   </button>
 
-  <button class="hamburger" v-if="isHamburger" :class="isHamburgerActive" @click="openMobileMenu">
+  <button
+    class="hamburger"
+    v-if="isHamburger"
+    :class="isHamburgerActive"
+    @click="openMobileMenu"
+  >
     <div class="hamburger-inner"></div>
   </button>
 </template>
