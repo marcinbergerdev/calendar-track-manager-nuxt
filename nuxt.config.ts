@@ -6,9 +6,14 @@ export default defineNuxtConfig({
       host: "http//localhost",
    },
 
-   modules: ["@pinia/nuxt", "@vueuse/nuxt",'@nuxtjs/device',],
+   modules: ["@pinia/nuxt", "@vueuse/nuxt", "@nuxtjs/device", "@formkit/nuxt"],
    pinia: {
       autoImports: ["defineStore", ["defineStore", "definePiniaStore"]],
+   },
+
+   formkit: {
+      // Experimental support for auto loading (see note):
+      autoImport: true,
    },
 
    css: ["/assets/css/global.scss"],
@@ -39,5 +44,5 @@ export default defineNuxtConfig({
          messagingSenderId: process.env.NUXT_MESSAGING_SENDER_ID,
          appId: process.env.NUXT_APP_ID,
       },
-   }
+   },
 });
