@@ -34,6 +34,7 @@ const password = ref("test123456");
 const signUp = () => {
   createUserAccount(email.value, password.value);
 };
+
 </script>
 
 <style scoped></style>

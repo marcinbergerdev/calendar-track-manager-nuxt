@@ -11,6 +11,13 @@
       validation-visibility="live"
     />
   </FormKit>
+
+  <div class="redirect-box">
+    <p class="redirect-box__text">or</p>
+    <p class="redirect-box__text">You don't have an account yet?</p>
+    <NuxtLink class="redirect-box__link" to="/signup">Sign up</NuxtLink>
+  </div>
+  <!-- <button @click="logIn">dsaf</button> -->
 </template>
 
 <script setup lang="ts">
@@ -26,4 +33,17 @@ const logIn = async () => {
 };
 </script>
 
-<style scoped></style>
+<style scoped lang="scss">
+
+
+
+
+
+.redirect-box {
+  &__text {
+  }
+
+  &__link {
+  }
+}
+</style>
