@@ -2,7 +2,7 @@
   <header class="auth-header">
     <h1 class="auth-header__title">Calendar Track Manager</h1>
 
-    <NavOptions :is-moon="true" :is-hamburger="false"></NavOptions>
+    <BaseOptions :is-moon="true" :is-hamburger="false"></BaseOptions>
   </header>
 </template>
 
@@ -10,10 +10,7 @@
 
 <style scoped lang="scss">
 .auth-header {
-
   display: flex;
-
-
 
   @media (width >= 768px) {
   }

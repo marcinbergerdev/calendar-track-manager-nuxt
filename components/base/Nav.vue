@@ -5,7 +5,7 @@
     </ul>
 
     <section class="nav-options">
-      <NavOptions :is-moon="isMoon" :is-hamburger="isHamburger"/>
+      <BaseOptions :is-moon="isMoon" :is-hamburger="isHamburger"/>
     </section>
 
     <ul class="nav-auth-list">
