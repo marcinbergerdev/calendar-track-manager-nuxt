@@ -10,17 +10,16 @@
 
 <style scoped lang="scss">
 .auth-header {
-  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 1rem;
+  color: var(--yellow);
 
   @media (width >= 768px) {
   }
 
   &__title {
-    @media (width >= 768px) {
-    }
-  }
-
-  &__link {
+    font-size: 2.3rem;
     @media (width >= 768px) {
     }
   }

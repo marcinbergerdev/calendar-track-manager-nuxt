@@ -66,6 +66,7 @@ button {
 .nav-auth-list,
 .settings-link,
 .auth-container,
-.auth-box {
+.auth-box,
+.auth-header  {
    @include default-flex;
 }

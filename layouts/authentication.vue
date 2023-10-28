@@ -53,6 +53,9 @@
   }
 
   &__title {
+    color: var(--yellow);
+    font-weight: 400;
+
     @media (width >= 768px) {
     }
   }

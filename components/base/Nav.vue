@@ -5,7 +5,7 @@
     </ul>
 
     <section class="nav-options">
-      <BaseOptions :is-moon="isMoon" :is-hamburger="isHamburger"/>
+      <BaseOptions :is-moon="isMoon" :is-hamburger="isHamburger" />
     </section>
 
     <ul class="nav-auth-list">
@@ -52,11 +52,12 @@ const { view } = defineProps<{
   left: -100%;
   z-index: 100;
 
-  padding: 0.5rem 2rem;
+  padding: 2rem 2rem;
   width: 100%;
   height: 100vh;
   background-color: var(--yellow);
   transition: transform 0.35s ease-in-out;
+  overflow: auto;
 
   @include default-grid;
   grid-template-areas:
@@ -65,6 +66,7 @@ const { view } = defineProps<{
     "auth auth";
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 2fr 1fr;
+  gap: 4rem 0;
 
   .nav-links {
     flex-direction: column;
@@ -112,13 +114,13 @@ const { view } = defineProps<{
     }
   }
 
-  .nav-auth-list, .nav-settings {
+  .nav-auth-list,
+  .nav-settings {
     display: none;
     @media (width >= 768px) {
       display: flex;
       gap: 0;
     }
-
   }
 }
 </style>
