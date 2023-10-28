@@ -1,12 +1,12 @@
 <template>
-  <header>
-    <h1>Calendar Track Manager</h1>
+  <header class="auth-header">
+    <h1 class="auth-header__title">Calendar Track Manager</h1>
   </header>
 
-  <main>
-    <section>
-      <header>
-        <h2>Welcome</h2>
+  <main class="auth-content-container">
+    <section class="auth-box">
+      <header class="auth-box-header">
+        <h2 class="auth-box-header__title">Welcome</h2>
       </header>
 
       <!-- custom form -->
@@ -17,4 +17,20 @@
 
 <script setup lang="ts"></script>
 
-<style scoped></style>
+<style scoped lang="scss">
+.auth-header {
+  &__title {
+  }
+}
+
+.auth-content-container {
+}
+
+.auth-box {
+}
+
+.auth-box-header {
+  &__title {
+  }
+}
+</style>
