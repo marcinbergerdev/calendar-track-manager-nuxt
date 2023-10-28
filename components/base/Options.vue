@@ -15,6 +15,7 @@
 
 <script setup lang="ts">
 const menuActivity = useMenuVisibility();
+const isMobileMenu = useMenuVisibility();
 
 defineProps<{
   isMoon?: boolean;
@@ -26,7 +27,6 @@ const isHamburgerActive = computed(() => {
 });
 
 const openMobileMenu = () => {
-  const isMobileMenu = useMenuVisibility();
   isMobileMenu.value = !isMobileMenu.value;
 };
 </script>
