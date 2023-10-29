@@ -24,7 +24,7 @@
     <NuxtLink class="redirect-box__link" to="/signup">Sign up</NuxtLink>
   </div>
 
-  <!-- <button @click="logIn">dsaf</button> -->
+  <button @click="logIn">dsaf</button>
 </template>
 
 <script setup lang="ts">
