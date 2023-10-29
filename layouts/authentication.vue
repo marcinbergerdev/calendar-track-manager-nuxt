@@ -21,8 +21,8 @@
   flex-direction: column;
   width: 100%;
   height: 100vh;
-  overflow: auto;
   background-color: var(--white);
+  overflow: auto;
 
   @media (width >= 768px) {
   }
@@ -30,6 +30,7 @@
 
 .auth-content-container {
   flex: 1;
+  padding: 2rem 0;
   width: 100%;
   justify-content: center;
   display: flex;
@@ -41,6 +42,7 @@
   width: min(90%, 50rem);
   flex-direction: column;
   justify-content: space-evenly;
+  align-items: center;
 
   @media (width >= 768px) {
   }
@@ -53,8 +55,9 @@
   }
 
   &__title {
-    color: var(--yellow);
+    font-size: 1.8rem;
     font-weight: 400;
+    color: var(--yellow);
 
     @media (width >= 768px) {
     }

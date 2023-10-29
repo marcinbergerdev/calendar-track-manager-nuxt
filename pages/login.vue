@@ -1,14 +1,20 @@
 <template>
   <FormKit type="form" submit-label="Log in">
-    <h3>Log in</h3>
+    <h3 class="formkit-form__title">Log in</h3>
 
-    <FormKit type="email" name="email" validation="required|length:5|email"></FormKit>
+    <FormKit
+      type="email"
+      name="email"
+      validation="required|length:5|email"
+      placeholder="e-mail address"
+    ></FormKit>
 
     <FormKit
       type="password"
       name="password"
       validation="required|length:5"
       validation-visibility="live"
+      placeholder="e-mail address"
     />
   </FormKit>
 
@@ -18,7 +24,6 @@
     <NuxtLink class="redirect-box__link" to="/signup">Sign up</NuxtLink>
   </div>
 
-  
   <!-- <button @click="logIn">dsaf</button> -->
 </template>
 

@@ -1,7 +1,62 @@
-.redirect-box {
-  &__text {
-  }
+.formkit-form {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   gap: 2rem 0;
+   width: 100%;
 
-  &__link {
-  }
+   &__title {
+      font-size: 2rem;
+      color: var(--yellow);
+      align-self: flex-start;
+   }
+}
+
+.formkit-outer {
+   width: min(100%, 44rem);
+}
+
+.formkit-input {
+   width: 100%;
+   padding: 1rem;
+   border-radius: 1.5rem;
+   border: 1px solid var(--grey-light-slim);
+}
+
+.formkit-messages {
+   padding: 0.5rem;
+   color: var(--red);
+}
+.formkit-message {
+}
+
+.formkit-actions {
+   display: flex;
+   justify-content: center;
+   width: 100%;
+   .formkit-input {
+      font-size: 1.6rem;
+      background-color: var(--yellow);
+      color: var(--white);
+      border: 0;
+   }
+}
+
+.redirect-box {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   gap: 0.5rem 0;
+
+   padding: 2rem 0;
+   text-align: center;
+   &__link {
+      display: block;
+      margin-top: 1rem;
+      padding: 0.7rem 2rem;
+      font-size: 1.7rem;
+      color: var(--yellow);
+      border: 1px solid var(--yellow);
+      border-radius: 1.5rem;
+   }
 }

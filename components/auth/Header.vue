@@ -12,7 +12,7 @@
 .auth-header {
   justify-content: space-between;
   width: 100%;
-  padding: 1rem;
+  padding: 1.5rem;
   color: var(--yellow);
 
   @media (width >= 768px) {
@@ -20,6 +20,7 @@
 
   &__title {
     font-size: 2.3rem;
+    font-weight: 400;
     @media (width >= 768px) {
     }
   }
