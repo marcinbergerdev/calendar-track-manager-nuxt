@@ -1,7 +1,7 @@
 <template>
-  <NuxtLink class="settings-link nav-animation" to="#">
+  <BaseButton :link="true" mode="settings-link nav-animation" path="#">
     <svg
-      class="settings-link__icon" 
+      class="settings-link__icon"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
     >
@@ -18,7 +18,7 @@
         <path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0-6 0" />
       </g>
     </svg>
-  </NuxtLink>
+  </BaseButton>
 </template>
 
 <script setup lang="ts"></script>

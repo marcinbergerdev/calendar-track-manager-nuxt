@@ -1,5 +1,5 @@
 <template>
-  <NuxtLink to="/" class="header-logo">Calendar Track Manager</NuxtLink>
+  <BaseButton :link="true" path="/" mode="header-logo">Calendar Track Manager</BaseButton>
 </template>
 
 <script setup lang="ts"></script>

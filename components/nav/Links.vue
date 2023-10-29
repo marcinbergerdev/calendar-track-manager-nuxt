@@ -1,6 +1,6 @@
 <template>
   <li v-for="({ path, name }, id) in menuLinks" :key="id">
-    <NuxtLink class="nav-animation" :to="path">{{ name }}</NuxtLink>
+    <BaseButton :link="true" mode="nav-animation" :path="path">{{ name }}</BaseButton>
   </li>
 </template>
 

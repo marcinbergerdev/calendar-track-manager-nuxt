@@ -10,10 +10,17 @@
 
 <script setup lang="ts">
 defineProps<{
-  link: boolean;
-  mode?: string;
+  link?: boolean;
+  mode?: string | object;
   path?: string;
 }>();
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+
+
+
+
+
+
+</style>

@@ -27,7 +27,7 @@
 
   <div class="redirect-box">
     <p class="redirect-box__text">If you have an account log in here!</p>
-    <NuxtLink class="redirect-box__link" to="/login">Log in</NuxtLink>
+    <BaseButton :link="true" mode="redirect-box__link" path="/login">Log in</BaseButton>
   </div>
 </template>
 

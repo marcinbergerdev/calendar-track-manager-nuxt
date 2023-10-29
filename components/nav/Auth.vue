@@ -1,6 +1,6 @@
 <template>
   <li class="auth-item">
-    <button class="nav-animation" @click="signOut">sign out</button>
+    <BaseButton mode="nav-animation" @click="signOut">sign out</BaseButton>
   </li>
 </template>
 

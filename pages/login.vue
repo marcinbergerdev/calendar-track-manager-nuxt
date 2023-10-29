@@ -21,7 +21,7 @@
   <div class="redirect-box">
     <p class="redirect-box__text">or</p>
     <p class="redirect-box__text">You don't have an account yet?</p>
-    <NuxtLink class="redirect-box__link" to="/signup">Sign up</NuxtLink>
+    <BaseButton :link="true" mode="redirect-box__link" path="/signup">Sign up</BaseButton>
   </div>
 
   <button @click="logIn">dsaf</button>

@@ -1,16 +1,16 @@
 <template>
-  <button class="dark-mode-button" v-if="isMoon">
+  <BaseButton v-if="isMoon" mode="dark-mode-button">
     <img class="dark-mode-button__icon" src="@/public/icons/moon.svg" alt="moon" />
-  </button>
+  </BaseButton>
 
-  <button
-    class="hamburger"
+  <BaseButton
     v-if="isHamburger"
-    :class="isHamburgerActive"
+    class="hamburger"
+    :mode="isHamburgerActive"
     @click="openMobileMenu"
   >
     <div class="hamburger-inner"></div>
-  </button>
+  </BaseButton>
 </template>
 
 <script setup lang="ts">
