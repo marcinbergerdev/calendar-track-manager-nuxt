@@ -15,9 +15,6 @@
   padding: 1.5rem;
   color: var(--yellow);
 
-  @media (width >= 768px) {
-  }
-
   &__title {
     font-size: 2.3rem;
     font-weight: 400;

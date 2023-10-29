@@ -13,7 +13,7 @@
 }
 
 .formkit-outer {
-   width: min(100%, 44rem);
+   width: 100%;
 }
 
 .formkit-input {
@@ -27,13 +27,13 @@
    padding: 0.5rem;
    color: var(--red);
 }
-.formkit-message {
-}
 
 .formkit-actions {
    display: flex;
    justify-content: center;
+   margin-top: 1rem;
    width: 100%;
+
    .formkit-input {
       font-size: 1.6rem;
       background-color: var(--yellow);
@@ -47,13 +47,13 @@
    flex-direction: column;
    align-items: center;
    gap: 0.5rem 0;
-
    padding: 2rem 0;
    text-align: center;
+
    &__link {
       display: block;
       margin-top: 1rem;
-      padding: 0.7rem 2rem;
+      padding: 0.7rem 6rem;
       font-size: 1.7rem;
       color: var(--yellow);
       border: 1px solid var(--yellow);

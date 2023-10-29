@@ -23,9 +23,6 @@
   height: 100vh;
   background-color: var(--white);
   overflow: auto;
-
-  @media (width >= 768px) {
-  }
 }
 
 .auth-content-container {
@@ -34,33 +31,32 @@
   width: 100%;
   justify-content: center;
   display: flex;
-  @media (width >= 768px) {
+
+  @media (width >= 1000px) {
+      align-items: center;
   }
 }
 
 .auth-box {
-  width: min(90%, 50rem);
+  width: min(90%, 60rem);
   flex-direction: column;
   justify-content: space-evenly;
-  align-items: center;
 
-  @media (width >= 768px) {
+  @media (width >= 1000px) {
+    padding: 6rem;
+    border: 1px solid var(--yellow);
+    border-radius: 1rem;
   }
 }
 
 .auth-box-header {
   display: flex;
   align-self: flex-end;
-  @media (width >= 768px) {
-  }
-
+ 
   &__title {
     font-size: 1.8rem;
     font-weight: 400;
     color: var(--yellow);
-
-    @media (width >= 768px) {
-    }
   }
 }
 </style>
