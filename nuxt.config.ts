@@ -6,7 +6,13 @@ export default defineNuxtConfig({
       host: "http//localhost",
    },
 
-   modules: ["@pinia/nuxt", "@vueuse/nuxt", "@nuxtjs/device", "@formkit/nuxt"],
+   modules: [
+      "@pinia/nuxt",
+      "@vueuse/nuxt",
+      "@nuxtjs/device",
+      "@formkit/nuxt",
+      "@nuxtjs/color-mode",
+   ],
    pinia: {
       autoImports: ["defineStore", ["defineStore", "definePiniaStore"]],
    },

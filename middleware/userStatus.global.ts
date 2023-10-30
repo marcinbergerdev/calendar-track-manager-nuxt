@@ -12,10 +12,6 @@ export default defineNuxtRouteMiddleware((to, __) => {
       !!userUidStatus.value &&
       (to.path === "/login" || to.path === "/signup")
    ) {
-      return navigateTo("/calendar");
-   }
-
-   if (!!userUidStatus.value && to.path === "/") {
-      return navigateTo("/calendar");
+      return navigateTo("/");
    }
 });

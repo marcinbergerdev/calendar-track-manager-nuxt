@@ -6,7 +6,6 @@
 
 <script setup lang="ts">
 const menuLinks = ref([
-  { path: "/calendar", name: "calendar" },
   { path: "/note", name: "note" },
   { path: "/list", name: "list" },
 ]);
