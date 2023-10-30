@@ -1,5 +1,5 @@
 <template>
-  <nav :class="[`${view}-nav-container`, { opened: menuVisibility }]">
+  <nav :class="[`${view}-nav-container`, { opened: isMenu }]">
     <ul class="nav-links">
       <NavLinks />
     </ul>
@@ -8,9 +8,9 @@
       <BaseOptions :is-moon="isMoon" :is-hamburger="isHamburger" />
     </section>
 
-    <ul class="nav-auth-list">
+    <section class="nav-auth-list">
       <NavAuth />
-    </ul>
+    </section>
 
     <section class="nav-settings">
       <NavSettings />
@@ -21,7 +21,7 @@
 <script setup lang="ts">
 const { view } = defineProps<{
   view: string;
-  menuVisibility?: boolean;
+  isMenu?: boolean;
   isMoon?: boolean;
   isHamburger?: boolean;
 }>();

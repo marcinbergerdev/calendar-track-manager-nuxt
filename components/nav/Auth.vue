@@ -1,7 +1,5 @@
 <template>
-  <li class="auth-item">
-    <BaseButton mode="nav-animation" @click="signOut">sign out</BaseButton>
-  </li>
+  <BaseButton mode="empty" @click="signOut">sign out</BaseButton>
 </template>
 
 <script setup lang="ts">

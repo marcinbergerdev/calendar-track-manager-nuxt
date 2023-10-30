@@ -3,13 +3,12 @@
     <HeaderLogo />
 
     <!-- Nav menu for mobile and teleported to body -->
-
     <ClientOnly>
       <Teleport to="body">
         <BaseNav
           view="mobile"
           v-if="menu.mobile"
-          :menu-visibility="isMenu"
+          :is-menu="isMenu"
           :is-moon="false"
           :is-hamburger="true"
         />

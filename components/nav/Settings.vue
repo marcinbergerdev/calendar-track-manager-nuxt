@@ -1,5 +1,5 @@
 <template>
-  <BaseButton :link="true" mode="settings-link nav-animation" path="#">
+  <BaseButton :link="true" path="#" class="settings-link" mode="empty">
     <svg
       class="settings-link__icon"
       xmlns="http://www.w3.org/2000/svg"

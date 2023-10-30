@@ -14,14 +14,16 @@
       name="password"
       validation="required|length:5"
       validation-visibility="live"
-      placeholder="e-mail address"
+      placeholder="password"
     />
   </FormKit>
 
   <div class="redirect-box">
     <p class="redirect-box__text">or</p>
     <p class="redirect-box__text">You don't have an account yet?</p>
-    <BaseButton :link="true" mode="redirect-box__link" path="/signup">Sign up</BaseButton>
+    <BaseButton :link="true" path="/signup" class="redirect-box__link" mode="border"
+      >Sign up</BaseButton
+    >
   </div>
 
   <button @click="logIn">dsaf</button>

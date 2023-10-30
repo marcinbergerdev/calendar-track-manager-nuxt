@@ -1,6 +1,6 @@
 <template>
   <li v-for="({ path, name }, id) in menuLinks" :key="id">
-    <BaseButton :link="true" mode="nav-animation" :path="path">{{ name }}</BaseButton>
+    <BaseButton :link="true" :path="path" mode="empty">{{ name }}</BaseButton>
   </li>
 </template>
 
