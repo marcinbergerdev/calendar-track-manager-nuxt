@@ -38,7 +38,7 @@ const password = ref("test123456");
 
 const logIn = async () => {
   await signInUser(email.value, password.value);
-  navigateTo("/");
+  navigateTo("/calendar");
 };
 </script>
 

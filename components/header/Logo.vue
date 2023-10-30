@@ -1,5 +1,5 @@
 <template>
-  <BaseButton :link="true" path="/" class="header-logo">Calendar Track Manager</BaseButton>
+  <BaseButton :link="true" path="/calendar" class="header-logo">Calendar Track Manager</BaseButton>
 </template>
 
 <script setup lang="ts"></script>
