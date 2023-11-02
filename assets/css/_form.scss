@@ -7,7 +7,7 @@
 
    &__title {
       font-size: 2rem;
-      color: var(--yellow);
+      color: var(--auth-title-clr);
       align-self: flex-start;
    }
 }
@@ -19,13 +19,22 @@
 .formkit-input {
    width: 100%;
    padding: 1rem;
+   color: var(--grey-ltr);
+   background-color: transparent;
    border-radius: 1.5rem;
-   border: 1px solid var(--grey-light-slim);
+   border: 1px solid var(--primary-clr);
+   outline: none;
 }
 
+[data-invalid].formkit-outer {
+   .formkit-input {
+      border: 1px solid var(--error-clr);
+   }
+}
 .formkit-messages {
    padding: 0.5rem;
-   color: var(--red);
+   color: var(--error-clr);
+   font-size: 1.15rem;
 }
 
 .formkit-actions {
@@ -36,19 +45,25 @@
 
    .formkit-input {
       font-size: 1.6rem;
-      background-color: var(--yellow);
-      color: var(--white);
-      border: 0;
+      background-color: var(--primary-clr);
+      color: var(--text-clr);
+
+      @media (width >= 768px) {
+         opacity: 0.7;
+         &:hover {
+            opacity: 1;
+            transition: 0.15s ease-in-out;
+         }
+      }
    }
 }
 
 .redirect-box {
-   display: flex;
    flex-direction: column;
-   align-items: center;
    gap: 0.5rem 0;
    padding: 2rem 0;
    text-align: center;
+   color: var(--auth-redirect-text);
 
    &__link {
       display: block;

@@ -13,11 +13,12 @@
   justify-content: space-between;
   width: 100%;
   padding: 1.5rem;
-  color: var(--yellow);
-
+  
   &__title {
     font-size: 2.3rem;
     font-weight: 400;
+    color: var(--auth-title-clr);
+
     @media (width >= 768px) {
     }
   }

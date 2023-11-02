@@ -30,7 +30,7 @@ const isMenu = useMenuVisibility();
 .header-container {
   padding: 1rem;
   justify-content: space-between;
-  background-color: var(--yellow);
+  background-color: var(--primary-clr);
 
   @media (width >= 768px) {
     padding: 1.150rem 1rem;

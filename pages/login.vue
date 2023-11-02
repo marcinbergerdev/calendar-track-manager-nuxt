@@ -21,6 +21,7 @@
   <div class="redirect-box">
     <p class="redirect-box__text">or</p>
     <p class="redirect-box__text">You don't have an account yet?</p>
+
     <BaseButton :link="true" path="/signup" class="redirect-box__link" mode="border"
       >Sign up</BaseButton
     >

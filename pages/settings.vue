@@ -1,12 +1,11 @@
 <template>
-  <div>
-    <p>calendat</p>
-  </div>
+  settings
 </template>
 
 <script setup lang="ts">
 
-
 </script>
 
-<style scoped></style>
+<style scoped>
+
+</style>

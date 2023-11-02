@@ -25,7 +25,7 @@ defineProps<{
 }
 
 .empty {
-  color: var(--white);
+  color: var(--text-clr);
   opacity: 0.7;
 
   @media (width >= 768px) {
@@ -38,19 +38,21 @@ defineProps<{
 
 .border {
   background-color: transparent;
-  color: var(--yellow);
-  border: 1px solid var(--yellow);
+  color: var(--auth-title-clr);
+  border: 2px solid var(--primary-clr);
 
   &:hover {
-    background-color: var(--yellow);
-    color: var(--white);
+    background-color: var(--primary-clr);
+    color: var(--text-clr);
     transition: 0.15s ease-in-out;
   }
 }
 
 .filled {
-  background-color: var(--yellow);
-  color: var(--white);
+  background-color: var(--primary-clr);
+  color: var(--text-clr);
+  opacity: 0.7;
+  transition: 0.15s ease-in-out;
 
   &:hover {
     opacity: 1;

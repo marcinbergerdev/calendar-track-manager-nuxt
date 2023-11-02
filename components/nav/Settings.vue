@@ -1,5 +1,5 @@
 <template>
-  <BaseButton :link="true" path="#" class="settings-link" mode="empty">
+  <BaseButton :link="true" path="/settings" class="settings-link" mode="empty">
     <svg
       class="settings-link__icon"
       xmlns="http://www.w3.org/2000/svg"
@@ -38,7 +38,7 @@
     }
 
     .color {
-      stroke: #fff;
+      stroke: var(--text-clr);
     }
   }
 }

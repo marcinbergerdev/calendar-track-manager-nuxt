@@ -55,7 +55,7 @@ const { view } = defineProps<{
   padding: 2rem 2rem;
   width: 100%;
   height: 100vh;
-  background-color: var(--yellow);
+  background-color: var(--primary-clr);
   transition: transform 0.35s ease-in-out;
   overflow: auto;
 

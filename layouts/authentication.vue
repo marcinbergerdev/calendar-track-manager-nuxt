@@ -21,7 +21,7 @@
   flex-direction: column;
   width: 100%;
   height: 100vh;
-  background-color: var(--white);
+  background-color: var(--auth-bg-clr);
   overflow: auto;
 }
 
@@ -33,7 +33,7 @@
   display: flex;
 
   @media (width >= 1000px) {
-      align-items: center;
+    align-items: center;
   }
 }
 
@@ -44,7 +44,9 @@
 
   @media (width >= 1000px) {
     padding: 6rem;
-    border: 1px solid var(--yellow);
+   
+    border: 1px solid var(--primary-clr);
+    box-shadow: 0 0 5px var(--primary-clr);
     border-radius: 1rem;
   }
 }
@@ -52,11 +54,11 @@
 .auth-box-header {
   display: flex;
   align-self: flex-end;
- 
+
   &__title {
     font-size: 1.8rem;
     font-weight: 400;
-    color: var(--yellow);
+    color: var(--auth-title-clr);
   }
 }
 </style>

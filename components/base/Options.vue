@@ -53,7 +53,6 @@ const openMobileMenu = () => {
   padding: 1rem;
   width: 3rem;
   height: 3rem;
-  color: var(--white);
   opacity: 0.7;
 }
 
@@ -64,7 +63,7 @@ const openMobileMenu = () => {
   transform: translate(-50%, -50%);
   width: 100%;
   height: 2px;
-  background-color: var(--white);
+  background-color: var(--hamburger-clr);
 
   &::before,
   &::after {
@@ -73,7 +72,7 @@ const openMobileMenu = () => {
     left: 0;
     width: 100%;
     height: 2px;
-    background-color: var(--white);
+    background-color: var(--hamburger-clr);
   }
 
   &::before {
@@ -107,7 +106,7 @@ const openMobileMenu = () => {
         &::after {
           top: 0;
           height: 3px;
-          background-color: var(--black);
+          background-color: var(--hamburger-clr);
           transition: 0.5s ease-in-out;
         }
 
@@ -121,12 +120,6 @@ const openMobileMenu = () => {
       }
     }
 
-    // .dark-mode-button {
-    //   display: none;
-    //   @media (width >= 768px) {
-    //     display: block;
-    //   }
-    // }
   }
 }
 .desktop-nav-container {
