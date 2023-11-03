@@ -1,8 +1,21 @@
 <template>
-  <BaseButton v-if="isMoon" mode="dark-mode-button">
-    <img class="dark-mode-button__icon" src="@/public/icons/moon.svg" alt="moon" />
+  <!-- dark mode icons -->
+  <BaseButton
+    v-if="isMoon"
+    class="dark-mode-button"
+    mode="empty"
+    @click="switchDarkModeHandler"
+  >
+    <ClientOnly>
+      <img
+        class="dark-mode-button__icon"
+        :src="`_nuxt/public/icons/${switchDarkModeIcon}`"
+        alt="dark-mode"
+      />
+    </ClientOnly>
   </BaseButton>
 
+  <!--hamburger  -->
   <BaseButton
     v-if="isHamburger"
     class="hamburger"
@@ -16,6 +29,7 @@
 <script setup lang="ts">
 const menuActivity = useMenuVisibility();
 const isMobileMenu = useMenuVisibility();
+const colorMode = useColorMode();
 
 defineProps<{
   isMoon?: boolean;
@@ -28,6 +42,14 @@ const isHamburgerActive = computed(() => {
 
 const openMobileMenu = () => {
   isMobileMenu.value = !isMobileMenu.value;
+};
+
+const switchDarkModeIcon = computed<string>(() => {
+  return colorMode.value === "dark" ? "sun.svg" : "moon.svg";
+});
+
+const switchDarkModeHandler = () => {
+  colorMode.preference = colorMode.preference === "dark" ? "light" : "dark";
 };
 </script>
 
@@ -119,7 +141,6 @@ const openMobileMenu = () => {
         }
       }
     }
-
   }
 }
 .desktop-nav-container {
