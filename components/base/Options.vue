@@ -9,7 +9,7 @@
     <ClientOnly>
       <img
         class="dark-mode-button__icon"
-        :src="`@/public/icons/${switchDarkModeIcon}`"
+        :src="`_nuxt/public/icons/${switchDarkModeIcon}`"
         alt="dark-mode"
       />
     </ClientOnly>

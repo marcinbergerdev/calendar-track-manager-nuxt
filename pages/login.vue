@@ -27,7 +27,7 @@
     >
   </div>
 
-  <button @click="logIn">dsaf</button>
+  <BaseButton @click="logIn" class="redirect-box__link" mode="border">Try test account</BaseButton>
 </template>
 
 <script setup lang="ts">
