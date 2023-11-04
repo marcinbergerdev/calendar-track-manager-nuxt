@@ -1,7 +1,7 @@
 <template>
   <div class="auth-container">
     <AuthHeader />
-    <BaseLoadingSpinner></BaseLoadingSpinner>
+    <!-- <BaseLoadingSpinner /> -->
 
     <main class="auth-content-container">
       <section class="auth-box">

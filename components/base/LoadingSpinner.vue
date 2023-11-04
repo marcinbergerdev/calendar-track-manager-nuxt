@@ -10,10 +10,22 @@
 <script setup lang="ts"></script>
 
 <style scoped lang="scss">
+.background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10;
+
+  display: grid;
+  place-items: center;
+
+  width: 100%;
+  height: 100vh;
+  background-color: color-mix(in srgb, var(--bg-clr) 60%, transparent);
+}
 .loading-spinner {
   height: 6rem;
   width: 6rem;
-  position: relative;
   animation: loading-spinner-animation infinite 1000ms ease;
 
   .orbit,
@@ -26,7 +38,6 @@
   .orbit {
     position: absolute;
     top: 0;
-    left: 0;
     border: calc(6rem * 0.03) solid var(--primary-clr);
     animation: loading-spinnerorbit-animation infinite 4000ms ease;
   }
