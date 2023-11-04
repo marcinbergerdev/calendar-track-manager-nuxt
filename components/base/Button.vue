@@ -26,9 +26,9 @@ defineProps<{
 
 .empty {
   color: var(--text-clr);
-  opacity: 0.7;
 
   @media (width >= 768px) {
+    opacity: 0.7;
     &:hover {
       opacity: 1;
       transition: 0.15s ease-in-out;
