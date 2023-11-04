@@ -12,6 +12,7 @@ export default defineNuxtConfig({
       "@nuxtjs/device",
       "@formkit/nuxt",
       "@nuxtjs/color-mode",
+      "@nuxt/image",
    ],
    pinia: {
       autoImports: ["defineStore", ["defineStore", "definePiniaStore"]],
@@ -33,7 +34,11 @@ export default defineNuxtConfig({
          },
       },
    },
-   
+
+   image: {
+      provider: "netlify",
+   },
+
    runtimeConfig: {
       apiKey: process.env.NUXT_API_KEY,
       authDomain: process.env.NUXT_AUTH_DOMAIN,
