@@ -7,9 +7,9 @@
     @click="switchDarkModeHandler"
   >
     <ClientOnly>
-      <img
+      <NuxtImg
         class="dark-mode-button__icon"
-        :src="`_nuxt/public/icons/${switchDarkModeIcon}`"
+        :src="`/icons/${switchDarkModeIcon}`"
         alt="dark-mode"
       />
     </ClientOnly>
