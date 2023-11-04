@@ -1,13 +1,14 @@
 <template>
   <div class="auth-container">
     <AuthHeader />
+    <BaseLoadingSpinner></BaseLoadingSpinner>
 
     <main class="auth-content-container">
       <section class="auth-box">
         <header class="auth-box-header">
           <h2 class="auth-box-header__title">Welcome</h2>
         </header>
-        <!-- custom form -->
+        <!-- here -->
         <slot />
       </section>
     </main>
@@ -44,7 +45,7 @@
 
   @media (width >= 1000px) {
     padding: 6rem;
-   
+
     border: 1px solid var(--primary-clr);
     box-shadow: 0 0 5px var(--primary-clr);
     border-radius: 1rem;
