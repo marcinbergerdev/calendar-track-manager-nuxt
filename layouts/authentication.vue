@@ -1,7 +1,14 @@
 <template>
   <div class="auth-container">
+    <BaseLoadingSpinner v-if="isLoadingSpinner" />
+    <BaseModal
+      v-if="modal.isModal"
+      :title="modal.title"
+      :content="modal.content"
+      :is-confirm="modal.confirm"
+    ></BaseModal>
+
     <AuthHeader />
-    <!-- <BaseLoadingSpinner /> -->
 
     <main class="auth-content-container">
       <section class="auth-box">
@@ -15,7 +22,12 @@
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useLoadingSpinner, useResponseData } from "~/composables/useState";
+
+const isLoadingSpinner = useLoadingSpinner();
+const modal = useResponseData();
+</script>
 
 <style scoped lang="scss">
 .auth-container {

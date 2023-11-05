@@ -1,3 +1,4 @@
+import { useResponseData } from "./useState";
 import {
    getAuth,
    createUserWithEmailAndPassword,
@@ -7,33 +8,47 @@ import {
 
 export const createUserAccount = async (email: string, password: string) => {
    const auth = getAuth();
+   const userResponse = useResponseData();
 
    await createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
          const user = userCredential.user;
-         console.log(user);
+         const userUidStatus = useCookie("userUidStatus");
+         userUidStatus.value = user.uid;
+         userResponse.value = {
+            isModal: true,
+            title: "Success!",
+            content: "Your account is created.",
+            confirm: true,
+         };
       })
       .catch((error) => {
-         const errorCode = error.code;
-         const errorMessage = error.message;
-         console.log(error);
+         userResponse.value = {
+            isModal: true,
+            title: error.code,
+            content: error.message,
+            confirm: false,
+         };
       });
 };
 
 export const signInUser = async (email: string, password: string) => {
    const auth = getAuth();
+   const userResponse = useResponseData();
 
    await signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
          const user = userCredential.user;
          const userUidStatus = useCookie("userUidStatus");
          userUidStatus.value = user.uid;
-         console.log(user);
       })
       .catch((error) => {
-         const errorCode = error.code;
-         const errorMessage = error.message;
-         console.log(error);
+         userResponse.value = {
+            isModal: true,
+            title: error.code,
+            content: error.message,
+            confirm: false,
+         };
       });
 };
 
@@ -43,12 +58,9 @@ export const userUpdateStatus = () => {
    onAuthStateChanged(auth, (user) => {
       if (user) {
          // console.log(user);
-       
-      }else {
-
+      } else {
          // console.log('error');
       }
-
    });
 };
 
@@ -56,5 +68,5 @@ export const signOutUser = () => {
    const auth = getAuth();
    const userUidStatus = useCookie("userUidStatus");
    userUidStatus.value = "false";
-   auth.signOut(); 
+   auth.signOut();
 };
