@@ -1,5 +1,5 @@
 <template>
-  <FormKit type="form" submit-label="Log in">
+  <FormKit type="form" submit-label="Log in" @submit="logInHandler">
     <h3 class="formkit-form__title">Log in</h3>
 
     <FormKit
@@ -7,14 +7,16 @@
       name="email"
       validation="required|length:5|email"
       placeholder="e-mail address"
+      v-model="email"
     ></FormKit>
 
     <FormKit
       type="password"
       name="password"
-      validation="required|length:5"
+      validation="required:trim|length:5"
       validation-visibility="live"
       placeholder="password"
+      v-model="password"
     />
   </FormKit>
 
@@ -27,18 +29,39 @@
     >
   </div>
 
-  <BaseButton @click="logIn" class="redirect-box__link" mode="border">Try test account</BaseButton>
+  <BaseButton @click="logInTestUserHandler" class="redirect-box__link" mode="border"
+    >Try test account</BaseButton
+  >
+
 </template>
 
 <script setup lang="ts">
+import { useLoadingSpinner } from "~/composables/useState";
+
 definePageMeta({
   layout: "authentication",
 });
-const email = ref("test@test.com");
-const password = ref("test123456");
 
-const logIn = async () => {
+const emit = defineEmits<{
+  (e: "test"): void;
+}>();
+
+const isLoadingSpinner = useLoadingSpinner();
+const email = ref<string>("");
+const password = ref<string>("");
+
+const logInHandler = async () => {
+  isLoadingSpinner.value = true;
   await signInUser(email.value, password.value);
+  navigateTo("/");
+  isLoadingSpinner.value = false;
+};
+
+const logInTestUserHandler = async () => {
+  const testEmail = ref<string>("test@test.com");
+  const testPassword = ref<string>("qwerty");
+
+  await signInUser(testEmail.value, testPassword.value);
   navigateTo("/");
 };
 </script>

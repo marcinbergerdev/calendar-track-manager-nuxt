@@ -1,24 +1,26 @@
 <template>
-  <FormKit type="form" submit-label="Sign up">
+  <FormKit type="form" submit-label="Sign up" @submit="signUpHandler">
     <h3 class="formkit-form__title">Sign up</h3>
     <FormKit
       type="email"
       name="email"
       validation="required|email"
       placeholder="e-mail address"
+      v-model="email"
     ></FormKit>
 
     <FormKit
       type="password"
       name="password"
-      validation="required|?length:6"
+      validation="required:trim|?length:6"
       validation-visibility="live"
       placeholder="password"
+      v-model="password"
     />
     <FormKit
       type="password"
       name="password_confirm"
-      validation="required|confirm|?length:6"
+      validation="required:trim|confirm|?length:6"
       validation-visibility="live"
       validation-label="Password confirmation"
       placeholder="confirm password"
@@ -27,7 +29,9 @@
 
   <div class="redirect-box">
     <p class="redirect-box__text">If you have an account log in here!</p>
-    <BaseButton :link="true" path="/login" class="redirect-box__link" mode="border">Log in</BaseButton>
+    <BaseButton :link="true" path="/login" class="redirect-box__link" mode="border"
+      >Log in</BaseButton
+    >
   </div>
 </template>
 
@@ -36,10 +40,10 @@ definePageMeta({
   layout: "authentication",
 });
 
-const email = ref("test@test.com");
-const password = ref("test123456");
+const email = ref<string>("");
+const password = ref<string>("");
 
-const signUp = () => {
+const signUpHandler = () => {
   createUserAccount(email.value, password.value);
 };
 </script>
