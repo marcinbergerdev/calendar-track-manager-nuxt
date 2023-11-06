@@ -30,15 +30,18 @@
 </template>
 
 <script setup lang="ts">
+import { useModal } from "~/store/useModal";
+
 defineProps<{
   title?: string;
   content?: string;
   isConfirm?: boolean;
 }>();
 
-const responseData = useResponseData();
+const authResponse = useModal();
 
 const closeModal = () => {
+  authResponse.isModal = false;
   resetModal();
 };
 
@@ -48,7 +51,7 @@ const confirmModal = () => {
 };
 
 const resetModal = () => {
-  responseData.value = { isModal: false, title: "", content: "", confirm: false };
+  authResponse.modalReset();
 };
 </script>
 

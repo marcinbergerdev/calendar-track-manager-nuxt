@@ -1,4 +1,4 @@
-import { useResponseData } from "./useState";
+import { useModal } from "~/store/useModal";
 import {
    getAuth,
    createUserWithEmailAndPassword,
@@ -8,33 +8,34 @@ import {
 
 export const createUserAccount = async (email: string, password: string) => {
    const auth = getAuth();
-   const userResponse = useResponseData();
+   const authResponse = useModal();
 
    await createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
          const user = userCredential.user;
          const userUidStatus = useCookie("userUidStatus");
          userUidStatus.value = user.uid;
-         userResponse.value = {
-            isModal: true,
+
+         authResponse.isModal = true;
+         authResponse.setModalValue({
             title: "Success!",
             content: "Your account is created.",
             confirm: true,
-         };
+         });
       })
       .catch((error) => {
-         userResponse.value = {
-            isModal: true,
+         authResponse.isModal = true;
+         authResponse.setModalValue({
             title: error.code,
             content: error.message,
             confirm: false,
-         };
+         });
       });
 };
 
 export const signInUser = async (email: string, password: string) => {
    const auth = getAuth();
-   const userResponse = useResponseData();
+   const authResponse = useModal();
 
    await signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
@@ -43,12 +44,12 @@ export const signInUser = async (email: string, password: string) => {
          userUidStatus.value = user.uid;
       })
       .catch((error) => {
-         userResponse.value = {
-            isModal: true,
+         authResponse.isModal = true;
+         authResponse.setModalValue({
             title: error.code,
             content: error.message,
             confirm: false,
-         };
+         });
       });
 };
 

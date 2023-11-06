@@ -38,6 +38,7 @@
 <script setup lang="ts">
 import { useLoadingSpinner } from "~/composables/useState";
 
+
 definePageMeta({
   layout: "authentication",
 });
@@ -60,7 +61,6 @@ const logInHandler = async () => {
 const logInTestUserHandler = async () => {
   const testEmail = ref<string>("test@test.com");
   const testPassword = ref<string>("qwerty");
-
   await signInUser(testEmail.value, testPassword.value);
   navigateTo("/");
 };
