@@ -86,14 +86,14 @@ const resetModal = () => {
   border-radius: 2.8rem 2.8rem 0 0;
 
   &__title {
-    font-size: 2rem;
+    font-size: 1.7rem;
     font-weight: 400;
     letter-spacing: 1px;
   }
 }
 
 .content-dialog {
-  padding: 1rem 1.5rem;
+  padding: 1.5rem;
   &__description {
     font-size: 1.2rem;
     color: var(--auth-form-text-color);
@@ -104,11 +104,11 @@ const resetModal = () => {
   display: flex;
   gap: 0 2rem;
   justify-content: center;
-  padding: 1rem 1.5rem;
+  padding: 1.5rem;
 
   &__button {
     width: 9rem;
-    padding: 0.3rem 0;
+    padding: 0.4rem 0;
     font-size: 1.6rem;
   }
 }
