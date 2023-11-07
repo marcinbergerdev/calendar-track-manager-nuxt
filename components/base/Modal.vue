@@ -38,10 +38,10 @@ defineProps<{
   isConfirm?: boolean;
 }>();
 
-const authResponse = useModal();
+const modal = useModal();
 
 const closeModal = () => {
-  authResponse.isModal = false;
+  modal.isModal = false;
   resetModal();
 };
 
@@ -51,7 +51,7 @@ const confirmModal = () => {
 };
 
 const resetModal = () => {
-  authResponse.modalReset();
+  modal.resetValues();
 };
 </script>
 

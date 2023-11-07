@@ -2,10 +2,10 @@
   <div class="auth-container">
     <BaseLoadingSpinner v-if="isLoadingSpinner" />
     <BaseModal
-      v-if="authResponse.isModal"
-      :title="authResponse.modalValue.title"
-      :content="authResponse.modalValue.content"
-      :is-confirm="authResponse.modalValue.confirm"
+      v-if="modal.isModal"
+      :title="modal.values.title"
+      :content="modal.values.content"
+      :is-confirm="modal.values.confirm"
     ></BaseModal>
 
     <AuthHeader />
@@ -27,7 +27,7 @@ import { useLoadingSpinner } from "~/composables/useState";
 import { useModal } from "~/store/useModal";
 
 const isLoadingSpinner = useLoadingSpinner();
-const authResponse = useModal();
+const modal = useModal();
 
 </script>
 

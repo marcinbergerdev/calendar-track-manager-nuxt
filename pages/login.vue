@@ -59,10 +59,12 @@ const logInHandler = async () => {
 };
 
 const logInTestUserHandler = async () => {
+  isLoadingSpinner.value = true;
   const testEmail = ref<string>("test@test.com");
   const testPassword = ref<string>("qwerty");
   await signInUser(testEmail.value, testPassword.value);
   navigateTo("/");
+  isLoadingSpinner.value = false;
 };
 </script>
 

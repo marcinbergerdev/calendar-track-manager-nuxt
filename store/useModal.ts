@@ -7,29 +7,27 @@ export const useModal = defineStore("dialog", () => {
 
    const isModal = ref<boolean>(false);
 
-   const modalValue: Modal = reactive({
+   const values: Modal = reactive({
       title: "",
       content: "",
       confirm: false,
    });
 
-   const setModalValue = (modalData: Modal) => {
+   const setValues = (modalData: Modal) => {
       for (const data in modalData) {
-         modalValue[data] = modalData[data];
+         values[data] = modalData[data];
       }
    };
 
-   const modalReset = () => {
+   const resetValues = () => {
       const resetValue: Modal = reactive({
          title: "",
          content: "",
          confirm: false,
       });
-
-      for (const value in resetValue) {
-         modalValue[value] = resetValue[value];
-      }
+      setValues(resetValue);
    };
 
-   return { isModal, modalValue, setModalValue, modalReset };
+
+   return { isModal, values, setValues, resetValues };
 });

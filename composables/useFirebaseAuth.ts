@@ -8,7 +8,7 @@ import {
 
 export const createUserAccount = async (email: string, password: string) => {
    const auth = getAuth();
-   const authResponse = useModal();
+   const modal = useModal();
 
    await createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
@@ -16,16 +16,16 @@ export const createUserAccount = async (email: string, password: string) => {
          const userUidStatus = useCookie("userUidStatus");
          userUidStatus.value = user.uid;
 
-         authResponse.isModal = true;
-         authResponse.setModalValue({
+         modal.isModal = true;
+         modal.setValues({
             title: "Success!",
             content: "Your account is created.",
             confirm: true,
          });
       })
       .catch((error) => {
-         authResponse.isModal = true;
-         authResponse.setModalValue({
+         modal.isModal = true;
+         modal.setValues({
             title: error.code,
             content: error.message,
             confirm: false,
@@ -35,7 +35,7 @@ export const createUserAccount = async (email: string, password: string) => {
 
 export const signInUser = async (email: string, password: string) => {
    const auth = getAuth();
-   const authResponse = useModal();
+   const modal = useModal();
 
    await signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
@@ -44,8 +44,8 @@ export const signInUser = async (email: string, password: string) => {
          userUidStatus.value = user.uid;
       })
       .catch((error) => {
-         authResponse.isModal = true;
-         authResponse.setModalValue({
+         modal.isModal = true;
+         modal.setValues({
             title: error.code,
             content: error.message,
             confirm: false,
