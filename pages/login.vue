@@ -31,7 +31,6 @@
   <BaseButton @click="logInTestUserHandler" class="redirect-box__link" mode="border"
     >Try test account</BaseButton
   >
-
 </template>
 
 <script setup lang="ts">
@@ -44,21 +43,23 @@ const emit = defineEmits<{
 }>();
 
 const isLoadingSpinner = useLoadingSpinner();
+
 const email = ref<string>("");
 const password = ref<string>("");
+const testEmail = ref<string>("test@test.com");
+const testPassword = ref<string>("qwerty");
 
-const logInHandler = async () => {
-  isLoadingSpinner.value = true;
-  await signInUser(email.value, password.value);
-  navigateTo("/");
-  isLoadingSpinner.value = false;
+const logInHandler = () => {
+  authInit(email.value, password.value);
 };
 
-const logInTestUserHandler = async () => {
+const logInTestUserHandler = () => {
+  authInit(testEmail.value, testPassword.value);
+};
+
+const authInit = async (email: string, password: string) => {
   isLoadingSpinner.value = true;
-  const testEmail = ref<string>("test@test.com");
-  const testPassword = ref<string>("qwerty");
-  await signInUser(testEmail.value, testPassword.value);
+  await signInUser(email, password);
   navigateTo("/");
   isLoadingSpinner.value = false;
 };
