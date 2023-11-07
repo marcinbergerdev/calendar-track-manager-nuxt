@@ -14,7 +14,6 @@
       type="password"
       name="password"
       validation="required:trim|length:5"
-      validation-visibility="live"
       placeholder="password"
       v-model="password"
     />
@@ -36,9 +35,6 @@
 </template>
 
 <script setup lang="ts">
-import { useLoadingSpinner } from "~/composables/useState";
-
-
 definePageMeta({
   layout: "authentication",
 });

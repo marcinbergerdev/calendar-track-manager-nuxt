@@ -13,7 +13,6 @@
       type="password"
       name="password"
       validation="required:trim|?length:6"
-      validation-visibility="live"
       placeholder="password"
       v-model="password"
     />
@@ -21,7 +20,6 @@
       type="password"
       name="password_confirm"
       validation="required:trim|confirm|?length:6"
-      validation-visibility="live"
       validation-label="Password confirmation"
       placeholder="confirm password"
     />

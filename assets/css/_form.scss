@@ -10,6 +10,10 @@
       color: var(--auth-title-clr);
       align-self: flex-start;
    }
+
+   .formkit-messages {
+      display: none;
+   }
 }
 
 .formkit-outer {
@@ -30,11 +34,12 @@
    .formkit-input {
       border: 1px solid var(--error-clr);
    }
-}
-.formkit-messages {
-   padding: 0.5rem;
-   color: var(--error-clr);
-   font-size: 1.15rem;
+   .formkit-messages {
+      display: block;
+      padding: 0.5rem;
+      color: var(--error-clr);
+      font-size: 1.15rem;
+   }
 }
 
 .formkit-actions {

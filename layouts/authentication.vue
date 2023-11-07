@@ -23,7 +23,6 @@
 </template>
 
 <script setup lang="ts">
-import { useLoadingSpinner } from "~/composables/useState";
 import { useModal } from "~/store/useModal";
 
 const isLoadingSpinner = useLoadingSpinner();
