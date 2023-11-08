@@ -55,13 +55,8 @@ const switchDarkModeHandler = () => {
 
 <style scoped lang="scss">
 .dark-mode-button {
-  width: 3rem;
-  height: 3rem;
-
-  @media (width >= 768px) {
-    width: 2.7rem;
-    height: 2.7rem;
-  }
+  width: 2.7rem;
+  height: 2.7rem;
 
   &__icon {
     width: 100%;

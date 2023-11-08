@@ -29,8 +29,8 @@
 
   &__icon {
     pointer-events: none;
-    width: 5rem;
-    height: 5rem;
+    width: 4rem;
+    height: 4rem;
 
     @media (width >= 768px) {
       width: 2.7rem;

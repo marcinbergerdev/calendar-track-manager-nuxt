@@ -50,14 +50,14 @@ const testEmail = ref<string>("test@test.com");
 const testPassword = ref<string>("qwerty");
 
 const logInHandler = () => {
-  authInit(email.value, password.value);
+  authLoginInit(email.value, password.value);
 };
 
 const logInTestUserHandler = () => {
-  authInit(testEmail.value, testPassword.value);
+  authLoginInit(testEmail.value, testPassword.value);
 };
 
-const authInit = async (email: string, password: string) => {
+const authLoginInit = async (email: string, password: string) => {
   isLoadingSpinner.value = true;
   await signInUser(email, password);
   navigateTo("/");

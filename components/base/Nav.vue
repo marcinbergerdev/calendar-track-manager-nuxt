@@ -68,6 +68,7 @@ const { view } = defineProps<{
   grid-template-rows: 1fr 2fr 1fr;
   gap: 4rem 0;
 
+
   .nav-links {
     flex-direction: column;
     align-self: center;
