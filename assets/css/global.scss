@@ -62,6 +62,8 @@ button {
 .auth-container,
 .auth-box,
 .auth-header,
-.redirect-box {
+.redirect-box,
+.calendar-header,
+.calendar-selector {
    @include default-flex;
 }

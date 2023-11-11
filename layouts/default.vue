@@ -10,6 +10,8 @@
 
 <style scoped lang="scss">
 .content-container {
+  display: grid;
+  place-items: center;
   height: calc(100vh - 5rem);
   overflow: auto;
   background-color: var(--bg-clr);
