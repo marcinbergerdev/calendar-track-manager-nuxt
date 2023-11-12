@@ -1,9 +1,9 @@
 <template>
   <header class="calendar-header">
-    <h2 class="calendar-current-date">{{ day }} {{ selectCurrentDay }}, {{ year }}</h2>
+    <h2 class="calendar-current-date">{{ day }} {{ selectDay }}</h2>
 
     <div class="calendar-selector">
-      <button class="calendar-selector__button previous" @click="selectPrevious">
+      <button class="calendar-selector__button previous" @click="$emit('previous')">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
           <path
             fill="currentColor"
@@ -12,9 +12,9 @@
         </svg>
       </button>
 
-      <span class="calendar-selector__month">November</span>
+      <span class="calendar-selector__month">{{ selectMonth }} {{ selectYear }}</span>
 
-      <button class="calendar-selector__button next" @click="selectNext">
+      <button class="calendar-selector__button next" @click="$emit('next')">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
           <path
             fill="currentColor"
@@ -32,26 +32,57 @@ import dayjs from "dayjs";
 interface Date {
   dayId: number;
   day: number;
-  year: number;
 }
 
-const { dayId, day, year }: Date = reactive({
+const emit = defineEmits<{
+  previous: [];
+  next: [];
+}>();
+
+const props = defineProps<{
+  selectedDate: any;
+}>();
+
+const weekdays = ref<string[]>([
+  "Sunday",
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+]);
+
+const months = ref<string[]>([
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+]);
+
+const { dayId, day }: Date = reactive({
   dayId: dayjs().day(),
   day: dayjs().date(),
-  year: dayjs().year(),
 });
 
-const selectCurrentDay = computed(() => {
-  const weekdays: string[] = [
-    "Sunday",
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-  ];
-  return weekdays[dayId];
+const selectDay = computed(() => {
+  return weekdays.value[dayId];
+});
+
+const selectMonth = computed(() => {
+  return months.value[props.selectedDate.month];
+});
+
+const selectYear = computed(() => {
+  return props.selectedDate.year;
 });
 </script>
 
@@ -91,7 +122,7 @@ const selectCurrentDay = computed(() => {
   }
 
   &__month {
-    width: 11rem;
+    width: 17rem;
     text-align: center;
     font-size: 2rem;
   }
