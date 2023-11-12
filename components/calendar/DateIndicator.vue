@@ -43,15 +43,15 @@ const { dayId, day, year }: Date = reactive({
 
 const selectCurrentDay = computed(() => {
   const weekdays: string[] = [
+    "Sunday",
     "Monday",
     "Tuesday",
     "Wednesday",
     "Thursday",
     "Friday",
     "Saturday",
-    "Sunday",
   ];
-  return weekdays[dayId - 1];
+  return weekdays[dayId];
 });
 </script>
 
@@ -71,6 +71,7 @@ const selectCurrentDay = computed(() => {
 .calendar-current-date {
   font-size: 3.3rem;
   font-weight: 400;
+  text-align: center;
 }
 
 .calendar-selector {

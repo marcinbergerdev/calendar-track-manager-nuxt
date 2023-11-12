@@ -19,12 +19,17 @@
   display: flex;
   flex-direction: column;
 
-  padding: 2.5rem 3.5rem;
-  width: min(80rem, 90%);
-  height: 50rem;
+  padding: 2rem 0.9rem;
+  width: min(70rem, 95%);
+  height: 45rem;
   
   color: var(--text-clr);
   background-color: var(--primary-clr);
-  border-radius: 4rem;
+  border-radius: 2rem;
+
+  @media (width >= 350px) {
+    padding: 2.5rem 3.5rem;
+    border-radius: 4rem;
+  }
 }
 </style>

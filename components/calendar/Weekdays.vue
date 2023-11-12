@@ -9,13 +9,21 @@ const weekdays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 </script>
 
 <style scoped lang="scss">
+.weeks-list {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
 
-.months-list{
-  
+  margin-top: 5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--text-clr);
 
-  &__week{
-    
+  &__week {
+    justify-self: center;
+    font-size: 1.4rem;
+
+    @media (width > 300px) {
+      font-size: 1.8rem;
+    }
   }
 }
-
 </style>
