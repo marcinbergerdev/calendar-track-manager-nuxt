@@ -1,6 +1,6 @@
 <template>
   <header class="calendar-header">
-    <h2 class="calendar-current-date">{{ day }} {{ selectDay }}</h2>
+    <h2 class="calendar-current-date">{{ day }} {{ setDayName }}</h2>
 
     <div class="calendar-selector">
       <button class="calendar-selector__button previous" @click="$emit('previous')">
@@ -12,7 +12,7 @@
         </svg>
       </button>
 
-      <span class="calendar-selector__month">{{ selectMonth }} {{ selectYear }}</span>
+      <span class="calendar-selector__month">{{ selectedMonth }} {{ year }}</span>
 
       <button class="calendar-selector__button next" @click="$emit('next')">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
@@ -27,63 +27,28 @@
 </template>
 
 <script setup lang="ts">
-import dayjs from "dayjs";
+import { Date } from '@/types/Date'
 
-interface Date {
-  dayId: number;
-  day: number;
-}
+const { weekdaysList, monthsList, date } = defineProps<{
+  weekdaysList: string[];
+  monthsList: string[];
+  date: Date;
+}>();
+const { id, day, month, year } = toRefs(date);
 
 const emit = defineEmits<{
   previous: [];
   next: [];
 }>();
 
-const props = defineProps<{
-  selectedDate: any;
-}>();
-
-const weekdays = ref<string[]>([
-  "Sunday",
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Saturday",
-]);
-
-const months = ref<string[]>([
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
-]);
-
-const { dayId, day }: Date = reactive({
-  dayId: dayjs().day(),
-  day: dayjs().date(),
+const setDayName = computed(() => {
+  return weekdaysList[id.value - 1]; // weeks begin from 0 - 6 index
 });
 
-const selectDay = computed(() => {
-  return weekdays.value[dayId];
+const selectedMonth = computed(() => {
+  return monthsList[month.value];
 });
 
-const selectMonth = computed(() => {
-  return months.value[props.selectedDate.month];
-});
-
-const selectYear = computed(() => {
-  return props.selectedDate.year;
-});
 </script>
 
 <style scoped lang="scss">

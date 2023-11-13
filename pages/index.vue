@@ -4,11 +4,13 @@
       <CalendarDateIndicator
         @previous="setPrevious"
         @next="setNext"
-        :selected-date="date"
+        :weekdays-list="weekdays"
+        :months-list="months"
+        :date="date"
       ></CalendarDateIndicator>
 
       <div>
-        <CalendarWeekdays></CalendarWeekdays>
+        <CalendarWeekdays :weekdays-list="weekdays"></CalendarWeekdays>
 
         <CalendarDaysOfTheMonth
           :days-of-the-month="setDaysInMonth"
@@ -20,34 +22,69 @@
 
 <script setup lang="ts">
 import dayjs from "dayjs";
+import { Date } from '@/types/Date'
 
-const date = reactive({
-  year: dayjs().year(),
+
+const weekdays = ref<string[]>([
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+  "Sunday",
+]);
+
+const months = ref<string[]>([
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+]);
+
+const date = reactive<Date>({
+  id: dayjs().day(),
+  day: dayjs().date(),
   month: dayjs().month(),
+  year: dayjs().year(),
 });
-const { year, month } = toRefs(date);
+const { id, day, month, year } = toRefs(date);
 
 const setDaysInMonth = computed(() => {
-  return dayjs(`${year.value}-${month.value}-01`).daysInMonth();
+  // console.log(month.value);
+  const dayId = dayjs().month(month.value).year(year.value);
+
+  const setDay = {
+    start: dayId.date(1).day(),
+    amountOfDays: dayjs(`${year.value}-${day.value}-01`).daysInMonth(),
+  };
+
+  return setDay;
 });
 
 const setPrevious = () => {
-  if (month.value <= 0) {
+  if (date.month <= 0) {
     month.value = 11;
-    year.value--;
+    --year.value;
     return;
   }
-
-  month.value--;
+  --month.value;
 };
-
 const setNext = () => {
   if (month.value >= 11) {
     month.value = 0;
-    year.value++;
+    ++year.value;
     return;
   }
-  month.value++;
+  ++month.value;
 };
 </script>
 
