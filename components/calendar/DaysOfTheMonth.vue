@@ -1,23 +1,25 @@
 <template>
- 
   <ul class="days-list">
-    <li class="days-list__day" v-for="(day, id) in daysOfTheMonth.amountOfDays" :style="{gridColumnStart: id === 0 ? daysOfTheMonth.start : 'auto'}" :key="id">{{ day }}</li>
+    <li
+      class="days-list__day"
+      v-for="(day, id) in daysData.days"
+      :style="{ gridColumnStart: id === 0 ? daysData.startingWeeksDay : 'auto' }"
+      :key="id"
+    >
+      {{ day }}
+    </li>
   </ul>
-
-  {{ daysOfTheMonth }}
 </template>
-s
+
 <script setup lang="ts">
 interface Date {
-  start: number,
-  amountOfDays: number
+  startingWeeksDay: number;
+  days: number;
 }
 
-const { daysOfTheMonth } = defineProps<{
-  daysOfTheMonth: Date;
+defineProps<{
+  daysData: Date;
 }>();
-
-
 </script>
 
 <style scoped lang="scss">
