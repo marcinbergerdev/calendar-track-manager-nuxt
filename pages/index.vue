@@ -4,7 +4,6 @@
       <CalendarDateIndicator
         @previous="setPrevious"
         @next="setNext"
-        :weekdays-list="weekdays"
         :months-list="months"
         :date="date"
       ></CalendarDateIndicator>
@@ -12,59 +11,107 @@
       <div>
         <CalendarWeekdays :weekdays-list="weekdays"></CalendarWeekdays>
 
-        <CalendarDaysOfTheMonth :days-data="setDayIdAndDaysInMonth"></CalendarDaysOfTheMonth>
+        <CalendarDaysOfTheMonth
+          :selected-month="selectDaysInMonth"
+        ></CalendarDaysOfTheMonth>
       </div>
     </section>
   </ClientOnly>
 </template>
 
 <script setup lang="ts">
-import { Date } from "@/types/Date";
+import { Date, Month } from "@/types/Date";
+import { uuid } from "vue-uuid";
+import { useWeekDays, useMonthNames } from "~/composables/useState";
 
 const dayjs = useDayjs();
-
-const weekdays = ref<string[]>([
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Saturday",
-  "Sunday",
-]);
-
-const months = ref<string[]>([
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
-]);
+const weekdays = useWeekDays();
+const months = useMonthNames();
 
 const date = reactive<Date>({
   id: dayjs().day(),
   day: dayjs().date(),
+  week: dayjs().format("dddd"),
   month: dayjs().month(),
   year: dayjs().year(),
 });
 const { month, year } = toRefs(date);
 
-const setDayIdAndDaysInMonth = computed(() => {
-  const dayId = dayjs(`${year.value}-${month.value + 1}-01`).day();
-  const daysInMonth = dayjs(`${year.value}-${month.value + 1}-01`).daysInMonth();
+const selectDaysInMonth = computed(() => {
+  let listOfDays: Month[] = [];
 
-  return {
-    startingWeeksDay: dayId,
-    days: daysInMonth,
-  };
+  const lastMonth = dayjs(`${year.value}-${month.value}-01`).daysInMonth(); // days in the last month
+  const currentMonth = dayjs(`${year.value}-${month.value + 1}-01`).daysInMonth();
+
+  const selectedLastMonth = selectLastMonth(lastMonth);
+  const selectedCurrentMonth = selectCurrentMonth(currentMonth);
+  const selectedNextMonth = selectNextMonth(
+    [...selectedLastMonth, ...selectedCurrentMonth].length
+  );
+
+  listOfDays = [...selectedLastMonth, ...selectedCurrentMonth, ...selectedNextMonth];
+
+  return listOfDays;
 });
+
+const setDayId = (increment: number, day: number) => {
+  let dayId = dayjs(`${year.value}-${month.value + increment}-${day}`).day();
+  dayId = dayId <= 0 ? 7 : dayId;
+  return dayId;
+};
+
+const selectLastMonth = (lastMonth: number) => {
+  const setDay: Month[] = [];
+  const dayId = setDayId(1, 1) - 1;
+
+  for (let i = 1; i <= dayId; i++) {
+    const daysLastMonth = lastMonth - dayId + i;
+
+    setDay.push({
+      inactive: true,
+      id: uuid.v1(),
+      day: daysLastMonth,
+      weekDayId: i,
+    });
+  }
+
+  return setDay;
+};
+
+const selectCurrentMonth = (nextMonth: number) => {
+  const setDay: Month[] = [];
+
+  for (let i = 1; i <= nextMonth; i++) {
+    const currentDayId = setDayId(1, i);
+
+    setDay.push({
+      id: uuid.v1(),
+      day: i,
+      weekDayId: currentDayId,
+    });
+  }
+
+  return setDay;
+};
+
+const selectNextMonth = (selectedDays: number) => {
+  const setDay: Month[] = [];
+  const allDays = 42;
+  const daysOfNextMonth = allDays - selectedDays + 1;
+
+  for (let i = 1; i < daysOfNextMonth; i++) {
+    const currentDayId = setDayId(2, i);
+
+    setDay.push({
+      inactive: true,
+      id: uuid.v1(),
+      day: i,
+      weekDayId: currentDayId,
+    });
+  }
+
+  return setDay;
+};
 
 const setPrevious = () => {
   if (month.value <= 0) {

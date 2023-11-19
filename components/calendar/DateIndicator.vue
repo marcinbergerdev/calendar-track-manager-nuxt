@@ -1,6 +1,6 @@
 <template>
   <header class="calendar-header">
-    <h2 class="calendar-current-date">{{ day }} {{ setDayName }}</h2>
+    <h2 class="calendar-current-date">{{ day }} {{ week }}</h2>
 
     <div class="calendar-selector">
       <button class="calendar-selector__button previous" @click="$emit('previous')">
@@ -29,21 +29,17 @@
 <script setup lang="ts">
 import { Date } from '@/types/Date'
 
-const { weekdaysList, monthsList, date } = defineProps<{
-  weekdaysList: string[];
+const { monthsList, date } = defineProps<{
   monthsList: string[];
   date: Date;
 }>();
-const { id, day, month, year } = toRefs(date);
+const { day, week, month, year } = toRefs(date);
 
 const emit = defineEmits<{
   previous: [];
   next: [];
 }>();
 
-const setDayName = computed(() => {
-  return weekdaysList[id.value - 1]; // weeks begin from 0 - 6 index
-});
 
 const selectedMonth = computed(() => {
   return monthsList[month.value];

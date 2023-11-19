@@ -1,9 +1,12 @@
 <template>
   <ul class="days-list">
     <li
+      v-for="{ id, day, weekDayId, inactive } in selectedMonth"
       class="days-list__day"
-      v-for="(day, id) in daysData.days"
-      :style="{ gridColumnStart: id === 0 ? daysData.startingWeeksDay : 'auto' }"
+      :class="{
+        inactive: inactive,
+        weekdays: weekDayId === 6 || weekDayId === 7 ? true : false,
+      }"
       :key="id"
     >
       {{ day }}
@@ -12,13 +15,10 @@
 </template>
 
 <script setup lang="ts">
-interface Date {
-  startingWeeksDay: number;
-  days: number;
-}
+import { Month } from "@/types/Date";
 
 defineProps<{
-  daysData: Date;
+  selectedMonth: Month[];
 }>();
 </script>
 
@@ -34,5 +34,13 @@ defineProps<{
     font-size: 1.5rem;
     justify-self: center;
   }
+}
+
+.weekdays {
+  color: var(--red);
+}
+
+.inactive {
+  opacity: 0.3;
 }
 </style>

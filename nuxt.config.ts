@@ -15,6 +15,7 @@ export default defineNuxtConfig({
       "@nuxt/image",
       "dayjs-nuxt",
    ],
+
    pinia: {
       autoImports: ["defineStore", ["defineStore", "definePiniaStore"]],
    },
@@ -40,6 +41,9 @@ export default defineNuxtConfig({
       provider: "netlify",
    },
 
+   dayjs:{
+      plugins: ['weekday']
+   },
 
    runtimeConfig: {
       apiKey: process.env.NUXT_API_KEY,
