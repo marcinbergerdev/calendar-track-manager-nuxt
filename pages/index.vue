@@ -60,57 +60,55 @@ const setDayId = (increment: number, day: number) => {
   return dayId;
 };
 
-const selectLastMonth = (lastMonth: number) => {
-  const setDay: Month[] = [];
-  const dayId = setDayId(1, 1) - 1;
+const selectDays = (
+  startingDay: number,
+  month: number,
+  monthId: number,
+  inactive: boolean
+) => {
+  const daysList: Month[] = [];
 
-  for (let i = 1; i <= dayId; i++) {
-    const daysLastMonth = lastMonth - dayId + i;
-
-    setDay.push({
-      inactive: true,
+  for (let day = startingDay; day <= month; day++) {
+    daysList.push({
+      inactive: inactive,
       id: uuid.v1(),
-      day: daysLastMonth,
-      weekDayId: i,
+      day: day,
+      weekDayId: setDayId(monthId, day),
     });
   }
+  return daysList;
+};
 
-  return setDay;
+const selectLastMonth = (lastMonth: number) => {
+  const dayId = setDayId(0, lastMonth);
+  const startingDay = lastMonth - dayId + 1;
+  const monthId = 0;
+  const inactive = true;
+
+  const selectedDays = selectDays(startingDay, lastMonth, monthId, inactive);
+
+  return selectedDays;
 };
 
 const selectCurrentMonth = (nextMonth: number) => {
-  const setDay: Month[] = [];
+  const startingDay = 1;
+  const monthId = 1;
+  const inactive = false;
 
-  for (let i = 1; i <= nextMonth; i++) {
-    const currentDayId = setDayId(1, i);
+  const selectedDays = selectDays(startingDay, nextMonth, monthId, inactive);
 
-    setDay.push({
-      id: uuid.v1(),
-      day: i,
-      weekDayId: currentDayId,
-    });
-  }
-
-  return setDay;
+  return selectedDays;
 };
 
-const selectNextMonth = (selectedDays: number) => {
-  const setDay: Month[] = [];
+const selectNextMonth = (currentDays: number) => {
   const allDays = 42;
-  const daysOfNextMonth = allDays - selectedDays + 1;
+  const daysOfNextMonth = allDays - currentDays;
+  const startingDay = 1;
+  const monthId = 2;
+  const inactive = true;
 
-  for (let i = 1; i < daysOfNextMonth; i++) {
-    const currentDayId = setDayId(2, i);
-
-    setDay.push({
-      inactive: true,
-      id: uuid.v1(),
-      day: i,
-      weekDayId: currentDayId,
-    });
-  }
-
-  return setDay;
+  const selectedDays = selectDays(startingDay, daysOfNextMonth, monthId, inactive);
+  return selectedDays;
 };
 
 const setPrevious = () => {
