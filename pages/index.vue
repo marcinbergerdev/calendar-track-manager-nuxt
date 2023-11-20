@@ -42,15 +42,13 @@ const selectDaysInMonth = computed(() => {
 
   const lastMonth = dayjs(`${year.value}-${month.value}-01`).daysInMonth(); // days in the last month
   const currentMonth = dayjs(`${year.value}-${month.value + 1}-01`).daysInMonth();
+  const nextMonth = currentMonth + setDayId(0, lastMonth);
 
   const selectedLastMonth = selectLastMonth(lastMonth);
   const selectedCurrentMonth = selectCurrentMonth(currentMonth);
-  const selectedNextMonth = selectNextMonth(
-    [...selectedLastMonth, ...selectedCurrentMonth].length
-  );
+  const selectedNextMonth = selectNextMonth(nextMonth);
 
   listOfDays = [...selectedLastMonth, ...selectedCurrentMonth, ...selectedNextMonth];
-
   return listOfDays;
 });
 
@@ -60,12 +58,7 @@ const setDayId = (increment: number, day: number) => {
   return dayId;
 };
 
-const selectDays = (
-  startingDay: number,
-  month: number,
-  monthId: number,
-  inactive: boolean
-) => {
+const selectDays = (startingDay: number, month: number, monthId: number, inactive: boolean) => {
   const daysList: Month[] = [];
 
   for (let day = startingDay; day <= month; day++) {
@@ -90,12 +83,12 @@ const selectLastMonth = (lastMonth: number) => {
   return selectedDays;
 };
 
-const selectCurrentMonth = (nextMonth: number) => {
+const selectCurrentMonth = (currentMonth: number) => {
   const startingDay = 1;
   const monthId = 1;
   const inactive = false;
 
-  const selectedDays = selectDays(startingDay, nextMonth, monthId, inactive);
+  const selectedDays = selectDays(startingDay, currentMonth, monthId, inactive);
 
   return selectedDays;
 };
