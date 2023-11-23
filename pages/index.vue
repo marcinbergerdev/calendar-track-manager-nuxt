@@ -2,8 +2,8 @@
   <ClientOnly>
     <section class="calendar-container">
       <CalendarDateIndicator
-        @previous="setPrevious"
-        @next="setNext"
+        @previous="setPreviousMonth"
+        @next="setNextMonth"
         :months-list="months"
         :date="date"
       ></CalendarDateIndicator>
@@ -38,18 +38,19 @@ const date = reactive<Date>({
 const { month, year } = toRefs(date);
 
 const selectDaysInMonth = computed(() => {
-  let listOfDays: Month[] = [];
+  let days: Month[] = [];
 
-  const lastMonth = dayjs(`${year.value}-${month.value}-01`).daysInMonth(); // days in the last month
-  const currentMonth = dayjs(`${year.value}-${month.value + 1}-01`).daysInMonth();
-  const nextMonth = currentMonth + setDayId(0, lastMonth);
+  // days index = (1 - 31)  ,  week index  (0 - 6)   , month index = (0 - 11)
+  const daysInLastMonth = dayjs(`${year.value}-${month.value}-01`).daysInMonth();
+  const daysInCurrentMonth = dayjs(`${year.value}-${month.value + 1}-01`).daysInMonth();
+  const daysInNextMonth = daysInCurrentMonth + setDayId(0, daysInLastMonth);
 
-  const selectedLastMonth = selectLastMonth(lastMonth);
-  const selectedCurrentMonth = selectCurrentMonth(currentMonth);
-  const selectedNextMonth = selectNextMonth(nextMonth);
+  const selectedLastMonth = selectLastMonth(daysInLastMonth);
+  const selectedCurrentMonth = selectCurrentMonth(daysInCurrentMonth);
+  const selectedNextMonth = selectNextMonth(daysInNextMonth);
 
-  listOfDays = [...selectedLastMonth, ...selectedCurrentMonth, ...selectedNextMonth];
-  return listOfDays;
+  days.push(...selectedLastMonth, ...selectedCurrentMonth, ...selectedNextMonth);
+  return days;
 });
 
 const setDayId = (increment: number, day: number) => {
@@ -58,67 +59,76 @@ const setDayId = (increment: number, day: number) => {
   return dayId;
 };
 
-const selectDays = (startingDay: number, month: number, monthId: number, inactive: boolean) => {
+const selectDays = (
+  daysInMonth: number,
+  increment: number,
+  startingDay: number,
+  inactive: boolean
+) => {
   const daysList: Month[] = [];
 
-  for (let day = startingDay; day <= month; day++) {
+  for (let day = startingDay; day <= daysInMonth; day++) {
     daysList.push({
       inactive: inactive,
       id: uuid.v1(),
       day: day,
-      weekDayId: setDayId(monthId, day),
+      weekDayId: setDayId(increment, day),
     });
   }
   return daysList;
 };
 
-const selectLastMonth = (lastMonth: number) => {
-  const dayId = setDayId(0, lastMonth);
-  const startingDay = lastMonth - dayId + 1;
-  const monthId = 0;
+const selectLastMonth = (days: number) => {
+  const dayId = setDayId(0, days);
+  const monthIncrement = 0;
+  const startingDay = days - dayId + 1;
   const inactive = true;
-
-  const selectedDays = selectDays(startingDay, lastMonth, monthId, inactive);
+  const selectedDays = selectDays(days, monthIncrement, startingDay, inactive);
 
   return selectedDays;
 };
 
-const selectCurrentMonth = (currentMonth: number) => {
+const selectCurrentMonth = (days: number) => {
+  const monthIncrement = 1;
   const startingDay = 1;
-  const monthId = 1;
   const inactive = false;
-
-  const selectedDays = selectDays(startingDay, currentMonth, monthId, inactive);
+  const selectedDays = selectDays(days, monthIncrement, startingDay, inactive);
 
   return selectedDays;
 };
 
-const selectNextMonth = (currentDays: number) => {
-  const allDays = 42;
-  const daysOfNextMonth = allDays - currentDays;
+const selectNextMonth = (days: number) => {
+  const allDaysInCalendar = 42;
+  const daysOfNextMonth = allDaysInCalendar - days;
+  const monthIncrement = 2;
   const startingDay = 1;
-  const monthId = 2;
   const inactive = true;
+  const selectedDays = selectDays(daysOfNextMonth, monthIncrement, startingDay, inactive);
 
-  const selectedDays = selectDays(startingDay, daysOfNextMonth, monthId, inactive);
   return selectedDays;
 };
 
-const setPrevious = () => {
-  if (month.value <= 0) {
-    month.value = 11;
+const changeDate = (update: number) => {
+  const monthIdMin = 0;
+  const monthIdMax = 11;
+
+  month.value += update;
+
+  if (month.value < monthIdMin) {
     --year.value;
-    return;
-  }
-  --month.value;
-};
-const setNext = () => {
-  if (month.value >= 11) {
-    month.value = 0;
+    month.value = monthIdMax;
+  } else if (month.value > monthIdMax) {
     ++year.value;
-    return;
+    month.value = monthIdMin;
   }
-  ++month.value;
+};
+
+const setPreviousMonth = () => {
+  changeDate(-1);
+};
+
+const setNextMonth = () => {
+  changeDate(1);
 };
 </script>
 

@@ -5,7 +5,7 @@
       class="days-list__day"
       :class="{
         inactive: inactive,
-        weekdays: weekDayId === 6 || weekDayId === 7 ? true : false,
+        weekdays: weekDayId === 7 ? true : false,
       }"
       :key="id"
     >
