@@ -1,11 +1,11 @@
 <template>
   <ul class="days-list">
     <li
-      v-for="{ isActive, id, day, weekDayId } in calculateDaysInMonth"
+      v-for="{ isActive, id, day, weekdayId } in calculateDaysInMonth"
       class="days-list__day"
       :class="{
         isActive: !isActive,
-        weekdays: weekDayId === 7 ? true : false,
+        weekdays: weekdayId === 7 ? true : false,
       }"
       :key="id"
     >
@@ -58,7 +58,7 @@ const setDays = (
       isActive: isActive,
       id: id,
       day: day,
-      weekDayId: selectedWeekDayId,
+      weekdayId: selectedWeekDayId,
     });
   }
   return days;

@@ -15,7 +15,7 @@ export interface Day {
    isActive: boolean;
    id: string;
    day: number;
-   weekDayId: number;
+   weekdayId: number;
 }
 
 export interface Extracted {
