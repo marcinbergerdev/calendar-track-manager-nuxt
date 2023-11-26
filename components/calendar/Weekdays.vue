@@ -1,15 +1,14 @@
 <template>
   <ul class="weeks-list">
-    <li class="weeks-list__week" v-for="(day, id) in weekdaysList" :key="id">
+    <li class="weeks-list__week" v-for="(day, id) in weekdays" :key="id">
       {{ day.substring(0, 3) }}
     </li>
   </ul>
 </template>
 
 <script setup lang="ts">
-defineProps<{
-  weekdaysList: string[];
-}>();
+const weekdays = useWeekDays();
+
 </script>
 
 <style scoped lang="scss">

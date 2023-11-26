@@ -1,6 +1,8 @@
 <template>
   <header class="calendar-header">
-    <h2 class="calendar-current-date">{{ day }} {{ week }}</h2>
+    <h2 class="calendar-current-date">
+      {{ extractedDate.day }} {{ extractedDate.name }}
+    </h2>
 
     <div class="calendar-selector">
       <button class="calendar-selector__button previous" @click="$emit('previous')">
@@ -12,7 +14,9 @@
         </svg>
       </button>
 
-      <span class="calendar-selector__month">{{ selectedMonth }} {{ year }}</span>
+      <span class="calendar-selector__month"
+        >{{ extractedDate.month }} {{ extractedDate.year }}</span
+      >
 
       <button class="calendar-selector__button next" @click="$emit('next')">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
@@ -27,24 +31,28 @@
 </template>
 
 <script setup lang="ts">
-import { Date } from '@/types/Date'
+import { Extracted } from "@/types/Date";
 
-const { monthsList, date } = defineProps<{
-  monthsList: string[];
-  date: Date;
-}>();
-const { day, week, month, year } = toRefs(date);
+const dayjs = useDayjs();
 
 const emit = defineEmits<{
   previous: [];
   next: [];
 }>();
 
+const { updatedDate } = defineProps<{
+  updatedDate: any;
+}>();
 
-const selectedMonth = computed(() => {
-  return monthsList[month.value];
+const extractedDate = computed<Extracted>(() => {
+  const dateGroup: Extracted = {
+    day: dayjs().format("DD"),
+    name: dayjs().format("dddd"),
+    month: updatedDate.format("MMMM"),
+    year: updatedDate.format("YYYY"),
+  };
+  return dateGroup;
 });
-
 </script>
 
 <style scoped lang="scss">

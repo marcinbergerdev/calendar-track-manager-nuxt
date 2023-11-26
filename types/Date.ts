@@ -1,3 +1,8 @@
+export interface CurrentDay {
+   day: string;
+   name: string;
+}
+
 export interface Date {
    id: number;
    day: number;
@@ -6,9 +11,16 @@ export interface Date {
    year: number;
 }
 
-export interface Month {
-   inactive?: boolean;
+export interface Day {
+   isActive: boolean;
    id: string;
    day: number;
-   weekDayId?: number;
+   weekDayId: number;
+}
+
+export interface Extracted {
+   day: string;
+   name: string;
+   month: string;
+   year: string;
 }

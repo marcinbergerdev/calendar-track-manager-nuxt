@@ -4,15 +4,16 @@
       <CalendarDateIndicator
         @previous="setPreviousMonth"
         @next="setNextMonth"
-        :months-list="months"
-        :date="date"
+        :updated-date="updateCurrentDate"
       ></CalendarDateIndicator>
 
       <div>
-        <CalendarWeekdays :weekdays-list="weekdays"></CalendarWeekdays>
+        <CalendarWeekdays></CalendarWeekdays>
 
         <CalendarDaysOfTheMonth
-          :selected-month="selectDaysInMonth"
+          :previous-month="updatePreviousMonth"
+          :current-month="updateCurrentDate"
+          :next-month="updateNextMonth"
         ></CalendarDaysOfTheMonth>
       </div>
     </section>
@@ -20,107 +21,21 @@
 </template>
 
 <script setup lang="ts">
-import { Date, Month } from "@/types/Date";
-import { uuid } from "vue-uuid";
-import { useWeekDays, useMonthNames } from "~/composables/useState";
-
 const dayjs = useDayjs();
-const weekdays = useWeekDays();
-const months = useMonthNames();
+const monthCounter = ref(0);
 
-const date = reactive<Date>({
-  id: dayjs().day(),
-  day: dayjs().date(),
-  week: dayjs().format("dddd"),
-  month: dayjs().month(),
-  year: dayjs().year(),
+const updatePreviousMonth = computed(() => {
+  return dayjs().add(monthCounter.value - 1, "month");
 });
-const { month, year } = toRefs(date);
-
-const selectDaysInMonth = computed(() => {
-  let days: Month[] = [];
-
-  // days index = (1 - 31)  ,  week index  (0 - 6)   , month index = (0 - 11)
-  const daysInLastMonth = dayjs(`${year.value}-${month.value}-01`).daysInMonth();
-  const daysInCurrentMonth = dayjs(`${year.value}-${month.value + 1}-01`).daysInMonth();
-  const daysInNextMonth = daysInCurrentMonth + setDayId(0, daysInLastMonth);
-
-  const selectedLastMonth = selectLastMonth(daysInLastMonth);
-  const selectedCurrentMonth = selectCurrentMonth(daysInCurrentMonth);
-  const selectedNextMonth = selectNextMonth(daysInNextMonth);
-
-  days.push(...selectedLastMonth, ...selectedCurrentMonth, ...selectedNextMonth);
-  return days;
+const updateCurrentDate = computed(() => {
+  return dayjs().add(monthCounter.value, "month");
+});
+const updateNextMonth = computed(() => {
+  return dayjs().add(monthCounter.value + 1, "month");
 });
 
-const setDayId = (increment: number, day: number) => {
-  let dayId = dayjs(`${year.value}-${month.value + increment}-${day}`).day();
-  dayId = dayId <= 0 ? 7 : dayId;
-  return dayId;
-};
-
-const selectDays = (
-  daysInMonth: number,
-  increment: number,
-  startingDay: number,
-  inactive: boolean
-) => {
-  const daysList: Month[] = [];
-
-  for (let day = startingDay; day <= daysInMonth; day++) {
-    daysList.push({
-      inactive: inactive,
-      id: uuid.v1(),
-      day: day,
-      weekDayId: setDayId(increment, day),
-    });
-  }
-  return daysList;
-};
-
-const selectLastMonth = (days: number) => {
-  const dayId = setDayId(0, days);
-  const monthIncrement = 0;
-  const startingDay = days - dayId + 1;
-  const inactive = true;
-  const selectedDays = selectDays(days, monthIncrement, startingDay, inactive);
-
-  return selectedDays;
-};
-
-const selectCurrentMonth = (days: number) => {
-  const monthIncrement = 1;
-  const startingDay = 1;
-  const inactive = false;
-  const selectedDays = selectDays(days, monthIncrement, startingDay, inactive);
-
-  return selectedDays;
-};
-
-const selectNextMonth = (days: number) => {
-  const allDaysInCalendar = 42;
-  const daysOfNextMonth = allDaysInCalendar - days;
-  const monthIncrement = 2;
-  const startingDay = 1;
-  const inactive = true;
-  const selectedDays = selectDays(daysOfNextMonth, monthIncrement, startingDay, inactive);
-
-  return selectedDays;
-};
-
-const changeDate = (update: number) => {
-  const monthIdMin = 0;
-  const monthIdMax = 11;
-
-  month.value += update;
-
-  if (month.value < monthIdMin) {
-    --year.value;
-    month.value = monthIdMax;
-  } else if (month.value > monthIdMax) {
-    ++year.value;
-    month.value = monthIdMin;
-  }
+const changeDate = (increment: number) => {
+  monthCounter.value += increment;
 };
 
 const setPreviousMonth = () => {

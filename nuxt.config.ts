@@ -1,9 +1,25 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
    devtools: { enabled: true },
-
    devServer: {
       host: "http//localhost",
+   },
+
+   css: ["/assets/css/global.scss"],
+   vite: {
+      vue: {
+         script: {
+            propsDestructure: true,
+         },
+      },
+      css: {
+         preprocessorOptions: {
+            scss: {
+               additionalData:
+                  '@import "@/assets/css/_variables.scss"; @import "@/assets/css/_mixins.scss"; @import "@/assets/css/_form.scss";',
+            },
+         },
+      },
    },
 
    modules: [
@@ -25,24 +41,12 @@ export default defineNuxtConfig({
       autoImport: true,
    },
 
-   css: ["/assets/css/global.scss"],
-   vite: {
-      css: {
-         preprocessorOptions: {
-            scss: {
-               additionalData:
-                  '@import "@/assets/css/_variables.scss"; @import "@/assets/css/_mixins.scss"; @import "@/assets/css/_form.scss";',
-            },
-         },
-      },
-   },
-
    image: {
       provider: "netlify",
    },
 
-   dayjs:{
-      plugins: ['weekday']
+   dayjs: {
+      plugins: ["weekday"],
    },
 
    runtimeConfig: {
