@@ -15,17 +15,18 @@
 </template>
 
 <script setup lang="ts">
+import { Dayjs } from "dayjs";
 import { Day } from "@/types/Date";
 
 const dayjs = useDayjs();
 
 const { previousMonth, currentMonth, nextMonth } = defineProps<{
-  previousMonth: any;
-  currentMonth: object;
-  nextMonth: any;
+  previousMonth: Dayjs;
+  currentMonth: Dayjs;
+  nextMonth: Dayjs;
 }>();
 
-const calculateDaysInMonth = computed(() => {
+const calculateDaysInMonth = computed<Day[]>(() => {
   let days: Day[] = [];
 
   const selectedPreviousDays = selectPreviousDays(previousMonth);
@@ -70,7 +71,7 @@ const setWeekdayId = (id: number) => {
   return dayId;
 };
 
-const selectPreviousDays = (previousMonth: any) => {
+const selectPreviousDays = (previousMonth: Dayjs) => {
   const lastDayOfMonthId = previousMonth.endOf("month").day();
   const daysInMonth: number = previousMonth.daysInMonth();
   const startingDay: number = daysInMonth - lastDayOfMonthId + 1;
@@ -80,7 +81,7 @@ const selectPreviousDays = (previousMonth: any) => {
   return selectedDays;
 };
 
-const selectCurrentDays = (currentMonth: any) => {
+const selectCurrentDays = (currentMonth: Dayjs) => {
   const daysInMonth: number = currentMonth.daysInMonth();
   const startingDay: number = 1;
   const isActive: boolean = true;
@@ -89,9 +90,13 @@ const selectCurrentDays = (currentMonth: any) => {
   return selectedDays;
 };
 
-const selectNextDays = (previousMonth: number, currentMonth: number, nextMonth: any) => {
+const selectNextDays = (
+  amountOfPreviousDays: number,
+  amountOfCurrentDays: number,
+  nextMonth: Dayjs
+) => {
   const allDays = 42;
-  const daysInMonth: number = allDays - (previousMonth + currentMonth);
+  const daysInMonth: number = allDays - (amountOfPreviousDays + amountOfCurrentDays);
   const startingDay: number = 1;
   const isActive: boolean = false;
 

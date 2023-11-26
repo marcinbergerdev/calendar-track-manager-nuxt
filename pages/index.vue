@@ -24,6 +24,7 @@
 const dayjs = useDayjs();
 const monthCounter = ref(0);
 
+
 const updatePreviousMonth = computed(() => {
   return dayjs().add(monthCounter.value - 1, "month");
 });
