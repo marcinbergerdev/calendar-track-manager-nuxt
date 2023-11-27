@@ -49,7 +49,6 @@ const setDays = (
 ) => {
   let days: Day[] = [];
 
-
   for (let d = startingDay; d <= daysInMonth; d++) {
     const dayId: Dayjs = month.date(d);
     const id: string = dayId.format("YYYY-MM-DD");
@@ -60,7 +59,7 @@ const setDays = (
       isActive: isActive,
       id: id,
       day: day,
-      weekdayId: selectedWeekDayId, 
+      weekdayId: selectedWeekDayId,
     });
   }
   return days;
@@ -96,7 +95,7 @@ const setNextDays = (
   amountOfCurrentDays: number,
   nextMonth: Dayjs
 ) => {
-  const allDays:number  = 42;
+  const allDays: number = 42;
   const daysInMonth: number = allDays - (amountOfPreviousDays + amountOfCurrentDays);
   const startingDay: number = 1;
   const isActive: boolean = false;
@@ -110,13 +109,31 @@ const setNextDays = (
 .days-list {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-
-  gap: 1rem 0;
-  margin-top: 1rem;
+  grid-template-rows: repeat(7, 1fr);
+  gap: 1.1rem;
+  margin-top: 2rem;
 
   &__day {
-    font-size: 1.5rem;
-    justify-self: center;
+    display: grid;
+    place-items: center;
+    height: 2.9rem;
+    font-size: 1.4rem;
+    border-radius: 0.5rem;
+    border: 1px solid var(--text-clr);
+
+    @media (width >= 570px) {
+      height: 4.2rem;
+      font-size: 2rem;
+      border-radius: 1.3rem;
+    }
+
+    @media (width >= 768px) {
+      &:hover {
+        box-shadow: 0px 0px 8px rgba(#fff, 0.8);
+        border: 2px solid var(--text-clr);
+        cursor: pointer;
+      }
+    }
   }
 }
 
@@ -125,6 +142,6 @@ const setNextDays = (
 }
 
 .isActive {
-  opacity: 0.3;
+  opacity: 0.4;
 }
 </style>

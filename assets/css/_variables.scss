@@ -1,8 +1,8 @@
 :root {
    --white: #fff;
    --black: #000;
-   --yellow: #ffbb24;
-   --yellow-lt: #fff5dc;
+   --blue: #263d8a;
+   --blue-lt: #dce5ff;
    --grey-dk: #222831;
    --grey: #393e46;
    --grey-lt: #d0d0d0;
@@ -13,16 +13,18 @@
 
 .light-mode body {
    --auth-bg-clr: var(--white);
-   --auth-title-clr: var(--yellow);
+   --auth-title-clr: var(--blue);
    --auth-form-text-color: var(--grey-ltr);
    --auth-redirect-text: var(--black);
    --hamburger-clr: var(--white);
    
-   --primary-clr: var(--yellow);
-   --bg-clr: var(--yellow-lt);
+   --primary-clr: var(--blue);
+   --bg-clr: var(--blue-lt);
    --text-clr: var(--white);
    --success-clr: var(--green);
    --error-clr: var(--red);
+
+   --days-border: var(--white)
 }
 
 .dark-mode body {
@@ -37,4 +39,6 @@
    --text-clr: var(--grey-lt);
    --success-clr: var(--green);
    --error-clr: var(--red);
+
+   --days-border: var(--grey-ltr)
 }
