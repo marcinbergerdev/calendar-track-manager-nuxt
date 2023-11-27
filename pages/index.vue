@@ -24,15 +24,16 @@
 const dayjs = useDayjs();
 const monthCounter = ref(0);
 
-
 const updatePreviousMonth = computed(() => {
-  return dayjs().add(monthCounter.value - 1, "month");
+  const monthQuantity = 1;
+  return dayjs().add(monthCounter.value - monthQuantity, "month");
 });
 const updateCurrentDate = computed(() => {
   return dayjs().add(monthCounter.value, "month");
 });
 const updateNextMonth = computed(() => {
-  return dayjs().add(monthCounter.value + 1, "month");
+  const monthQuantity = 1;
+  return dayjs().add(monthCounter.value + monthQuantity, "month");
 });
 
 const changeDate = (increment: number) => {

@@ -29,9 +29,9 @@ const { previousMonth, currentMonth, nextMonth } = defineProps<{
 const calculateDaysInMonth = computed<Day[]>(() => {
   let days: Day[] = [];
 
-  const selectedPreviousDays = selectPreviousDays(previousMonth);
-  const selectedCurrenDays = selectCurrentDays(currentMonth);
-  const selectedNextDays = selectNextDays(
+  const selectedPreviousDays = setPreviousDays(previousMonth);
+  const selectedCurrenDays = setCurrentDays(currentMonth);
+  const selectedNextDays = setNextDays(
     selectedPreviousDays.length,
     selectedCurrenDays.length,
     nextMonth
@@ -42,65 +42,66 @@ const calculateDaysInMonth = computed<Day[]>(() => {
 });
 
 const setDays = (
-  month: any,
+  month: Dayjs,
   daysInMonth: number,
   startingDay: number,
   isActive: boolean
 ) => {
   let days: Day[] = [];
 
+
   for (let d = startingDay; d <= daysInMonth; d++) {
-    const dayId = month.date(d);
-    const id = dayId.format("YYYY-MM-DD");
-    const day = dayId.format("D");
-    const selectedWeekDayId = setWeekdayId(dayId);
+    const dayId: Dayjs = month.date(d);
+    const id: string = dayId.format("YYYY-MM-DD");
+    const day: string = dayId.format("D");
+    const selectedWeekDayId: number = setWeekdayId(dayId);
 
     days.push({
       isActive: isActive,
       id: id,
       day: day,
-      weekdayId: selectedWeekDayId,
+      weekdayId: selectedWeekDayId, 
     });
   }
   return days;
 };
 
-const setWeekdayId = (id: number) => {
-  const weekdayId = dayjs(id).day();
-  const dayId = weekdayId <= 0 ? 7 : weekdayId;
+const setWeekdayId = (day: Dayjs) => {
+  const weekdayId: number = dayjs(day).day();
+  const dayId: number = weekdayId <= 0 ? 7 : weekdayId;
   return dayId;
 };
 
-const selectPreviousDays = (previousMonth: Dayjs) => {
-  const lastDayOfMonthId = previousMonth.endOf("month").day();
+const setPreviousDays = (previousMonth: Dayjs) => {
+  const lastDayOfMonthId: number = previousMonth.endOf("month").day();
   const daysInMonth: number = previousMonth.daysInMonth();
   const startingDay: number = daysInMonth - lastDayOfMonthId + 1;
   const isActive: boolean = false;
 
-  const selectedDays = setDays(previousMonth, daysInMonth, startingDay, isActive);
+  const selectedDays: Day[] = setDays(previousMonth, daysInMonth, startingDay, isActive);
   return selectedDays;
 };
 
-const selectCurrentDays = (currentMonth: Dayjs) => {
+const setCurrentDays = (currentMonth: Dayjs) => {
   const daysInMonth: number = currentMonth.daysInMonth();
   const startingDay: number = 1;
   const isActive: boolean = true;
 
-  const selectedDays = setDays(currentMonth, daysInMonth, startingDay, isActive);
+  const selectedDays: Day[] = setDays(currentMonth, daysInMonth, startingDay, isActive);
   return selectedDays;
 };
 
-const selectNextDays = (
+const setNextDays = (
   amountOfPreviousDays: number,
   amountOfCurrentDays: number,
   nextMonth: Dayjs
 ) => {
-  const allDays = 42;
+  const allDays:number  = 42;
   const daysInMonth: number = allDays - (amountOfPreviousDays + amountOfCurrentDays);
   const startingDay: number = 1;
   const isActive: boolean = false;
 
-  const selectedDays = setDays(nextMonth, daysInMonth, startingDay, isActive);
+  const selectedDays: Day[] = setDays(nextMonth, daysInMonth, startingDay, isActive);
   return selectedDays;
 };
 </script>

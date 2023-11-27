@@ -14,7 +14,7 @@ export interface Date {
 export interface Day {
    isActive: boolean;
    id: string;
-   day: number;
+   day: string;
    weekdayId: number;
 }
 
