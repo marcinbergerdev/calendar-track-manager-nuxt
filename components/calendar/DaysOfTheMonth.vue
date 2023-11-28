@@ -1,11 +1,12 @@
 <template>
   <ul class="days-list">
     <li
-      v-for="{ isActive, id, day, weekdayId } in calculateDaysInMonth"
+      v-for="{ isActive, isCurrent, id, day, weekdayId } in calculateDaysInMonth"
       class="days-list__day"
       :class="{
-        isActive: !isActive,
-        weekdays: weekdayId === 7 ? true : false,
+        'inactive-day': !isActive,
+        'active-weekdays': weekdayId === 7 ? true : false,
+        'active-current-day': isCurrent,
       }"
       :key="id"
     >
@@ -43,36 +44,6 @@ const calculateDaysInMonth = computed<Day[]>(() => {
   return days;
 });
 
-const setDays = (
-  month: Dayjs,
-  daysInMonth: number,
-  startingDay: number,
-  isActive: boolean
-) => {
-  let days: Day[] = [];
-
-  for (let d = startingDay; d <= daysInMonth; d++) {
-    const dayId: Dayjs = month.date(d);
-    const id: string = dayId.format("YYYY-MM-DD");
-    const day: string = dayId.format("D");
-    const selectedWeekDayId: number = setWeekdayId(dayId);
-
-    days.push({
-      isActive: isActive,
-      id: id,
-      day: day,
-      weekdayId: selectedWeekDayId,
-    });
-  }
-  return days;
-};
-
-const setWeekdayId = (day: Dayjs) => {
-  const weekdayId: number = dayjs(day).day();
-  const dayId: number = weekdayId <= 0 ? 7 : weekdayId;
-  return dayId;
-};
-
 const setPreviousDays = (previousMonth: Dayjs) => {
   const lastDayOfWeekId: number = previousMonth.endOf("month").day();
   const daysInMonth: number = previousMonth.daysInMonth();
@@ -104,6 +75,43 @@ const setNextDays = (
 
   const selectedDays: Day[] = setDays(nextMonth, daysInMonth, startingDay, isActive);
   return selectedDays;
+};
+
+const setWeekdayId = (day: Dayjs) => {
+  const weekdayId: number = dayjs(day).day();
+  const dayId: number = weekdayId <= 0 ? 7 : weekdayId;
+  return dayId;
+};
+
+const setCurrentDay = (id: string) => {
+  const currentDate = dayjs().format("YYYY-MM-DD");
+  return currentDate === id ? true : false;
+};
+
+const setDays = (
+  month: Dayjs,
+  daysInMonth: number,
+  startingDay: number,
+  isActive: boolean
+) => {
+  let days: Day[] = [];
+
+  for (let d = startingDay; d <= daysInMonth; d++) {
+    const dayId: Dayjs = month.date(d);
+    const id: string = dayId.format("YYYY-MM-DD");
+    const day: string = dayId.format("D");
+    const selectedWeekDayId: number = setWeekdayId(dayId);
+    const isCurrent = setCurrentDay(id);
+
+    days.push({
+      isActive: isActive,
+      isCurrent: isCurrent,
+      id: id,
+      day: day,
+      weekdayId: selectedWeekDayId,
+    });
+  }
+  return days;
 };
 </script>
 
@@ -139,11 +147,16 @@ const setNextDays = (
   }
 }
 
-.weekdays {
+.active-weekdays {
   color: var(--red);
 }
 
-.isActive {
+.inactive-day {
   opacity: 0.4;
+}
+
+.active-current-day {
+  background-color: var(--text-clr);
+  color: var(--black);
 }
 </style>

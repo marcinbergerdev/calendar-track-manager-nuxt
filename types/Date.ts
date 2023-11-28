@@ -13,6 +13,7 @@ export interface Date {
 
 export interface Day {
    isActive: boolean;
+   isCurrent: boolean;
    id: string;
    day: string;
    weekdayId: number;
