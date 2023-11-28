@@ -2,15 +2,18 @@
   <ul class="days-list">
     <li
       v-for="{ isActive, isCurrent, id, day, weekdayId } in calculateDaysInMonth"
-      class="days-list__day"
-      :class="{
-        'inactive-day': !isActive,
-        'active-weekdays': weekdayId === 7 ? true : false,
-        'active-current-day': isCurrent,
-      }"
       :key="id"
     >
-      {{ day }}
+      <BaseButton
+        mode="border-day days-list__day"
+        :class="{
+          'inactive-day': !isActive,
+          'active-weekdays': weekdayId === 7 ? true : false,
+          'active-current-day': isCurrent,
+        }"
+      >
+        {{ day }}
+      </BaseButton>
     </li>
   </ul>
 </template>
@@ -126,23 +129,13 @@ const setDays = (
   &__day {
     display: grid;
     place-items: center;
+    width: 100%;
     height: 2.9rem;
     font-size: 1.4rem;
-    border-radius: 0.5rem;
-    border: 1px solid var(--text-clr);
 
     @media (width >= 570px) {
       height: 4.2rem;
       font-size: 2rem;
-      border-radius: 1.3rem;
-    }
-
-    @media (width >= 768px) {
-      &:hover {
-        box-shadow: 0px 0px 8px rgba(#fff, 0.8);
-        border: 2px solid var(--text-clr);
-        cursor: pointer;
-      }
     }
   }
 }

@@ -59,4 +59,21 @@ defineProps<{
     transition: 0.15s ease-in-out;
   }
 }
+
+.border-day{
+  color: var(--text-clr);
+  border-radius: 0.5rem;
+  border: 1px solid var(--text-clr);
+
+  @media (width >= 570px) {
+      border-radius: 1.3rem;
+    }
+
+    @media (width >= 768px) {
+      &:hover {
+        box-shadow: 0px 0px 8px rgba(#fff, 0.8);
+        border: 2px solid var(--text-clr);
+      }
+    }
+}
 </style>
