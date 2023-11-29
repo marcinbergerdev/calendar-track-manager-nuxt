@@ -33,11 +33,7 @@ const { previousMonth, currentMonth, nextMonth } = defineProps<{
 const calculateDaysInMonth = computed<Day[]>(() => {
   const selectedPreviousDays = setPreviousDays(previousMonth);
   const selectedCurrenDays = setCurrentDays(currentMonth);
-  const selectedNextDays = setNextDays(
-    selectedPreviousDays.length,
-    selectedCurrenDays.length,
-    nextMonth
-  );
+  const selectedNextDays = setNextDays([...selectedPreviousDays, ...selectedCurrenDays], nextMonth);
 
   const days: Day[] = [
     ...selectedPreviousDays,
@@ -67,12 +63,11 @@ const setCurrentDays = (currentMonth: Dayjs) => {
 };
 
 const setNextDays = (
-  amountOfPreviousDays: number,
-  amountOfCurrentDays: number,
+  amountOfPreviousAndCurrentDays: Day[],
   nextMonth: Dayjs
 ) => {
   const allDays: number = 42;
-  const daysInMonth: number = allDays - (amountOfPreviousDays + amountOfCurrentDays);
+  const daysInMonth: number = allDays - amountOfPreviousAndCurrentDays.length;
   const startingDay: number = nextMonth.startOf("month").date();
   const isActive: boolean = false;
 

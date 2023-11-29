@@ -5,7 +5,7 @@
     </h2>
 
     <div class="calendar-selector">
-      <button class="calendar-selector__button previous" @click="$emit('previous')">
+      <button class="calendar-selector__button previous" @click="emit('previous')">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
           <path
             fill="currentColor"
@@ -14,11 +14,11 @@
         </svg>
       </button>
 
-      <span class="calendar-selector__month"
-        >{{ extractedDate.month }} {{ extractedDate.year }}</span
-      >
+      <Transition name="fade">
+        <span class="calendar-selector__month" :key="extractedDate.month">{{ extractedDate.month }} {{ extractedDate.year }}</span>
+      </Transition>
 
-      <button class="calendar-selector__button next" @click="$emit('next')">
+      <button class="calendar-selector__button next" @click="emit('next')">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
           <path
             fill="currentColor"
@@ -56,6 +56,33 @@ const extractedDate = computed<Extracted>(() => {
 </script>
 
 <style scoped lang="scss">
+.fade-enter-from{
+  overflow: hidden;
+  transform: translateX(-120px);
+}
+.fade-enter-active{
+  transition: 1s ease-in-out;
+}
+.fade-enter-to{
+  overflow: hidden;
+  transform: translateX(120px);
+
+}
+
+.fade-leave-from{
+
+}
+.fade-leave-active {
+
+}
+.fade-leave-to{
+
+}
+
+
+
+
+
 .calendar-header {
   flex-direction: column;
   justify-content: center;
@@ -76,6 +103,8 @@ const extractedDate = computed<Extracted>(() => {
 
 .calendar-selector {
   gap: 0 1rem;
+  position: relative;
+  overflow: hidden;
 
   &__button {
     width: 3rem;
@@ -91,6 +120,10 @@ const extractedDate = computed<Extracted>(() => {
   }
 
   &__month {
+    position: absolute;
+      left: 0;
+      top: 0;
+    display: block;
     width: 17rem;
     text-align: center;
     font-size: 2rem;
