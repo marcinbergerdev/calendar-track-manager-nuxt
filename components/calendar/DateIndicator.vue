@@ -15,8 +15,8 @@
       </BaseButton>
 
       <Transition :name="animationName" mode="out-in">
-        <span class="calendar-selector__month" :key="extractedDate.monthId"
-          >{{ extractedDate.month }} {{ extractedDate.year }}</span
+        <BaseButton class="calendar-selector__month" :key="extractedDate.monthId"
+          >{{ extractedDate.month }} {{ extractedDate.year }}</BaseButton
         >
       </Transition>
 
@@ -123,7 +123,6 @@ const setNextMonth = () => {
   &__button {
     width: 3rem;
     height: 3rem;
-    color: var(--text-clr);
 
     &.previous {
       rotate: -90deg;

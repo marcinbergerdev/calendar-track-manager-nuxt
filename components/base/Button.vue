@@ -60,7 +60,7 @@ defineProps<{
   }
 }
 
-.border-day{
+.border-calendar-day{
   color: var(--text-clr);
   border-radius: 0.5rem;
   border: 1px solid var(--text-clr);

@@ -5,7 +5,8 @@
       :key="id"
     >
       <BaseButton
-        mode="border-day days-list__day"
+        mode="border-calendar-day"
+        class="days-list__day"
         :class="{
           'inactive-day': !isActive,
           'active-weekdays': weekdayId === 7 ? true : false,
@@ -33,7 +34,10 @@ const { previousMonth, currentMonth, nextMonth } = defineProps<{
 const calculateDaysInMonth = computed<Day[]>(() => {
   const selectedPreviousDays = setPreviousDays(previousMonth);
   const selectedCurrenDays = setCurrentDays(currentMonth);
-  const selectedNextDays = setNextDays([...selectedPreviousDays, ...selectedCurrenDays], nextMonth);
+  const selectedNextDays = setNextDays(
+    [...selectedPreviousDays, ...selectedCurrenDays],
+    nextMonth
+  );
 
   const days: Day[] = [
     ...selectedPreviousDays,
@@ -62,10 +66,7 @@ const setCurrentDays = (currentMonth: Dayjs) => {
   return selectedDays;
 };
 
-const setNextDays = (
-  amountOfPreviousAndCurrentDays: Day[],
-  nextMonth: Dayjs
-) => {
+const setNextDays = (amountOfPreviousAndCurrentDays: Day[], nextMonth: Dayjs) => {
   const allDays: number = 42;
   const daysInMonth: number = allDays - amountOfPreviousAndCurrentDays.length;
   const startingDay: number = nextMonth.startOf("month").date();
