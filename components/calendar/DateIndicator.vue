@@ -5,32 +5,35 @@
     </h2>
 
     <div class="calendar-selector">
-      <button class="calendar-selector__button previous" @click="emit('previous')">
+      <BaseButton class="calendar-selector__button previous" @click="setPreviousMonth">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
           <path
             fill="currentColor"
             d="M8.2 751.4c0 8.6 3.4 17.401 10 24.001c13.2 13.2 34.8 13.2 48 0l451.8-451.8l445.2 445.2c13.2 13.2 34.8 13.2 48 0s13.2-34.8 0-48L542 251.401c-13.2-13.2-34.8-13.2-48 0l-475.8 475.8c-6.8 6.8-10 15.4-10 24.2z"
           />
         </svg>
-      </button>
+      </BaseButton>
 
-      <Transition name="fade">
-        <span class="calendar-selector__month" :key="extractedDate.month">{{ extractedDate.month }} {{ extractedDate.year }}</span>
+      <Transition :name="animationName" mode="out-in">
+        <span class="calendar-selector__month" :key="extractedDate.monthId"
+          >{{ extractedDate.month }} {{ extractedDate.year }}</span
+        >
       </Transition>
 
-      <button class="calendar-selector__button next" @click="emit('next')">
+      <BaseButton class="calendar-selector__button next" @click="setNextMonth">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
           <path
             fill="currentColor"
             d="M8.2 751.4c0 8.6 3.4 17.401 10 24.001c13.2 13.2 34.8 13.2 48 0l451.8-451.8l445.2 445.2c13.2 13.2 34.8 13.2 48 0s13.2-34.8 0-48L542 251.401c-13.2-13.2-34.8-13.2-48 0l-475.8 475.8c-6.8 6.8-10 15.4-10 24.2z"
           />
         </svg>
-      </button>
+      </BaseButton>
     </div>
   </header>
 </template>
 
 <script setup lang="ts">
+import { Dayjs } from "dayjs";
 import { Extracted } from "@/types/Date";
 
 const dayjs = useDayjs();
@@ -41,47 +44,59 @@ const emit = defineEmits<{
 }>();
 
 const { updatedDate } = defineProps<{
-  updatedDate: any;
+  updatedDate: Dayjs;
 }>();
 
+const animationName = ref("");
+
 const extractedDate = computed<Extracted>(() => {
-  const dateGroup: Extracted = {
+  return {
+    monthId: updatedDate.month(),
     day: dayjs().format("DD"),
     name: dayjs().format("dddd"),
     month: updatedDate.format("MMMM"),
     year: updatedDate.format("YYYY"),
   };
-  return dateGroup;
 });
+
+const setPreviousMonth = () => {
+  animationName.value = "previous";
+  emit("previous");
+};
+
+const setNextMonth = () => {
+  animationName.value = "next";
+  emit("next");
+};
 </script>
 
 <style scoped lang="scss">
-.fade-enter-from{
-  overflow: hidden;
-  transform: translateX(-120px);
-}
-.fade-enter-active{
-  transition: 1s ease-in-out;
-}
-.fade-enter-to{
-  overflow: hidden;
-  transform: translateX(120px);
-
+.previous-enter-from,
+.next-leave-to {
+  transform: translateX(2rem);
+  opacity: 0;
 }
 
-.fade-leave-from{
-
-}
-.fade-leave-active {
-
-}
-.fade-leave-to{
-
+.previous-leave-to,
+.next-enter-from {
+  transform: translateX(-2rem);
+  opacity: 0;
 }
 
+.previous-enter-to,
+.previous-leave-from,
+.next-enter-to,
+.next-leave-from {
+  transform: translateX(0rem);
+  opacity: 1;
+}
 
-
-
+.previous-enter-active,
+.previous-leave-active,
+.next-enter-active,
+.next-leave-active {
+  transition: 0.22s ease-in-out;
+}
 
 .calendar-header {
   flex-direction: column;
@@ -103,7 +118,6 @@ const extractedDate = computed<Extracted>(() => {
 
 .calendar-selector {
   gap: 0 1rem;
-  position: relative;
   overflow: hidden;
 
   &__button {
@@ -120,9 +134,6 @@ const extractedDate = computed<Extracted>(() => {
   }
 
   &__month {
-    position: absolute;
-      left: 0;
-      top: 0;
     display: block;
     width: 17rem;
     text-align: center;
