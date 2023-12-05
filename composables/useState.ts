@@ -4,6 +4,9 @@ export const useMenuVisibility = () =>
 export const useLoadingSpinner = () =>
    useState("loadingSpinner", () => false as boolean);
 
+export const useMonthAnimationName = () =>
+   useState("loadingSpinner", () => "" as "next" | "previous");
+
 export const useWeekDays = () => {
    return useState(
       "weekdays",

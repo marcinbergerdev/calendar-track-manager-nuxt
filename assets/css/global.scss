@@ -68,3 +68,31 @@ button {
 .calendar-selector{
    @include default-flex;
 }
+
+
+.previous-enter-from,
+.next-leave-to {
+  transform: translateX(2rem);
+  opacity: 0;
+}
+
+.previous-leave-to,
+.next-enter-from {
+  transform: translateX(-2rem);
+  opacity: 0;
+}
+
+.previous-enter-to,
+.previous-leave-from,
+.next-enter-to,
+.next-leave-from {
+  transform: translateX(0rem);
+  opacity: 1;
+}
+
+.previous-enter-active,
+.previous-leave-active,
+.next-enter-active,
+.next-leave-active {
+  transition: 0.22s ease-in-out;
+}

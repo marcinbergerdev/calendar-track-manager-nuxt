@@ -14,7 +14,7 @@
         </svg>
       </BaseButton>
 
-      <Transition :name="animationName" mode="out-in">
+      <Transition :name="monthAnimationName" mode="out-in">
         <BaseButton class="calendar-selector__month" :key="extractedDate.monthId"
           >{{ extractedDate.month }} {{ extractedDate.year }}</BaseButton
         >
@@ -35,7 +35,9 @@
 <script setup lang="ts">
 import { Dayjs } from "dayjs";
 import { Extracted } from "@/types/Date";
+import { useMonthAnimationName } from "~/composables/useState";
 
+const monthAnimationName = useMonthAnimationName();
 const dayjs = useDayjs();
 
 const emit = defineEmits<{
@@ -47,7 +49,6 @@ const { updatedDate } = defineProps<{
   updatedDate: Dayjs;
 }>();
 
-const animationName = ref("");
 
 const extractedDate = computed<Extracted>(() => {
   return {
@@ -60,44 +61,17 @@ const extractedDate = computed<Extracted>(() => {
 });
 
 const setPreviousMonth = () => {
-  animationName.value = "previous";
+  monthAnimationName.value = "previous";
   emit("previous");
 };
 
 const setNextMonth = () => {
-  animationName.value = "next";
+  monthAnimationName.value = "next";
   emit("next");
 };
 </script>
 
 <style scoped lang="scss">
-.previous-enter-from,
-.next-leave-to {
-  transform: translateX(2rem);
-  opacity: 0;
-}
-
-.previous-leave-to,
-.next-enter-from {
-  transform: translateX(-2rem);
-  opacity: 0;
-}
-
-.previous-enter-to,
-.previous-leave-from,
-.next-enter-to,
-.next-leave-from {
-  transform: translateX(0rem);
-  opacity: 1;
-}
-
-.previous-enter-active,
-.previous-leave-active,
-.next-enter-active,
-.next-leave-active {
-  transition: 0.22s ease-in-out;
-}
-
 .calendar-header {
   flex-direction: column;
   justify-content: center;

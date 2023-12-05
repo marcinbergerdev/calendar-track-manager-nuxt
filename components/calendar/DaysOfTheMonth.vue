@@ -1,29 +1,33 @@
 <template>
-  <ul class="days-list">
-    <li
-      v-for="{ isActive, isCurrent, id, day, weekdayId } in calculateDaysInMonth"
-      :key="id"
-    >
-      <BaseButton
-        mode="border-calendar-day"
-        class="days-list__day"
-        :class="{
-          'inactive-day': !isActive,
-          'active-weekdays': weekdayId === 7 ? true : false,
-          'active-current-day': isCurrent,
-        }"
+  <Transition :name="monthAnimationName" mode="out-in">
+    <ul class="days-list" :key="currentMonth.month()">
+      <li
+        v-for="{ isActive, isCurrent, id, day, weekdayId } in calculateDaysInMonth"
+        :key="id"
       >
-        {{ day }}
-      </BaseButton>
-    </li>
-  </ul>
+        <BaseButton
+          mode="border-calendar-day"
+          class="days-list__day"
+          :class="{
+            'inactive-day': !isActive,
+            'active-weekdays': weekdayId === 7 ? true : false,
+            'active-current-day': isCurrent,
+          }"
+        >
+          {{ day }}
+        </BaseButton>
+      </li>
+    </ul>
+  </Transition>
 </template>
 
 <script setup lang="ts">
 import { Dayjs } from "dayjs";
 import { Day } from "@/types/Date";
 
+const monthAnimationName = useMonthAnimationName();
 const dayjs = useDayjs();
+
 
 const { previousMonth, currentMonth, nextMonth } = defineProps<{
   previousMonth: Dayjs;
