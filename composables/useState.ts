@@ -1,45 +1,20 @@
 export const useMenuVisibility = () =>
-   useState("menuVisibility", () => false as boolean);
+   useState("menuVisibility", (): boolean => false);
 
 export const useLoadingSpinner = () =>
-   useState("loadingSpinner", () => false as boolean);
+   useState("loadingSpinner", (): boolean => false);
 
 export const useMonthAnimationName = () =>
    useState("loadingSpinner", () => "" as "next" | "previous");
 
 export const useWeekDays = () => {
-   return useState(
-      "weekdays",
-      () =>
-         [
-            "Monday",
-            "Tuesday",
-            "Wednesday",
-            "Thursday",
-            "Friday",
-            "Saturday",
-            "Sunday",
-         ] as string[]
-   );
-};
-
-export const useMonthNames = () => {
-   return useState(
-      "monthNames",
-      () =>
-         [
-            "January",
-            "February",
-            "March",
-            "April",
-            "May",
-            "June",
-            "July",
-            "August",
-            "September",
-            "October",
-            "November",
-            "December",
-         ] as string[]
-   );
+   return useState("weekdays", (): string[] => [
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+      "Sunday",
+   ]);
 };
