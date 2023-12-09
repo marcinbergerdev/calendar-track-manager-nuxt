@@ -6,15 +6,3 @@ export const useLoadingSpinner = () =>
 
 export const useMonthAnimationName = () =>
    useState("loadingSpinner", () => "" as "next" | "previous");
-
-export const useWeekDays = () => {
-   return useState("weekdays", (): string[] => [
-      "Monday",
-      "Tuesday",
-      "Wednesday",
-      "Thursday",
-      "Friday",
-      "Saturday",
-      "Sunday",
-   ]);
-};

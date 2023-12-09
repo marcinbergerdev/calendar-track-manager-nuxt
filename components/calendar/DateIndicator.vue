@@ -42,6 +42,7 @@ import { useMonthAnimationName } from "~/composables/useState";
 
 const monthAnimationName = useMonthAnimationName();
 const dayjs = useDayjs();
+const dateLang = dayjs.locale();
 
 const emit = defineEmits<{
   previous: [];
@@ -56,8 +57,8 @@ const { updatedDate } = defineProps<{
 const extractedDate = computed<Extracted>(() => {
   return {
     monthId: updatedDate.month(),
-    day: dayjs().format("DD"),
-    name: dayjs().format("dddd"),
+    day: dayjs().locale(dateLang).format("DD"),
+    name: dayjs().locale(dateLang).format("dddd"),
     month: updatedDate.format("MMMM"),
     year: updatedDate.format("YYYY"),
   };

@@ -46,7 +46,9 @@ export default defineNuxtConfig({
    },
 
    dayjs: {
-      plugins: ["weekday", "localeData"],
+      locales: ["en","de","pl"],
+      plugins: ["localeData", "relativeTime", "utc", "timezone"],
+      defaultLocale: "en",
    },
 
    runtimeConfig: {

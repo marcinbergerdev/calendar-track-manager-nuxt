@@ -1,5 +1,5 @@
 <template>
-  <div class="date-selector-container">
+  <div class="date-selector-container" v-if="false">
     <ul class="month-selector-list">
       <li class="month-element" v-for="(month, id) in selectedMonth" :key="id">
         <span> {{ month }} </span>

@@ -22,18 +22,19 @@
 
 <script setup lang="ts">
 const dayjs = useDayjs();
+const dateLang = dayjs.locale();
 const monthCounter = ref(0);
 
 const updatePreviousMonth = computed(() => {
   const monthQuantity = 1;
-  return dayjs().add(monthCounter.value - monthQuantity, "month");
+  return dayjs().locale(dateLang).add(monthCounter.value - monthQuantity, "month");
 });
 const updateCurrentDate = computed(() => {
-  return dayjs().add(monthCounter.value, "month");
+  return dayjs().locale(dateLang).add(monthCounter.value, "month");
 });
 const updateNextMonth = computed(() => {
   const monthQuantity = 1;
-  return dayjs().add(monthCounter.value + monthQuantity, "month");
+  return dayjs().locale(dateLang).add(monthCounter.value + monthQuantity, "month");
 });
 
 const changeDate = (increment: number) => {

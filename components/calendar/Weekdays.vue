@@ -1,14 +1,24 @@
 <template>
   <ul class="weeks-list">
     <li class="weeks-list__week" v-for="(day, id) in weekdays" :key="id">
-      {{ day.substring(0, 3) }}
+      {{ day }}
     </li>
   </ul>
 </template>
 
 <script setup lang="ts">
-const weekdays = useWeekDays();
+const dayjs = useDayjs();
 
+const weekdays = computed<string[]>(() => {
+  const setWeekdays: string[] = [...dayjs.weekdaysMin(true)];
+
+  if (dayjs.locale() === "en") {
+    const extractedDay = setWeekdays.shift() || "Su";
+    setWeekdays.push(extractedDay);
+  }
+
+  return setWeekdays;
+});
 </script>
 
 <style scoped lang="scss">
