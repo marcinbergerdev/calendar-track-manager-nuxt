@@ -28,7 +28,6 @@ import { Day } from "@/types/Date";
 const monthAnimationName = useMonthAnimationName();
 const dayjs = useDayjs();
 
-
 const { previousMonth, currentMonth, nextMonth } = defineProps<{
   previousMonth: Dayjs;
   currentMonth: Dayjs;

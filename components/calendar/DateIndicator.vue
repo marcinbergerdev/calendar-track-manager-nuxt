@@ -4,7 +4,7 @@
       {{ extractedDate.day }} {{ extractedDate.name }}
     </h2>
 
-    <div class="calendar-selector">
+    <section class="calendar-selector">
       <BaseButton class="calendar-selector__button previous" @click="setPreviousMonth">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
           <path
@@ -15,10 +15,13 @@
       </BaseButton>
 
       <Transition :name="monthAnimationName" mode="out-in">
-        <BaseButton class="calendar-selector__month" :key="extractedDate.monthId"
+        <BaseButton class="calendar-selector__month" :key="extractedDate.monthId" @click="selectData"
           >{{ extractedDate.month }} {{ extractedDate.year }}</BaseButton
         >
+        
       </Transition>
+
+      <CalendarDateSelector></CalendarDateSelector>
 
       <BaseButton class="calendar-selector__button next" @click="setNextMonth">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
@@ -28,7 +31,7 @@
           />
         </svg>
       </BaseButton>
-    </div>
+    </section>
   </header>
 </template>
 
@@ -69,6 +72,10 @@ const setNextMonth = () => {
   monthAnimationName.value = "next";
   emit("next");
 };
+
+const selectData = () => {
+
+}
 </script>
 
 <style scoped lang="scss">
@@ -91,12 +98,13 @@ const setNextMonth = () => {
 }
 
 .calendar-selector {
+  position: relative;
   gap: 0 1rem;
-  overflow: hidden;
 
   &__button {
     width: 3rem;
     height: 3rem;
+    z-index: 5;
 
     &.previous {
       rotate: -90deg;

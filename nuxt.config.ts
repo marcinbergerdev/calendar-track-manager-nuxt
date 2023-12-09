@@ -46,7 +46,7 @@ export default defineNuxtConfig({
    },
 
    dayjs: {
-      plugins: ["weekday"],
+      plugins: ["weekday", "localeData"],
    },
 
    runtimeConfig: {
