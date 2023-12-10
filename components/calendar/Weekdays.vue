@@ -10,15 +10,19 @@
 const dayjs = useDayjs();
 
 const weekdays = computed<string[]>(() => {
+  const version = "en";
   const setWeekdays: string[] = [...dayjs.weekdaysMin(true)];
+  const isEnglishVersion = dayjs.locale() === version;
 
-  if (dayjs.locale() === "en") {
-    const extractedDay = setWeekdays.shift() || "Su";
-    setWeekdays.push(extractedDay);
-  }
-
+  if (isEnglishVersion) setSundayToLastElementOnList(setWeekdays);
   return setWeekdays;
 });
+
+const setSundayToLastElementOnList = (setWeekdays: string[]) => {
+  const sundayShortName = "Su";
+  const extractedDay = setWeekdays.shift() || sundayShortName;
+  setWeekdays.push(extractedDay);
+};
 </script>
 
 <style scoped lang="scss">
