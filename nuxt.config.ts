@@ -15,8 +15,12 @@ export default defineNuxtConfig({
       css: {
          preprocessorOptions: {
             scss: {
-               additionalData:
-                  '@import "@/assets/css/_variables.scss"; @import "@/assets/css/_mixins.scss"; @import "@/assets/css/_form.scss";',
+               additionalData: `
+                @import "@/assets/css/_variables.scss"; 
+                @import "@/assets/css/_mixins.scss"; 
+                @import "@/assets/css/_form.scss"; 
+                @import "@/assets/css/_scrollbar.scss";
+               `,
             },
          },
       },
@@ -46,7 +50,7 @@ export default defineNuxtConfig({
    },
 
    dayjs: {
-      locales: ["en","de","pl"],
+      locales: ["en", "de", "pl"],
       plugins: ["localeData", "relativeTime", "utc", "timezone"],
       defaultLocale: "en",
    },

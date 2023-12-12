@@ -1,6 +1,6 @@
 <template>
   <ul class="weeks-list">
-    <li class="weeks-list__week" v-for="(day, id) in weekdays" :key="id">
+    <li class="weeks-list__week" v-for="(day, id) in calculatedWeekdays" :key="id">
       {{ day }}
     </li>
   </ul>
@@ -9,19 +9,22 @@
 <script setup lang="ts">
 const dayjs = useDayjs();
 
-const weekdays = computed<string[]>(() => {
+const calculatedWeekdays = computed<string[]>(() => {
+  const originalWeekdays: string[] = dayjs.weekdaysMin(true);
   const version = "en";
-  const setWeekdays: string[] = [...dayjs.weekdaysMin(true)];
   const isEnglishVersion = dayjs.locale() === version;
 
-  if (isEnglishVersion) setSundayToLastElementOnList(setWeekdays);
-  return setWeekdays;
+  return isEnglishVersion
+    ? moveSundayToLastElement([...originalWeekdays])
+    : originalWeekdays;
 });
 
-const setSundayToLastElementOnList = (setWeekdays: string[]) => {
+const moveSundayToLastElement = (weekdays: string[]) => {
   const sundayShortName = "Su";
-  const extractedDay = setWeekdays.shift() || sundayShortName;
-  setWeekdays.push(extractedDay);
+  const extractedDay = weekdays.shift() || sundayShortName;
+
+  weekdays.push(extractedDay);
+  return weekdays;
 };
 </script>
 

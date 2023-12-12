@@ -1,0 +1,20 @@
+.date-selector-container {
+   @media (width >= 768px) {
+      &::-webkit-scrollbar {
+         width: 7px;
+      }
+
+      &::-webkit-scrollbar-track {
+         background: transparent;
+      }
+
+      &::-webkit-scrollbar-thumb {
+         background: var(--bg-clr);
+         border-radius: 15px;
+      }
+
+      &::-webkit-scrollbar-thumb:hover {
+         background: var(--bg-clr);
+      }
+   }
+}
