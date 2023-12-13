@@ -1,12 +1,12 @@
 <template>
-  <div class="date-selector-container" v-if="false">
+  <div class="date-selector-container" v-if="true" ref="yearContainer">
     <ul class="month-selector-list" v-if="false">
       <li class="month-element" v-for="(month, id) in selectedMonth" :key="id">
         <span> {{ month }} </span>
       </li>
     </ul>
 
-    <ul class="year-selector-list" v-else ref="years">
+    <ul class="year-selector-list" v-else>
       <li class="year-element" v-for="(year, id) in selectListOfYear" :key="id">
         <span> {{ year }} </span>
       </li>
@@ -16,6 +16,7 @@
 
 <script setup lang="ts">
 const dayjs = useDayjs();
+const yearContainer = ref<HTMLElement | null>(null);
 
 const selectedMonth = computed<string[]>(() => {
   return dayjs.monthsShort();
@@ -25,15 +26,28 @@ const selectListOfYear = computed(() => {
   const yearDifference = 100;
   const firstYear = dayjs().year() - yearDifference;
   const lastYear = dayjs().year() + yearDifference;
-  const selectedYears: number[] = [];
 
+  scrollToCurrentYear();
+
+  const selectedYears = selectYears(firstYear, lastYear);
+  return selectedYears;
+});
+
+const scrollToCurrentYear = () => {
+  const containerElement = yearContainer.value;
+
+  containerElement?.scroll({
+    top: (containerElement?.scrollHeight - containerElement?.clientHeight) / 2,
+  });
+};
+
+const selectYears = (firstYear: number, lastYear: number) => {
+  const selectedYears: number[] = [];
   for (let year = firstYear; year <= lastYear; year++) {
     selectedYears.push(year);
   }
-
-
   return selectedYears;
-});
+};
 </script>
 
 <style scoped lang="scss">
@@ -84,7 +98,7 @@ const selectListOfYear = computed(() => {
 }
 
 .year-element {
-  padding: 1rem;
+  padding: 1.5rem 1rem;
 }
 
 .active-year {
