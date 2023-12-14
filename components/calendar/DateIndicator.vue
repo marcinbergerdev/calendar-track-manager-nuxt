@@ -15,10 +15,12 @@
       </BaseButton>
 
       <Transition :name="monthAnimationName" mode="out-in">
-        <BaseButton class="calendar-selector__month" :key="extractedDate.monthId" @click="selectData"
+        <BaseButton
+          class="calendar-selector__month"
+          :key="extractedDate.monthId"
+          @click="openDateSelector"
           >{{ extractedDate.month }} {{ extractedDate.year }}</BaseButton
         >
-        
       </Transition>
 
       <CalendarDateSelector></CalendarDateSelector>
@@ -40,6 +42,7 @@ import { Dayjs } from "dayjs";
 import { Extracted } from "@/types/Date";
 import { useMonthAnimationName } from "~/composables/useState";
 
+const isDateSelector = useDateSelectorVisibility();
 const monthAnimationName = useMonthAnimationName();
 const dayjs = useDayjs();
 const dateLang = dayjs.locale();
@@ -52,7 +55,6 @@ const emit = defineEmits<{
 const { updatedDate } = defineProps<{
   updatedDate: Dayjs;
 }>();
-
 
 const extractedDate = computed<Extracted>(() => {
   return {
@@ -74,9 +76,7 @@ const setNextMonth = () => {
   emit("next");
 };
 
-const selectData = () => {
-
-}
+const openDateSelector = () => (isDateSelector.value = true);
 </script>
 
 <style scoped lang="scss">

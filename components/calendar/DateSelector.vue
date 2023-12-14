@@ -1,5 +1,5 @@
 <template>
-  <div class="date-selector-container" v-if="true" ref="yearContainer">
+  <div class="date-selector-container" ref="selectorContainer" v-if="isDateSelector">
     <ul class="month-selector-list" v-if="false">
       <li class="month-element" v-for="(month, id) in selectedMonth" :key="id">
         <span> {{ month }} </span>
@@ -7,7 +7,12 @@
     </ul>
 
     <ul class="year-selector-list" v-else>
-      <li class="year-element" v-for="(year, id) in selectListOfYear" :key="id">
+      <li
+        class="year-element"
+        :class="{ 'active-year': year === dayjs().year() }"
+        v-for="(year, id) in selectListOfYear"
+        :key="id"
+      >
         <span> {{ year }} </span>
       </li>
     </ul>
@@ -16,7 +21,8 @@
 
 <script setup lang="ts">
 const dayjs = useDayjs();
-const yearContainer = ref<HTMLElement | null>(null);
+const isDateSelector = useDateSelectorVisibility();
+const selectorContainer = ref<HTMLElement | null>(null);
 
 const selectedMonth = computed<string[]>(() => {
   return dayjs.monthsShort();
@@ -34,10 +40,13 @@ const selectListOfYear = computed(() => {
 });
 
 const scrollToCurrentYear = () => {
-  const containerElement = yearContainer.value;
+  const containerElement = selectorContainer.value;
+  const middleOfElement = 1425;
 
-  containerElement?.scroll({
-    top: (containerElement?.scrollHeight - containerElement?.clientHeight) / 2,
+  containerElement?.scrollTo({
+    top:
+      (containerElement.scrollHeight - containerElement.clientHeight) / 2 ||
+      middleOfElement,
   });
 };
 
@@ -48,6 +57,9 @@ const selectYears = (firstYear: number, lastYear: number) => {
   }
   return selectedYears;
 };
+
+const closeDataSelector = () => (isDateSelector.value = false);
+onClickOutside(selectorContainer, closeDataSelector);
 </script>
 
 <style scoped lang="scss">
@@ -71,7 +83,7 @@ const selectYears = (firstYear: number, lastYear: number) => {
 .year-selector-list {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  padding: 0.5rem;
+  padding: 0.2rem 0 0.3rem 0.5rem;
   height: 100%;
   border-radius: 1rem;
 }
@@ -98,7 +110,7 @@ const selectYears = (firstYear: number, lastYear: number) => {
 }
 
 .year-element {
-  padding: 1.5rem 1rem;
+  padding: 1.5rem 0;
 }
 
 .active-year {
