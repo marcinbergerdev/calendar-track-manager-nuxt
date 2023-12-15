@@ -8,11 +8,7 @@
         <BaseButton
           mode="border-calendar-day"
           class="days-list__day"
-          :class="{
-            'inactive-day': !isActive,
-            'active-weekdays': weekdayId === 7 ? true : false,
-            'active-current-day': isCurrent,
-          }"
+          :class="setClasses(isActive, isCurrent, weekdayId)"
         >
           {{ day }}
         </BaseButton>
@@ -33,6 +29,25 @@ const { previousMonth, currentMonth, nextMonth } = defineProps<{
   currentMonth: Dayjs;
   nextMonth: Dayjs;
 }>();
+
+const setClasses = computed(() => {
+  return (isActive: boolean, isCurrent: boolean, weekdayId: number) => {
+    const classes = [];
+
+    if (!isActive) {
+      classes.push("inactive-day");
+    }
+
+    if (weekdayId === 7) {
+      classes.push("active-weekdays");
+    }
+
+    if (isCurrent) {
+      classes.push("active-current-day");
+    }
+    return classes;
+  };
+});
 
 const calculateDaysInMonth = computed<Day[]>(() => {
   const selectedPreviousDays = setPreviousDays(previousMonth);

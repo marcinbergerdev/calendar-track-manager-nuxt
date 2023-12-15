@@ -1,21 +1,24 @@
 <template>
   <div class="date-selector-container" ref="selectorContainer" v-if="isDateSelector">
-    <ul class="month-selector-list" v-if="false">
-      <li class="month-element" v-for="(month, id) in selectedMonth" :key="id">
-        <span> {{ month }} </span>
-      </li>
-    </ul>
+    <Transition name="selector" mode="out-in">
+      <ul class="year-selector-list" v-if="!isYearOrMonth">
+        <li
+          class="year-element"
+          :class="isActiveYear(year)"
+          v-for="(year, id) in selectListOfYear"
+          :key="id"
+          @click="openMonthSelector"
+        >
+          <span> {{ year }} </span>
+        </li>
+      </ul>
 
-    <ul class="year-selector-list" v-else>
-      <li
-        class="year-element"
-        :class="{ 'active-year': year === dayjs().year() }"
-        v-for="(year, id) in selectListOfYear"
-        :key="id"
-      >
-        <span> {{ year }} </span>
-      </li>
-    </ul>
+      <ul class="month-selector-list" v-else>
+        <li class="month-element" v-for="(month, id) in selectedMonth" :key="id">
+          <span> {{ month }} </span>
+        </li>
+      </ul>
+    </Transition>
   </div>
 </template>
 
@@ -23,6 +26,7 @@
 const dayjs = useDayjs();
 const isDateSelector = useDateSelectorVisibility();
 const selectorContainer = ref<HTMLElement | null>(null);
+const isYearOrMonth = ref(false);
 
 const selectedMonth = computed<string[]>(() => {
   return dayjs.monthsShort();
@@ -38,6 +42,10 @@ const selectListOfYear = computed(() => {
   const selectedYears = selectYears(firstYear, lastYear);
   return selectedYears;
 });
+
+const isActiveYear = (year: number) => {
+  return { "active-year": year === dayjs().year() };
+};
 
 const scrollToCurrentYear = () => {
   const containerElement = selectorContainer.value;
@@ -58,7 +66,14 @@ const selectYears = (firstYear: number, lastYear: number) => {
   return selectedYears;
 };
 
-const closeDataSelector = () => (isDateSelector.value = false);
+const openMonthSelector = () => {
+  isYearOrMonth.value = true;
+};
+
+const closeDataSelector = () => {
+  isDateSelector.value = false;
+  isYearOrMonth.value = false;
+};
 onClickOutside(selectorContainer, closeDataSelector);
 </script>
 

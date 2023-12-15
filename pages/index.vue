@@ -26,7 +26,7 @@ const monthCounter = ref(0);
 
 const updatePreviousMonth = computed(() => {
   const monthQuantity = 1;
-  return dayjs().add(monthCounter.value - monthQuantity, "month");
+  return dayjs().add(monthCounter.value - monthQuantity, "month"); 
 });
 const updateCurrentDate = computed(() => {
   return dayjs().add(monthCounter.value, "month");

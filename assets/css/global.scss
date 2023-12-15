@@ -96,3 +96,24 @@ button {
 .next-leave-active {
   transition: 0.22s ease-in-out;
 }
+
+.selector-enter-from {
+   transform: scale(0.6);
+ }
+ 
+ .selector-enter-to {
+   transform: scale(1);
+ }
+ 
+ .selector-leave-from {
+   opacity: 1;
+ }
+ 
+ .selector-leave-to {
+   opacity: 0;
+ }
+ 
+ .selector-enter-active,
+ .selector-leave-active {
+   transition: 0.3s ease-in-out;
+ }
