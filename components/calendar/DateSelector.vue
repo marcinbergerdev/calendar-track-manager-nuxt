@@ -31,6 +31,7 @@
 const dayjs = useDayjs();
 const isDateSelector = useDateSelectorVisibility();
 const setDate = useSelectedData();
+const monthAnimationName = useMonthAnimationName();
 const selectorContainer = ref<HTMLElement | null>(null);
 const isYearOrMonthSelector = ref(false);
 const newSelectedData = { month: 0, year: 0 };
@@ -76,12 +77,19 @@ const selectYears = (firstYear: number, lastYear: number) => {
 const setYearAndMoveToMonth = (year: number) => {
   newSelectedData.year = year;
   isYearOrMonthSelector.value = true;
+  setAnimationDirectionByDataUpdate(year);
+};
+
+const setAnimationDirectionByDataUpdate = (year: number) => {
+  year >= dayjs().year()
+    ? (monthAnimationName.value = "next")
+    : (monthAnimationName.value = "previous");
 };
 
 const setMonth = (monthId: number) => {
   newSelectedData.month = monthId;
-  setDate.value = {...newSelectedData};
-  closeDataSelector();   
+  setDate.value = { ...newSelectedData };
+  closeDataSelector();
 };
 
 const closeDataSelector = () => {

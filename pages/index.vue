@@ -26,28 +26,26 @@ const dateSelector = useSelectedData();
 const dayjs = useDayjs();
 
 const updatePreviousData = computed(() => {
-  const date = dateSelector.value;
   const monthCounter = -1;
-  return updateDate(date.year, date.month, monthCounter);
+  return updateDate(monthCounter);
 });
 
 const updateCurrentData = computed(() => {
-  const date = dateSelector.value;
   const monthCounter = 0;
-  return updateDate(date.year, date.month, monthCounter);
+  return updateDate(monthCounter);
 });
 
 const updateNextData = computed(() => {
-  const date = dateSelector.value;
   const monthCounter = 1;
-  return updateDate(date.year, date.month, monthCounter);
+  return updateDate(monthCounter);
 });
 
-const updateDate = (year: number | null, month: number, monthCounter: number) => {
-  if (!!year) {
-    return setDateFromSelector(year, month, monthCounter);
+const updateDate = (monthCounter: number) => {
+  const date = dateSelector.value;
+  if (!!date.year) {
+    return setDateFromSelector(date.year, date.month, monthCounter);
   }
-  return changeDate(monthCounter, month);
+  return changeDate(monthCounter, date.month);
 };
 
 const setDateFromSelector = (year: number, month: number, monthCounter: number) => {
