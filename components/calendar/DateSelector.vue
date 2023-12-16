@@ -1,20 +1,25 @@
 <template>
   <div class="date-selector-container" ref="selectorContainer" v-if="isDateSelector">
     <Transition name="selector" mode="out-in">
-      <ul class="year-selector-list" v-if="!isYearOrMonth">
+      <ul class="year-selector-list" v-if="!isYearOrMonthSelector">
         <li
           class="year-element"
           :class="isActiveYear(year)"
           v-for="(year, id) in selectListOfYear"
           :key="id"
-          @click="openMonthSelector"
+          @click="setYearAndMoveToMonth(year)"
         >
           <span> {{ year }} </span>
         </li>
       </ul>
 
       <ul class="month-selector-list" v-else>
-        <li class="month-element" v-for="(month, id) in selectedMonth" :key="id">
+        <li
+          class="month-element"
+          v-for="(month, id) in selectedMonth"
+          :key="id"
+          @click="setMonth(id)"
+        >
           <span> {{ month }} </span>
         </li>
       </ul>
@@ -25,8 +30,10 @@
 <script setup lang="ts">
 const dayjs = useDayjs();
 const isDateSelector = useDateSelectorVisibility();
+const setDate = useSelectedData();
 const selectorContainer = ref<HTMLElement | null>(null);
-const isYearOrMonth = ref(false);
+const isYearOrMonthSelector = ref(false);
+const newSelectedData = { month: 0, year: 0 };
 
 const selectedMonth = computed<string[]>(() => {
   return dayjs.monthsShort();
@@ -43,9 +50,9 @@ const selectListOfYear = computed(() => {
   return selectedYears;
 });
 
-const isActiveYear = (year: number) => {
-  return { "active-year": year === dayjs().year() };
-};
+const isActiveYear = computed(() => {
+  return (year: number) => (year === dayjs().year() ? "active-year" : null);
+});
 
 const scrollToCurrentYear = () => {
   const containerElement = selectorContainer.value;
@@ -66,13 +73,20 @@ const selectYears = (firstYear: number, lastYear: number) => {
   return selectedYears;
 };
 
-const openMonthSelector = () => {
-  isYearOrMonth.value = true;
+const setYearAndMoveToMonth = (year: number) => {
+  newSelectedData.year = year;
+  isYearOrMonthSelector.value = true;
+};
+
+const setMonth = (monthId: number) => {
+  newSelectedData.month = monthId;
+  setDate.value = {...newSelectedData};
+  closeDataSelector();   
 };
 
 const closeDataSelector = () => {
   isDateSelector.value = false;
-  isYearOrMonth.value = false;
+  isYearOrMonthSelector.value = false;
 };
 onClickOutside(selectorContainer, closeDataSelector);
 </script>

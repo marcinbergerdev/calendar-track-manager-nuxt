@@ -4,16 +4,16 @@
       <CalendarDateIndicator
         @previous="setPreviousMonth"
         @next="setNextMonth"
-        :updated-date="updateCurrentDate"
+        :updated-date="updateCurrentData"
       ></CalendarDateIndicator>
 
       <div class="calendar-days">
         <CalendarWeekdays></CalendarWeekdays>
 
         <CalendarDaysOfTheMonth
-          :previous-month="updatePreviousMonth"
-          :current-month="updateCurrentDate"
-          :next-month="updateNextMonth"
+          :previous-month="updatePreviousData"
+          :current-month="updateCurrentData"
+          :next-month="updateNextData"
         ></CalendarDaysOfTheMonth>
       </div>
     </section>
@@ -21,31 +21,53 @@
 </template>
 
 <script setup lang="ts">
+const dateSelector = useSelectedData();
+
 const dayjs = useDayjs();
-const monthCounter = ref(0);
 
-const updatePreviousMonth = computed(() => {
-  const monthQuantity = 1;
-  return dayjs().add(monthCounter.value - monthQuantity, "month"); 
-});
-const updateCurrentDate = computed(() => {
-  return dayjs().add(monthCounter.value, "month");
-});
-const updateNextMonth = computed(() => {
-  const monthQuantity = 1;
-  return dayjs().add(monthCounter.value + monthQuantity, "month");
+const updatePreviousData = computed(() => {
+  const date = dateSelector.value;
+  const monthCounter = -1;
+  return updateDate(date.year, date.month, monthCounter);
 });
 
-const changeDate = (increment: number) => {
-  monthCounter.value += increment;
+const updateCurrentData = computed(() => {
+  const date = dateSelector.value;
+  const monthCounter = 0;
+  return updateDate(date.year, date.month, monthCounter);
+});
+
+const updateNextData = computed(() => {
+  const date = dateSelector.value;
+  const monthCounter = 1;
+  return updateDate(date.year, date.month, monthCounter);
+});
+
+const updateDate = (year: number | null, month: number, monthCounter: number) => {
+  if (!!year) {
+    return setDateFromSelector(year, month, monthCounter);
+  }
+  return changeDate(monthCounter, month);
+};
+
+const setDateFromSelector = (year: number, month: number, monthCounter: number) => {
+  return dayjs().set("year", year).set("month", month).add(monthCounter, "month");
+};
+
+const changeDate = (monthCounter: number, month: number) => {
+  return dayjs().add(monthCounter + month, "month");
 };
 
 const setPreviousMonth = () => {
-  changeDate(-1);
+  changeMonth(-1);
 };
 
 const setNextMonth = () => {
-  changeDate(1);
+  changeMonth(1);
+};
+
+const changeMonth = (increment: number) => {
+  dateSelector.value.month += increment;
 };
 </script>
 

@@ -26,3 +26,8 @@ export type Extracted = {
    month: string;
    year: string;
 };
+
+export type Selected = {
+   month: number;
+   year: number | null;
+};
