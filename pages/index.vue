@@ -45,14 +45,14 @@ const updateDate = (monthCounter: number) => {
   if (!!date.year) {
     return setDateFromSelector(date.year, date.month, monthCounter);
   }
-  return changeDate(monthCounter, date.month);
+  return setDate(monthCounter, date.month);
 };
 
 const setDateFromSelector = (year: number, month: number, monthCounter: number) => {
   return dayjs().set("year", year).set("month", month).add(monthCounter, "month");
 };
 
-const changeDate = (monthCounter: number, month: number) => {
+const setDate = (monthCounter: number, month: number) => {
   return dayjs().add(monthCounter + month, "month");
 };
 

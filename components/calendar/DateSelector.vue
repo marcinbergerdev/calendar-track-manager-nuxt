@@ -36,6 +36,10 @@ const selectorContainer = ref<HTMLElement | null>(null);
 const isYearOrMonthSelector = ref(false);
 const newSelectedData = { month: 0, year: 0 };
 
+const isActiveYear = computed(() => {
+  return (year: number) => (year === dayjs().year() ? "active-year" : null);
+});
+
 const selectedMonth = computed<string[]>(() => {
   return dayjs.monthsShort();
 });
@@ -49,10 +53,6 @@ const selectListOfYear = computed(() => {
 
   const selectedYears = selectYears(firstYear, lastYear);
   return selectedYears;
-});
-
-const isActiveYear = computed(() => {
-  return (year: number) => (year === dayjs().year() ? "active-year" : null);
 });
 
 const scrollToCurrentYear = () => {
