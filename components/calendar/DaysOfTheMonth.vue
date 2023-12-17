@@ -9,6 +9,7 @@
           mode="border-calendar-day"
           class="days-list__day"
           :class="setClasses(isActive, isCurrent, weekdayId)"
+          @click="selectDay(id, day, weekdayId)"
         >
           {{ day }}
         </BaseButton>
@@ -94,17 +95,6 @@ const setNextDays = (amountOfPreviousAndCurrentDays: Day[], nextMonth: Dayjs) =>
   return selectedDays;
 };
 
-const setWeekdayId = (day: Dayjs) => {
-  const weekdayId: number = dayjs(day).day();
-  const dayId: number = weekdayId <= 0 ? 7 : weekdayId;
-  return dayId;
-};
-
-const setCurrentDay = (id: string) => {
-  const currentDate = dayjs().format("YYYY-MM-DD");
-  return currentDate === id ? true : false;
-};
-
 const setDays = (
   month: Dayjs,
   daysInMonth: number,
@@ -130,26 +120,51 @@ const setDays = (
   }
   return days;
 };
+
+const setWeekdayId = (day: Dayjs) => {
+  const weekdayId: number = dayjs(day).day();
+  const dayId: number = weekdayId <= 0 ? 7 : weekdayId;
+  return dayId;
+};
+
+const setCurrentDay = (id: string) => {
+  const currentDate = dayjs().format("YYYY-MM-DD");
+  return currentDate === id ? true : false;
+};
+
+const selectDay = (id: string, day: string, weekdayId: number) => {
+  console.log(id);
+  console.log(day);
+  console.log(weekdayId);
+};
 </script>
 
 <style scoped lang="scss">
 .days-list {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  grid-template-rows: repeat(7, 1fr);
-  gap: 1.1rem;
-  margin-top: 2rem;
+  grid-template-rows: repeat(6, 1fr);
+  gap: 0.8rem;
+  margin: 2rem 0 4rem 0;
+
+  @media (width >= 370px) {
+    gap: 1.1rem;
+  }
 
   &__day {
     display: grid;
     place-items: center;
     width: 100%;
     height: 2.9rem;
-    font-size: 1.4rem;
+    font-size: 1.6rem;
 
-    @media (width >= 570px) {
-      height: 4.2rem;
+    @media (width >= 370px) {
+      height: 3.5rem;
       font-size: 2rem;
+    }
+
+    @media (width >= 768px) {
+      height: 4.2rem;
     }
   }
 }
