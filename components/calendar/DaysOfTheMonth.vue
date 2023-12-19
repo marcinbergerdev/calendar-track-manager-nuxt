@@ -16,6 +16,10 @@
       </li>
     </ul>
   </Transition>
+
+  <Teleport to="body">
+    <CalendarDayEditor></CalendarDayEditor>
+  </Teleport>
 </template>
 
 <script setup lang="ts">
@@ -106,7 +110,7 @@ const setDays = (
   for (let d = startingDay; d <= daysInMonth; d++) {
     const dayId: Dayjs = month.date(d);
     const id: string = dayId.format("YYYY-MM-DD");
-    const day: string = dayId.format("D");
+    const day: number = Number(dayId.format("D"));
     const selectedWeekDayId: number = setWeekdayId(dayId);
     const isCurrent = setCurrentDay(id);
 
@@ -122,7 +126,7 @@ const setDays = (
 };
 
 const setWeekdayId = (day: Dayjs) => {
-  const weekdayId: number = dayjs(day).day();
+  const weekdayId: number = day.day();
   const dayId: number = weekdayId <= 0 ? 7 : weekdayId;
   return dayId;
 };
@@ -132,11 +136,7 @@ const setCurrentDay = (id: string) => {
   return currentDate === id ? true : false;
 };
 
-const selectDay = (id: string, day: string, weekdayId: number) => {
-  console.log(id);
-  console.log(day);
-  console.log(weekdayId);
-};
+const selectDay = (id: string, day: number, weekdayId: number) => {};
 </script>
 
 <style scoped lang="scss">

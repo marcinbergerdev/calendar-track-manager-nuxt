@@ -102,7 +102,7 @@ const switchDarkModeHandler = () => {
 }
 // default style for hamburger
 
-// hamburger animation only mobile side (menu mobile)
+// hamburger animation only mobile (menu mobile)
 .mobile-nav-container {
   .nav-options {
     .hamburger-inner {

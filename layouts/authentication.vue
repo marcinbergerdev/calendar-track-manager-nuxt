@@ -1,12 +1,12 @@
 <template>
   <div class="auth-container">
     <BaseLoadingSpinner v-if="isLoadingSpinner" />
-    <BaseModal
+    <BaseFormModal
       v-if="modal.isModal"
       :title="modal.values.title"
       :content="modal.values.content"
       :is-confirm="modal.values.confirm"
-    ></BaseModal>
+    ></BaseFormModal>
 
     <AuthHeader />
 

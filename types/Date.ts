@@ -1,5 +1,5 @@
 export type CurrentDay = {
-   day: string;
+   day: number;
    name: string;
 };
 
@@ -15,13 +15,13 @@ export type Day = {
    isActive: boolean;
    isCurrent: boolean;
    id: string;
-   day: string;
+   day: number;
    weekdayId: number;
 };
 
 export type Extracted = {
    monthId: number;
-   day: string;
+   day: number;
    name: string;
    month: string;
    year: string;

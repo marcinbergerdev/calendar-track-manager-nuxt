@@ -20,14 +20,10 @@ export const useModal = defineStore("dialog", () => {
    };
 
    const resetValues = () => {
-      const resetValue: Modal = reactive({
-         title: "",
-         content: "",
-         confirm: false,
-      });
-      setValues(resetValue);
+      values.title = "";
+      values.content = "";
+      values.confirm = false;
    };
-
 
    return { isModal, values, setValues, resetValues };
 });
