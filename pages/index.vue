@@ -82,6 +82,10 @@ const changeMonth = (increment: number) => {
     padding: 2.5rem 3.5rem;
     border-radius: 4rem;
   }
+
+  @media (width >= 950px) {
+    position: relative;
+  }
 }
 
 .calendar-days {

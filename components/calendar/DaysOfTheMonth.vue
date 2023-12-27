@@ -9,7 +9,7 @@
           mode="border-calendar-day"
           class="days-list__day"
           :class="setClasses(isActive, isCurrent, weekdayId)"
-          @click="selectDay(id, day, weekdayId)"
+          @click="selectDayAndOpenEditor(id, day, weekdayId)"
         >
           {{ day }}
         </BaseButton>
@@ -17,17 +17,16 @@
     </ul>
   </Transition>
 
-  <Teleport to="body">
-    <CalendarDayEditor></CalendarDayEditor>
-  </Teleport>
+  <CalendarDayEditor></CalendarDayEditor>
 </template>
 
 <script setup lang="ts">
 import { Dayjs } from "dayjs";
 import { Day } from "@/types/Date";
 
-const monthAnimationName = useMonthAnimationName();
 const dayjs = useDayjs();
+const isEditor = useEditorVisibility();
+const monthAnimationName = useMonthAnimationName();
 
 const { previousMonth, currentMonth, nextMonth } = defineProps<{
   previousMonth: Dayjs;
@@ -50,6 +49,7 @@ const setClasses = computed(() => {
     if (isCurrent) {
       classes.push("active-current-day");
     }
+
     return classes;
   };
 });
@@ -136,7 +136,9 @@ const setCurrentDay = (id: string) => {
   return currentDate === id ? true : false;
 };
 
-const selectDay = (id: string, day: number, weekdayId: number) => {};
+const selectDayAndOpenEditor = (id: string, day: number, weekdayId: number) => {
+  isEditor.value = !isEditor.value;
+};
 </script>
 
 <style scoped lang="scss">
@@ -180,5 +182,12 @@ const selectDay = (id: string, day: number, weekdayId: number) => {};
 .active-current-day {
   background-color: var(--text-clr);
   color: var(--black);
+}
+
+.selected-day {
+  @media (width >= 768px) {
+    box-shadow: 0px 0px 8px rgba(#fff, 0.8);
+    border: 2px solid var(--text-clr);
+  }
 }
 </style>

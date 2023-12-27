@@ -21,7 +21,7 @@ export type Day = {
 
 export type Extracted = {
    monthId: number;
-   day: number;
+   day: string;
    name: string;
    month: string;
    year: string;

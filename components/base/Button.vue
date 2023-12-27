@@ -19,7 +19,8 @@ defineProps<{
 <style scoped lang="scss">
 .empty,
 .border,
-.filled {
+.filled,
+.filled-lt {
   border-radius: 1.5rem;
   transition: 0.15s ease-in-out;
 }
@@ -48,11 +49,9 @@ defineProps<{
   }
 }
 
-.filled {
-  background-color: var(--primary-clr);
-  color: var(--text-clr);
+.filled,
+.filled-lt {
   opacity: 0.7;
-  transition: 0.15s ease-in-out;
 
   &:hover {
     opacity: 1;
@@ -60,20 +59,28 @@ defineProps<{
   }
 }
 
-.border-calendar-day{
+.filled {
+  background-color: var(--primary-clr);
+  color: var(--text-clr);
+}
+.filled-lt {
+  background-color: var(--bg-clr);
+}
+
+.border-calendar-day {
   color: var(--text-clr);
   border-radius: 0.5rem;
   border: 1px solid var(--text-clr);
 
   @media (width >= 570px) {
-      border-radius: 1.3rem;
-    }
+    border-radius: 1.3rem;
+  }
 
-    @media (width >= 768px) {
-      &:hover {
-        box-shadow: 0px 0px 8px rgba(#fff, 0.8);
-        border: 2px solid var(--text-clr);
-      }
+  @media (width >= 768px) {
+    &:hover {
+      box-shadow: 0px 0px 8px rgba(#fff, 0.8);
+      border: 2px solid var(--text-clr);
     }
+  }
 }
 </style>

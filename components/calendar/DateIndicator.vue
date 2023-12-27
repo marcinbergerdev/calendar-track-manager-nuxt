@@ -40,7 +40,6 @@
 <script setup lang="ts">
 import { Dayjs } from "dayjs";
 import { Extracted } from "@/types/Date";
-import { useMonthAnimationName } from "~/composables/useState";
 
 const isDateSelector = useDateSelectorVisibility();
 const monthAnimationName = useMonthAnimationName();
@@ -55,6 +54,7 @@ const emit = defineEmits<{
 const { updatedDate } = defineProps<{
   updatedDate: Dayjs;
 }>();
+
 
 const extractedDate = computed<Extracted>(() => {
   return {
@@ -123,3 +123,4 @@ const openDateSelector = () => (isDateSelector.value = true);
   }
 }
 </style>
+~/composables/states
