@@ -8,7 +8,7 @@
         <BaseButton
           mode="border-calendar-day"
           class="days-list__day"
-          :class="setClasses(isActive, isCurrent, weekdayId)"
+          :class="setClasses(id, isActive, isCurrent, weekdayId)"
           @click="selectDayAndOpenEditor(id, day, weekdayId)"
         >
           {{ day }}
@@ -27,6 +27,7 @@ import { Day } from "@/types/Date";
 const dayjs = useDayjs();
 const isEditor = useEditorVisibility();
 const monthAnimationName = useMonthAnimationName();
+const selectedDayId = useSelectedDayId();
 
 const { previousMonth, currentMonth, nextMonth } = defineProps<{
   previousMonth: Dayjs;
@@ -34,20 +35,30 @@ const { previousMonth, currentMonth, nextMonth } = defineProps<{
   nextMonth: Dayjs;
 }>();
 
+const selectDayAndOpenEditor = (id: string, day: number, weekdayId: number) => {
+  isEditor.value = !isEditor.value;
+  selectedDayId.value = id;
+};
+
 const setClasses = computed(() => {
-  return (isActive: boolean, isCurrent: boolean, weekdayId: number) => {
+  return (id: string, isActive: boolean, isCurrent: boolean, weekdayId: number) => {
     const classes = [];
+    const lastWeekdayId = 7;
 
     if (!isActive) {
       classes.push("inactive-day");
     }
 
-    if (weekdayId === 7) {
+    if (weekdayId === lastWeekdayId) {
       classes.push("active-weekdays");
     }
 
     if (isCurrent) {
       classes.push("active-current-day");
+    }
+
+    if (selectedDayId.value === id) {
+      classes.push("selected-day");
     }
 
     return classes;
@@ -134,10 +145,6 @@ const setWeekdayId = (day: Dayjs) => {
 const setCurrentDay = (id: string) => {
   const currentDate = dayjs().format("YYYY-MM-DD");
   return currentDate === id ? true : false;
-};
-
-const selectDayAndOpenEditor = (id: string, day: number, weekdayId: number) => {
-  isEditor.value = !isEditor.value;
 };
 </script>
 

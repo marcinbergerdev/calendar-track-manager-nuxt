@@ -17,6 +17,7 @@ export type Day = {
    id: string;
    day: number;
    weekdayId: number;
+   isSelected?: boolean;
 };
 
 export type Extracted = {
