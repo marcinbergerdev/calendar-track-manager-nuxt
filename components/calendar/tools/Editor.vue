@@ -1,5 +1,5 @@
 <template>
-  <div class="editor-container" v-if="isEditor">
+  <div class="editor-container">
     <section class="editor-title">
       <input class="editor-title__input" type="text" placeholder="Tytuł..." />
 
@@ -82,8 +82,7 @@
 
 <script setup lang="ts">
 const [isNotification, toggleNotification] = useToggle();
-const isEditor = useEditorVisibility();
-const selectedDayId = useSelectedDayId();
+
 
 const calculateNotificationStatus = computed(() => {
   return !isNotification.value ? "checked" : "not-checked";
@@ -96,8 +95,7 @@ const setNotificationStatus = () => {
 const saveEvent = () => {};
 
 const closeEditor = () => {
-  isEditor.value = false;
-  selectedDayId.value = false;
+
 };
 </script>
 
@@ -126,7 +124,7 @@ const closeEditor = () => {
     right: -13%;
     transform: translate(13%, -50%);
     border: 2px solid var(--bg-clr);
-    border-radius: 2rem;
+    border-radius: 1.5rem;
   }
 }
 

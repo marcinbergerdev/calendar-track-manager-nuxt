@@ -2,6 +2,7 @@
   <Transition :name="monthAnimationName" mode="out-in">
     <ul class="days-list" :key="currentMonth.month()">
       <li
+        class="day-element-container"
         v-for="{ isActive, isCurrent, id, day, weekdayId } in calculateDaysInMonth"
         :key="id"
       >
@@ -13,11 +14,14 @@
         >
           {{ day }}
         </BaseButton>
+
+        <CalendarToolsOptions v-if="false"></CalendarToolsOptions>
       </li>
     </ul>
   </Transition>
 
-  <CalendarDayEditor></CalendarDayEditor>
+  <CalendarToolsEditor v-if="false"></CalendarToolsEditor>
+  <CalendarToolsEventsList v-if="false"></CalendarToolsEventsList>
 </template>
 
 <script setup lang="ts">
@@ -25,20 +29,13 @@ import { Dayjs } from "dayjs";
 import { Day } from "@/types/Date";
 
 const dayjs = useDayjs();
-const isEditor = useEditorVisibility();
 const monthAnimationName = useMonthAnimationName();
-const selectedDayId = useSelectedDayId();
 
 const { previousMonth, currentMonth, nextMonth } = defineProps<{
   previousMonth: Dayjs;
   currentMonth: Dayjs;
   nextMonth: Dayjs;
 }>();
-
-const selectDayAndOpenEditor = (id: string, day: number, weekdayId: number) => {
-  isEditor.value = !isEditor.value;
-  selectedDayId.value = id;
-};
 
 const setClasses = computed(() => {
   return (id: string, isActive: boolean, isCurrent: boolean, weekdayId: number) => {
@@ -55,10 +52,6 @@ const setClasses = computed(() => {
 
     if (isCurrent) {
       classes.push("active-current-day");
-    }
-
-    if (selectedDayId.value === id) {
-      classes.push("selected-day");
     }
 
     return classes;
@@ -178,6 +171,10 @@ const setCurrentDay = (id: string) => {
   }
 }
 
+.day-element-container {
+  position: relative;
+}
+
 .active-weekdays {
   color: var(--red);
 }
@@ -192,9 +189,9 @@ const setCurrentDay = (id: string) => {
 }
 
 .selected-day {
-  @media (width >= 768px) {
-    box-shadow: 0px 0px 8px rgba(#fff, 0.8);
-    border: 2px solid var(--text-clr);
-  }
+  // @media (width >= 768px) {
+  box-shadow: 0px 0px 8px rgba(#fff, 0.8);
+  border: 2px solid var(--text-clr);
+  // }
 }
 </style>

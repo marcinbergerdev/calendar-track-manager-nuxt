@@ -32,6 +32,7 @@ const dayjs = useDayjs();
 const isDateSelector = useDateSelectorVisibility();
 const setDate = useSelectedData();
 const monthAnimationName = useMonthAnimationName();
+
 const selectorContainer = ref<HTMLElement | null>(null);
 const isYearOrMonthSelector = ref(false);
 const newSelectedData = { month: 0, year: 0 };
