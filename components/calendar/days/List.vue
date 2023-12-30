@@ -1,22 +1,17 @@
 <template>
   <Transition :name="monthAnimationName" mode="out-in">
     <ul class="days-list" :key="currentMonth.month()">
-      <li
-        class="day-element-container"
-        v-for="{ isActive, isCurrent, id, day, weekdayId } in calculateDaysInMonth"
+      <CalendarDaysItem
+        v-for="({id, day, weekdayId, isActive, isCurrent}) in calculateDaysInMonth"
         :key="id"
-      >
-        <BaseButton
-          mode="border-calendar-day"
-          class="days-list__day"
-          :class="setClasses(id, isActive, isCurrent, weekdayId)"
-          @click="selectDayAndOpenEditor(id, day, weekdayId)"
-        >
-          {{ day }}
-        </BaseButton>
-
-        <CalendarToolsOptions v-if="false"></CalendarToolsOptions>
-      </li>
+        :id="id"
+        :day="day"
+        :weekdayId="weekdayId"
+        :is-active="isActive"
+        :is-current="isCurrent"
+        :is-selected="id === selectedDay"
+        @select-day="selectDayAndOpenEditor"
+      ></CalendarDaysItem>
     </ul>
   </Transition>
 
@@ -30,33 +25,31 @@ import { Day } from "@/types/Date";
 
 const dayjs = useDayjs();
 const monthAnimationName = useMonthAnimationName();
+const selectedDay = useSelectedDayId();
+
+
+const selectDayAndOpenEditor = (id: string) => {
+  selectedDay.value = id;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 const { previousMonth, currentMonth, nextMonth } = defineProps<{
   previousMonth: Dayjs;
   currentMonth: Dayjs;
   nextMonth: Dayjs;
 }>();
-
-const setClasses = computed(() => {
-  return (id: string, isActive: boolean, isCurrent: boolean, weekdayId: number) => {
-    const classes = [];
-    const lastWeekdayId = 7;
-
-    if (!isActive) {
-      classes.push("inactive-day");
-    }
-
-    if (weekdayId === lastWeekdayId) {
-      classes.push("active-weekdays");
-    }
-
-    if (isCurrent) {
-      classes.push("active-current-day");
-    }
-
-    return classes;
-  };
-});
 
 const calculateDaysInMonth = computed<Day[]>(() => {
   const selectedPreviousDays = setPreviousDays(previousMonth);
@@ -119,11 +112,11 @@ const setDays = (
     const isCurrent = setCurrentDay(id);
 
     days.push({
-      isActive: isActive,
-      isCurrent: isCurrent,
       id: id,
       day: day,
       weekdayId: selectedWeekDayId,
+      isActive: isActive,
+      isCurrent: isCurrent,
     });
   }
   return days;
@@ -152,46 +145,5 @@ const setCurrentDay = (id: string) => {
   @media (width >= 370px) {
     gap: 1.1rem;
   }
-
-  &__day {
-    display: grid;
-    place-items: center;
-    width: 100%;
-    height: 2.9rem;
-    font-size: 1.6rem;
-
-    @media (width >= 370px) {
-      height: 3.5rem;
-      font-size: 2rem;
-    }
-
-    @media (width >= 768px) {
-      height: 4.2rem;
-    }
-  }
-}
-
-.day-element-container {
-  position: relative;
-}
-
-.active-weekdays {
-  color: var(--red);
-}
-
-.inactive-day {
-  opacity: 0.4;
-}
-
-.active-current-day {
-  background-color: var(--text-clr);
-  color: var(--black);
-}
-
-.selected-day {
-  // @media (width >= 768px) {
-  box-shadow: 0px 0px 8px rgba(#fff, 0.8);
-  border: 2px solid var(--text-clr);
-  // }
 }
 </style>

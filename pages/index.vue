@@ -8,13 +8,13 @@
       ></CalendarDateIndicator>
 
       <div class="calendar-days">
-        <CalendarWeekdays></CalendarWeekdays>
+        <CalendarDaysWeekdays></CalendarDaysWeekdays>
 
-        <CalendarDaysOfTheMonth
+        <CalendarDaysList
           :previous-month="updatePreviousData"
           :current-month="updateCurrentData"
           :next-month="updateNextData"
-        ></CalendarDaysOfTheMonth>
+        ></CalendarDaysList>
       </div>
     </section>
   </ClientOnly>

@@ -12,12 +12,11 @@ export type Date = {
 };
 
 export type Day = {
-   isActive: boolean;
-   isCurrent: boolean;
    id: string;
    day: number;
    weekdayId: number;
-   isSelected?: boolean;
+   isActive: boolean;
+   isCurrent: boolean;
 };
 
 export type Extracted = {

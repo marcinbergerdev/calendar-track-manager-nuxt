@@ -15,8 +15,8 @@ export const useLoadingSpinner = () =>
 // export const useEditorOptionsVisibility = () =>
 //    useState<boolean>("editorOptionsVisibility", () => false);
 
-// export const useSelectedDayId = () =>
-//    useState<string | boolean>("selectedDayId", () => false);
+export const useSelectedDayId = () =>
+   useState<string | boolean>("selectedDayId", () => false);
 
 export const useMonthAnimationName = () =>
    useState<"next" | "previous">("monthAnimationName", () => "next");
