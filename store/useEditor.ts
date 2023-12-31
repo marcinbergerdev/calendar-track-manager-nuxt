@@ -16,6 +16,7 @@ export const useEditor = defineStore("editor", () => {
       isEditorOptions.value =
          !isEditorOptions.value ||
          isSelectedOtherDay.value(selectedDay.value, id);
+
       selectedDay.value = id;
    };
 
