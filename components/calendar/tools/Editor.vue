@@ -81,9 +81,9 @@
 </template>
 
 <script setup lang="ts">
+import { useEditor } from "../../../store/useEditor";
+const editor = useEditor();
 const [isNotification, toggleNotification] = useToggle();
-const selectedDay = useSelectedDayId();
-const isEditor = useEditorVisibility();
 
 const calculateNotificationStatus = computed(() => {
   return !isNotification.value ? "checked" : "not-checked";
@@ -94,8 +94,8 @@ const setNotificationStatus = () => {
 };
 
 const closeEditor = () => {
-  selectedDay.value = null;
-  isEditor.value = false;
+  editor.selectedDay = null;
+  editor.isEditor = false;
 };
 
 const saveEvent = () => {};
@@ -192,7 +192,6 @@ const saveEvent = () => {};
     &-icon {
       display: grid;
       place-items: center;
-
       width: 100%;
       height: 100%;
     }
@@ -223,9 +222,11 @@ const saveEvent = () => {};
 }
 
 .not-checked {
+  padding: 0.2rem;
   transform: translate(-15px, -50%);
   background-color: var(--error-clr);
 }
+
 .editor-text {
   flex: 1;
   display: flex;

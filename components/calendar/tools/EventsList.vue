@@ -11,12 +11,12 @@
 </template>
 
 <script setup lang="ts">
-const selectedDay = useSelectedDayId();
-const isEvent = useEventVisibility();
+import { useEditor } from "../../../store/useEditor";
+const editor = useEditor();
 
 const closeEventList = () => {
-  selectedDay.value = null;
-  isEvent.value = false;
+  editor.selectedDay = null;
+  editor.isEvent = false;
 };
 </script>
 

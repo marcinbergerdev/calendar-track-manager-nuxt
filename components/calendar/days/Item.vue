@@ -4,18 +4,18 @@
       mode="border-calendar-day"
       class="day-item"
       :class="setClasses"
-      @click="selectDayAndOpenEditor"
+      @click="selectDay"
     >
       {{ day }}
     </BaseButton>
 
-    <CalendarToolsOptions v-if="isSelected && isEditorOptions"></CalendarToolsOptions>
+    <CalendarToolsOptions v-if="isSelected && editor.isEditorOptions"></CalendarToolsOptions>
   </li>
 </template>
 
 <script setup lang="ts">
-const isEditorOptions = useEditorOptionsVisibility();
-const selectedDay = useSelectedDayId();
+import { useEditor } from "../../../store/useEditor";
+const editor = useEditor();
 
 const props = defineProps<{
   id: string;
@@ -50,16 +50,8 @@ const setClasses = computed(() => {
   return classes;
 });
 
-const isSelectedOtherDay = computed(() => {
-  return (selectedDay: string | null, id: string): boolean => {
-    return selectedDay !== id;
-  };
-});
-
-const selectDayAndOpenEditor = () => {
-  isEditorOptions.value =
-    !isEditorOptions.value || isSelectedOtherDay.value(selectedDay.value, id.value);
-  selectedDay.value = id.value;
+const selectDay = () => {
+  editor.selectDayAndOpenEditor(id.value);
 };
 </script>
 

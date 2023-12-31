@@ -16,27 +16,22 @@
 </template>
 
 <script setup lang="ts">
-const isEditorOptions = useEditorOptionsVisibility();
-const isEditor = useEditorVisibility();
-const isEvent = useEventVisibility();
+import { useEditor } from "../../../store/useEditor";
+const editor = useEditor();
 
 const selectOptions = (option: boolean) => {
   option ? openEditor() : openEventList();
-  closeOptions();
+  editor.closeOptions();
 };
 
 const openEditor = () => {
-  if (isEvent.value) isEvent.value = false;
-  isEditor.value = true;
+  if (editor.isEvent) editor.isEvent = false;
+  editor.isEditor = true;
 };
 
 const openEventList = () => {
-  if (isEditor.value) isEditor.value = false;
-  isEvent.value = true;
-};
-
-const closeOptions = () => {
-  isEditorOptions.value = false;
+  if (editor.isEditor) editor.isEditor = false;
+  editor.isEvent = true;
 };
 </script>
 

@@ -9,24 +9,23 @@
         :weekdayId="weekdayId"
         :is-active="isActive"
         :is-current="isCurrent"
-        :is-selected="id === selectedDay"
+        :is-selected="id === editor.selectedDay"
       ></CalendarDaysItem>
     </ul>
   </Transition>
 
-  <CalendarToolsEditor v-if="isEditor"></CalendarToolsEditor>
-  <CalendarToolsEventsList v-if="isEvent"></CalendarToolsEventsList>
+  <CalendarToolsEditor v-if="editor.isEditor"></CalendarToolsEditor>
+  <CalendarToolsEventsList v-if="editor.isEvent"></CalendarToolsEventsList>
 </template>
 
 <script setup lang="ts">
 import { Dayjs } from "dayjs";
 import { Day } from "@/types/Date";
+import { useEditor } from "../../../store/useEditor";
 
 const dayjs = useDayjs();
 const monthAnimationName = useMonthAnimationName();
-const selectedDay = useSelectedDayId();
-const isEditor = useEditorVisibility();
-const isEvent = useEventVisibility();
+const editor = useEditor();
 
 const { previousMonth, currentMonth, nextMonth } = defineProps<{
   previousMonth: Dayjs;
