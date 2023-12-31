@@ -9,14 +9,17 @@ export const useDateSelectorVisibility = () =>
 export const useLoadingSpinner = () =>
    useState<boolean>("loadingSpinner", () => false);
 
-// export const useEditorVisibility = () =>
-//    useState<boolean>("editorVisibility", () => false);
-
-// export const useEditorOptionsVisibility = () =>
-//    useState<boolean>("editorOptionsVisibility", () => false);
-
 export const useSelectedDayId = () =>
-   useState<string | boolean>("selectedDayId", () => false);
+   useState<string | null>("selectedDayId", () => null);
+
+export const useEventVisibility = () =>
+   useState<boolean>("eventVisibility", () => false);
+
+export const useEditorVisibility = () =>
+   useState<boolean>("editorVisibility", () => false);
+
+export const useEditorOptionsVisibility = () =>
+   useState<boolean>("editorOptionsVisibility", () => false);
 
 export const useMonthAnimationName = () =>
    useState<"next" | "previous">("monthAnimationName", () => "next");

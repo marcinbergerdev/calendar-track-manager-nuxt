@@ -2,7 +2,7 @@
   <Transition :name="monthAnimationName" mode="out-in">
     <ul class="days-list" :key="currentMonth.month()">
       <CalendarDaysItem
-        v-for="({id, day, weekdayId, isActive, isCurrent}) in calculateDaysInMonth"
+        v-for="{ id, day, weekdayId, isActive, isCurrent } in calculateDaysInMonth"
         :key="id"
         :id="id"
         :day="day"
@@ -10,13 +10,12 @@
         :is-active="isActive"
         :is-current="isCurrent"
         :is-selected="id === selectedDay"
-        @select-day="selectDayAndOpenEditor"
       ></CalendarDaysItem>
     </ul>
   </Transition>
 
-  <CalendarToolsEditor v-if="false"></CalendarToolsEditor>
-  <CalendarToolsEventsList v-if="false"></CalendarToolsEventsList>
+  <CalendarToolsEditor v-if="isEditor"></CalendarToolsEditor>
+  <CalendarToolsEventsList v-if="isEvent"></CalendarToolsEventsList>
 </template>
 
 <script setup lang="ts">
@@ -26,24 +25,8 @@ import { Day } from "@/types/Date";
 const dayjs = useDayjs();
 const monthAnimationName = useMonthAnimationName();
 const selectedDay = useSelectedDayId();
-
-
-const selectDayAndOpenEditor = (id: string) => {
-  selectedDay.value = id;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
+const isEditor = useEditorVisibility();
+const isEvent = useEventVisibility();
 
 const { previousMonth, currentMonth, nextMonth } = defineProps<{
   previousMonth: Dayjs;

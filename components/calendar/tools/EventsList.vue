@@ -4,11 +4,21 @@
       <CalendarToolsEventsItem></CalendarToolsEventsItem>
     </ul>
 
-    <BaseButton mode="filled-lt" class="events-exit">Wyjdź</BaseButton>
+    <BaseButton mode="filled-lt" class="events-exit" @click="closeEventList"
+      >Wyjdź</BaseButton
+    >
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const selectedDay = useSelectedDayId();
+const isEvent = useEventVisibility();
+
+const closeEventList = () => {
+  selectedDay.value = null;
+  isEvent.value = false;
+};
+</script>
 
 <style scoped lang="scss">
 .events-container {

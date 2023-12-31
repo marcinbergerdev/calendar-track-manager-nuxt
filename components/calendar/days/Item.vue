@@ -4,16 +4,19 @@
       mode="border-calendar-day"
       class="day-item"
       :class="setClasses"
-      @click="$emit('select-day', id)"
+      @click="selectDayAndOpenEditor"
     >
       {{ day }}
     </BaseButton>
 
-    <CalendarToolsOptions v-if="isSelected"></CalendarToolsOptions>
+    <CalendarToolsOptions v-if="isSelected && isEditorOptions"></CalendarToolsOptions>
   </li>
 </template>
 
 <script setup lang="ts">
+const isEditorOptions = useEditorOptionsVisibility();
+const selectedDay = useSelectedDayId();
+
 const props = defineProps<{
   id: string;
   day: number;
@@ -47,16 +50,17 @@ const setClasses = computed(() => {
   return classes;
 });
 
-onUpdated(() => {
-  console.log("----");
-  console.log("Update " + id.value);
-  console.log("Update " + day.value);
-  console.log("Update " + weekdayId.value);
-  console.log("Update " + isActive.value);
-  console.log("Update " + isCurrent.value);
-  console.log("Update " + isSelected.value);
-  console.log("----");
+const isSelectedOtherDay = computed(() => {
+  return (selectedDay: string | null, id: string): boolean => {
+    return selectedDay !== id;
+  };
 });
+
+const selectDayAndOpenEditor = () => {
+  isEditorOptions.value =
+    !isEditorOptions.value || isSelectedOtherDay.value(selectedDay.value, id.value);
+  selectedDay.value = id.value;
+};
 </script>
 
 <style scoped lang="scss">

@@ -82,7 +82,8 @@
 
 <script setup lang="ts">
 const [isNotification, toggleNotification] = useToggle();
-
+const selectedDay = useSelectedDayId();
+const isEditor = useEditorVisibility();
 
 const calculateNotificationStatus = computed(() => {
   return !isNotification.value ? "checked" : "not-checked";
@@ -92,11 +93,12 @@ const setNotificationStatus = () => {
   toggleNotification();
 };
 
-const saveEvent = () => {};
-
 const closeEditor = () => {
-
+  selectedDay.value = null;
+  isEditor.value = false;
 };
+
+const saveEvent = () => {};
 </script>
 
 <style scoped lang="scss">

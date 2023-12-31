@@ -3,19 +3,41 @@
     <BaseButton
       mode="empty"
       class="option-container__button editButton"
-      @click="openEditor"
+      @click="selectOptions(true)"
       >Edytuj</BaseButton
     >
-    <BaseButton mode="empty" class="option-container__button" @click="openEventList"
+    <BaseButton
+      mode="empty"
+      class="option-container__button"
+      @click="selectOptions(false)"
       >Zobacz</BaseButton
     >
   </section>
 </template>
 
 <script setup lang="ts">
-const openEditor = () => {};
+const isEditorOptions = useEditorOptionsVisibility();
+const isEditor = useEditorVisibility();
+const isEvent = useEventVisibility();
 
-const openEventList = () => {};
+const selectOptions = (option: boolean) => {
+  option ? openEditor() : openEventList();
+  closeOptions();
+};
+
+const openEditor = () => {
+  if (isEvent.value) isEvent.value = false;
+  isEditor.value = true;
+};
+
+const openEventList = () => {
+  if (isEditor.value) isEditor.value = false;
+  isEvent.value = true;
+};
+
+const closeOptions = () => {
+  isEditorOptions.value = false;
+};
 </script>
 
 <style scoped lang="scss">
