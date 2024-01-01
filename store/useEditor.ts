@@ -13,6 +13,7 @@ export const useEditor = defineStore("editor", () => {
    });
 
    const selectDayAndOpenEditor = (id: string) => {
+      closeEditorAndEvent();
       isEditorOptions.value =
          !isEditorOptions.value ||
          isSelectedOtherDay.value(selectedDay.value, id);
@@ -20,8 +21,25 @@ export const useEditor = defineStore("editor", () => {
       selectedDay.value = id;
    };
 
+   const openEditor = () => {
+      if (isEvent.value) isEvent.value = false;
+      isEditor.value = true;
+   };
+
+   const openEventList = () => {
+      if (isEditor.value) isEditor.value = false;
+      isEvent.value = true;
+   };
+
    const closeOptions = () => {
       isEditorOptions.value = false;
+   };
+
+   const closeEditorAndEvent = () => {
+      if (isEditor.value || isEvent.value) {
+         isEvent.value = false;
+         isEditor.value = false;
+      }
    };
 
    return {
@@ -30,6 +48,8 @@ export const useEditor = defineStore("editor", () => {
       isEvent,
       isEditorOptions,
       selectDayAndOpenEditor,
+      openEditor,
+      openEventList,
       closeOptions,
    };
 });

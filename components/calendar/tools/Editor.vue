@@ -64,7 +64,7 @@
 
     <section class="editor-text">
       <article class="editor-note">
-        <label class="editor-note__title" for="message">Notatka...</label>
+        <label class="editor-note__title" for="message">Notatka:</label>
         <textarea class="editor-note__message" name="message" id="message"></textarea>
       </article>
 
@@ -98,7 +98,9 @@ const closeEditor = () => {
   editor.isEditor = false;
 };
 
-const saveEvent = () => {};
+const saveEvent = () => {
+  editor.openEventList();
+};
 </script>
 
 <style scoped lang="scss">
@@ -113,25 +115,27 @@ const saveEvent = () => {};
   align-items: center;
   gap: 2rem 0;
 
-  padding: 2rem 0;
+  padding: 2rem;
   width: 100%;
   height: 100vh;
   overflow: auto;
   background-color: var(--primary-clr);
 
   @media (width >= 950px) {
-    width: 26rem;
-    height: 35rem;
     top: 50%;
     right: -13%;
     transform: translate(13%, -50%);
+
+    padding: 2rem 1.5rem;
+    width: 27rem;
+    height: 35rem;
     border: 2px solid var(--bg-clr);
     border-radius: 1.5rem;
   }
 }
 
 .editor-title {
-  width: 85%;
+  width: 100%;
 
   &__input {
     padding: 0.7rem 1rem;
@@ -214,6 +218,7 @@ const saveEvent = () => {};
 .notifications-time-selector {
   grid-area: time;
   height: 3rem;
+  padding: 0 0.2rem;
 }
 
 .checked {
@@ -233,7 +238,7 @@ const saveEvent = () => {};
   flex-direction: column;
   justify-content: space-around;
   gap: 2rem 0;
-  width: 85%;
+  width: 100%;
 }
 
 .editor-note {
@@ -253,7 +258,6 @@ const saveEvent = () => {};
     padding: 1rem;
     color: var(--text-clr);
     background-color: var(--bg-clr);
-    letter-spacing: 1px;
     outline: none;
     border: 0;
   }
@@ -267,7 +271,10 @@ const saveEvent = () => {};
   &__button {
     font-size: 2rem;
     padding: 0.5rem 1rem;
+
+    @media (width >= 950px) {
+      font-size: 1.4rem;
+    }
   }
 }
 </style>
-~/composables/states

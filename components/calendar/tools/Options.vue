@@ -20,18 +20,8 @@ import { useEditor } from "../../../store/useEditor";
 const editor = useEditor();
 
 const selectOptions = (option: boolean) => {
-  option ? openEditor() : openEventList();
+  option ? editor.openEditor() : editor.openEventList();
   editor.closeOptions();
-};
-
-const openEditor = () => {
-  if (editor.isEvent) editor.isEvent = false;
-  editor.isEditor = true;
-};
-
-const openEventList = () => {
-  if (editor.isEditor) editor.isEditor = false;
-  editor.isEvent = true;
 };
 </script>
 
@@ -40,7 +30,7 @@ const openEventList = () => {
   position: absolute;
   top: -8rem;
   left: 50%;
-  z-index: 1;
+  z-index: 20;
   transform: translateX(-50%);
   display: flex;
   flex-direction: column;

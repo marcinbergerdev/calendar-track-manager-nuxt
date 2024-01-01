@@ -1,14 +1,13 @@
 <template>
   <li class="event-element">
     <header class="event-header">
-      <h2 class="event-header__title">Kurs niemieckiego</h2>
-      <span class="event-header__time">10:00</span>
+      <h2 class="event-header__title">{{ title }}</h2>
+      <span class="event-header__time">{{ time }}</span>
     </header>
 
     <section class="event-note">
       <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut eget malesuada velit.
-        Duis mattis ante congue interdum fringilla. Aliquam erat volutpat.
+        {{ note }}
       </p>
     </section>
 
@@ -26,7 +25,7 @@
             d="M208.49 191.51a12 12 0 0 1-17 17L128 145l-63.51 63.49a12 12 0 0 1-17-17L111 128L47.51 64.49a12 12 0 0 1 17-17L128 111l63.51-63.52a12 12 0 0 1 17 17L145 128Z"
           /></svg
       ></BaseButton>
-      <BaseButton class="edit"
+      <BaseButton class="edit" @click="editor.openEditor()"
         ><svg
           class="edit-icon"
           xmlns="http://www.w3.org/2000/svg"
@@ -62,7 +61,19 @@
   </li>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useEditor } from "../../../store/useEditor";
+const editor = useEditor();
+
+defineProps<{
+  id: number;
+  title: string;
+  time: string;
+  note: string;
+  isCompleted: boolean;
+  isNotification: boolean;
+}>();
+</script>
 
 <style scoped lang="scss">
 .event-element {

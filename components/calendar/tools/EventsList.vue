@@ -1,7 +1,16 @@
 <template>
   <div class="events-container">
     <ul class="events-list">
-      <CalendarToolsEventsItem></CalendarToolsEventsItem>
+      <CalendarToolsEventsItem
+        v-for="{ id, title, time, note, isCompleted, isNotification } in events"
+        :key="id"
+        :id="id"
+        :title="title"
+        :time="time"
+        :note="note"
+        :is-completed="isCompleted"
+        :is-notification="isNotification"
+      ></CalendarToolsEventsItem>
     </ul>
 
     <BaseButton mode="filled-lt" class="events-exit" @click="closeEventList"
@@ -13,6 +22,46 @@
 <script setup lang="ts">
 import { useEditor } from "../../../store/useEditor";
 const editor = useEditor();
+
+type Event = {
+  id: number;
+  title: string;
+  time: string;
+  note: string;
+  isCompleted: boolean;
+  isNotification: boolean;
+};
+
+const events = ref<Event[]>([
+  {
+    id: 0,
+    title: "Kurs niemieckiego",
+    time: "10:00",
+    note: `Zrób notatki, pamiętaj aby dużo sie wsłuchiwać i zadawać pytania 
+    jeżeli cokolwiek bedzie dla mnie nie jasne to pytaj odrazu
+    `,
+    isCompleted: false,
+    isNotification: false,
+  },
+  {
+    id: 1,
+    title: "Trening",
+    time: "12:00",
+    note: `Zrób klate i nogi.
+    `,
+    isCompleted: false,
+    isNotification: false,
+  },
+  {
+    id: 2,
+    title: "Zamów jedzonko",
+    time: "10:00",
+    note: `Dzisij spagetti i pamietaj o dodatkowym sosie.
+    `,
+    isCompleted: false,
+    isNotification: false,
+  },
+]);
 
 const closeEventList = () => {
   editor.selectedDay = null;
