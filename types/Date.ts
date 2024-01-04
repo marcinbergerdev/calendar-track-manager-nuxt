@@ -12,8 +12,9 @@ export type Date = {
 };
 
 export type Day = {
-   id: string;
+   id: number;
    day: number;
+   year: number;
    weekdayId: number;
    isActive: boolean;
    isCurrent: boolean;
@@ -31,3 +32,20 @@ export type Selected = {
    month: number;
    year: number | null;
 };
+
+export type Event = {
+   id: number;
+   day: number;
+   title: string;
+   time: string;
+   note: string;
+   isCompleted: boolean;
+   isNotification: boolean;
+};
+
+export type SelectedDay = {
+   id: number;
+   day: number;
+   year: number;
+};
+

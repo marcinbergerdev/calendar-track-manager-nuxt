@@ -3,13 +3,10 @@
     <BaseButton
       mode="empty"
       class="option-container__button editButton"
-      @click="selectOptions(true)"
+      @click="openEditor"
       >Edytuj</BaseButton
     >
-    <BaseButton
-      mode="empty"
-      class="option-container__button"
-      @click="selectOptions(false)"
+    <BaseButton mode="empty" class="option-container__button" @click="openEventList"
       >Zobacz</BaseButton
     >
   </section>
@@ -19,9 +16,11 @@
 import { useEditor } from "../../../store/useEditor";
 const editor = useEditor();
 
-const selectOptions = (option: boolean) => {
-  option ? editor.openEditor() : editor.openEventList();
-  editor.closeOptions();
+const openEditor = () => {
+  editor.openEditor();
+};
+const openEventList = async () => {
+  editor.openEventList();
 };
 </script>
 
@@ -30,7 +29,7 @@ const selectOptions = (option: boolean) => {
   position: absolute;
   top: -8rem;
   left: 50%;
-  z-index: 20;
+  z-index: 10;
   transform: translateX(-50%);
   display: flex;
   flex-direction: column;

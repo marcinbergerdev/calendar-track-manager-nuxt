@@ -1,5 +1,13 @@
 <template>
   <div class="events-container">
+    <BaseLoadingSpinner
+      mode="event"
+      :is-background="false"
+      v-if="isLoadingSpinner"
+    ></BaseLoadingSpinner>
+
+    <p v-if="error.isError">{{ error.message }}</p>
+
     <ul class="events-list">
       <CalendarToolsEventsItem
         v-for="{ id, title, time, note, isCompleted, isNotification } in events"
@@ -13,60 +21,49 @@
       ></CalendarToolsEventsItem>
     </ul>
 
-    <BaseButton mode="filled-lt" class="events-exit" @click="closeEventList"
+    <BaseButton mode="filled-lt" class="events-exit" @click="editor.closeEditorAndEvent()"
       >Wyjdź</BaseButton
     >
   </div>
 </template>
 
 <script setup lang="ts">
-import { useEditor } from "../../../store/useEditor";
+import { Event } from "@/types/Date";
+import { useEditor } from "@/store/useEditor";
+import { useModal } from "@/store/useModal";
+
 const editor = useEditor();
+const isLoadingSpinner = ref(false);
+const error = ref<any>({
+  name: "error.name",
+  message: "",
+  isError: false,
+});
 
-type Event = {
-  id: number;
-  title: string;
-  time: string;
-  note: string;
-  isCompleted: boolean;
-  isNotification: boolean;
-};
-
-const events = ref<Event[]>([
+const events = ref<any>([
   {
     id: 0,
     title: "Kurs niemieckiego",
     time: "10:00",
-    note: `Zrób notatki, pamiętaj aby dużo sie wsłuchiwać i zadawać pytania 
+    note: `Zrób notatki, pamiętaj aby dużo sie wsłuchiwać i zadawać pytania
     jeżeli cokolwiek bedzie dla mnie nie jasne to pytaj odrazu
-    `,
-    isCompleted: false,
-    isNotification: false,
-  },
-  {
-    id: 1,
-    title: "Trening",
-    time: "12:00",
-    note: `Zrób klate i nogi.
-    `,
-    isCompleted: false,
-    isNotification: false,
-  },
-  {
-    id: 2,
-    title: "Zamów jedzonko",
-    time: "10:00",
-    note: `Dzisij spagetti i pamietaj o dodatkowym sosie.
     `,
     isCompleted: false,
     isNotification: false,
   },
 ]);
 
-const closeEventList = () => {
-  editor.selectedDay = null;
-  editor.isEvent = false;
-};
+onMounted(async () => {
+  // const selectedDay = editor.selectedDay;
+  // isLoadingSpinner.value = true;
+  // try {
+  //   const data = await getEvents(selectedDay.id, selectedDay.year);
+  //   console.log(data);
+  // } catch (err) {
+  //   error.value = err;
+  // }
+  // isLoadingSpinner.value = false;
+});
 </script>
 
 <style scoped lang="scss">
@@ -79,6 +76,7 @@ const closeEventList = () => {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: flex-end;
   gap: 1rem 0;
 
   padding: 0 0.3rem;
@@ -87,11 +85,12 @@ const closeEventList = () => {
   background-color: var(--primary-clr);
 
   @media (width >= 950px) {
-    width: 26rem;
-    height: 35rem;
     top: 50%;
     right: -13%;
     transform: translate(13%, -50%);
+
+    width: 26rem;
+    height: 35rem;
     border: 2px solid var(--bg-clr);
     border-radius: 1.5rem;
   }

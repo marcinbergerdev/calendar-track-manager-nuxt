@@ -9,7 +9,9 @@
       {{ day }}
     </BaseButton>
 
-    <CalendarToolsOptions v-if="isSelected && editor.isEditorOptions"></CalendarToolsOptions>
+    <CalendarToolsOptions
+      v-if="isSelected && editor.isEditorOptions"
+    ></CalendarToolsOptions>
   </li>
 </template>
 
@@ -18,14 +20,15 @@ import { useEditor } from "../../../store/useEditor";
 const editor = useEditor();
 
 const props = defineProps<{
-  id: string;
+  id: number;
   day: number;
+  year: number;
   weekdayId: number;
   isActive: boolean;
   isCurrent: boolean;
   isSelected: boolean;
 }>();
-const { id, day, weekdayId, isActive, isCurrent, isSelected } = toRefs(props);
+const { id, day, year, weekdayId, isActive, isCurrent, isSelected } = toRefs(props);
 
 const setClasses = computed(() => {
   const classes = [];
@@ -50,8 +53,8 @@ const setClasses = computed(() => {
   return classes;
 });
 
-const selectDay = () => {
-  editor.selectDayAndOpenEditor(id.value);
+const selectDay = () => {;
+  editor.selectDayAndOpenEditor(id.value, day.value, year.value);
 };
 </script>
 
@@ -90,10 +93,18 @@ const selectDay = () => {
   color: var(--black);
 }
 
+.event-day {
+  box-shadow: 0px 0px 8px rgba(#197f8f, 0.8);
+  border: 2px solid #197f8f;
+}
+
 .selected-day {
-  // @media (width >= 768px) {
   box-shadow: 0px 0px 8px rgba(#fff, 0.8);
   border: 2px solid var(--text-clr);
-  // }
+}
+
+.selected-day {
+  box-shadow: 0px 0px 8px rgba(#fff, 0.8);
+  border: 2px solid var(--text-clr);
 }
 </style>

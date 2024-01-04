@@ -1,11 +1,21 @@
 <template>
   <div class="editor-container">
     <section class="editor-title">
-      <input class="editor-title__input" type="text" placeholder="Tytuł..." />
+      <input
+        class="editor-title__input"
+        type="text"
+        placeholder="Tytuł..."
+        v-model.trim="eventTitle"
+      />
 
       <div class="editor-notifications-container">
         <label class="notification-switch">
-          <input class="notification-switch__input" type="checkbox" checked />
+          <input
+            class="notification-switch__input"
+            type="checkbox"
+            checked
+            v-model="isEventNotification"
+          />
           <span
             class="notification-switch__slider checked"
             @click="setNotificationStatus"
@@ -58,18 +68,26 @@
           <p class="notifications-title__text">Powiadomienia</p>
         </div>
 
-        <input class="notifications-time-selector" type="time" />
+        <input class="notifications-time-selector" type="time" v-model="eventTime" />
       </div>
     </section>
 
     <section class="editor-text">
       <article class="editor-note">
         <label class="editor-note__title" for="message">Notatka:</label>
-        <textarea class="editor-note__message" name="message" id="message"></textarea>
+        <textarea
+          class="editor-note__message"
+          name="message"
+          id="message"
+          v-model="eventNote"
+        ></textarea>
       </article>
 
       <article class="editor-actions">
-        <BaseButton mode="filled-lt" class="editor-actions__button" @click="closeEditor"
+        <BaseButton
+          mode="filled-lt"
+          class="editor-actions__button"
+          @click="editor.closeEditorAndEvent()"
           >Wyjdź</BaseButton
         >
         <BaseButton mode="filled-lt" class="editor-actions__button" @click="saveEvent"
@@ -81,9 +99,15 @@
 </template>
 
 <script setup lang="ts">
+import { Event } from "@/types/Date";
 import { useEditor } from "../../../store/useEditor";
 const editor = useEditor();
 const [isNotification, toggleNotification] = useToggle();
+
+const eventTitle = ref("");
+const eventTime = ref("");
+const eventNote = ref("");
+const isEventNotification = ref(true);
 
 const calculateNotificationStatus = computed(() => {
   return !isNotification.value ? "checked" : "not-checked";
@@ -93,13 +117,20 @@ const setNotificationStatus = () => {
   toggleNotification();
 };
 
-const closeEditor = () => {
-  editor.selectedDay = null;
-  editor.isEditor = false;
-};
+const saveEvent = async () => {
+  const selectedDay = editor.selectedDay;
 
-const saveEvent = () => {
-  editor.openEventList();
+  const eventData: Event = {
+    id: selectedDay.id,
+    day: selectedDay.day,
+    title: eventTitle.value,
+    time: eventTime.value,
+    note: eventNote.value,
+    isCompleted: false,
+    isNotification: isEventNotification.value,
+  };
+
+  await writeUserData(selectedDay.year, eventData);
 };
 </script>
 

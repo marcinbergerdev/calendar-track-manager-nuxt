@@ -1,6 +1,8 @@
 <template>
   <div class="auth-container">
-    <BaseLoadingSpinner v-if="isLoadingSpinner" />
+    <BaseLoadingSpinner v-if="isLoadingSpinner" :is-background="true"/>
+
+
     <BaseFormModal
       v-if="modal.isModal"
       :title="modal.values.title"

@@ -1,24 +1,41 @@
 import { defineStore } from "pinia";
+import { SelectedDay } from "@/types/Date";
 
 export const useEditor = defineStore("editor", () => {
-   const selectedDay = ref<string | null>(null);
+   const selectedDay: SelectedDay = reactive({ id: 0, day: 0, year: 0 });
+
    const isEditor = ref<boolean>(false);
    const isEvent = ref<boolean>(false);
    const isEditorOptions = ref<boolean>(false);
 
    const isSelectedOtherDay = computed(() => {
-      return (selectedDay: string | null, id: string): boolean => {
+      return (selectedDay: number | null, id: number): boolean => {
          return selectedDay !== id;
       };
    });
 
-   const selectDayAndOpenEditor = (id: string) => {
-      closeEditorAndEvent();
+   const selectDayAndOpenEditor = (id: number, day: number, year: number) => {
       isEditorOptions.value =
-         !isEditorOptions.value ||
-         isSelectedOtherDay.value(selectedDay.value, id);
+         !isEditorOptions.value || isSelectedOtherDay.value(selectedDay.id, id);
 
-      selectedDay.value = id;
+      if (isEditorOptions.value) {
+         setSelectedDay(id, day, year);
+         return;
+      }
+
+      setDefaultValueForSelectedDay();
+   };
+
+   const setSelectedDay = (id: number, day: number, year: number) => {
+      selectedDay.id = id;
+      selectedDay.day = day;
+      selectedDay.year = year;
+   };
+
+   const setDefaultValueForSelectedDay = () => {
+      selectedDay.id = 0;
+      selectedDay.day = 0;
+      selectedDay.year = 0;
    };
 
    const openEditor = () => {
@@ -31,14 +48,11 @@ export const useEditor = defineStore("editor", () => {
       isEvent.value = true;
    };
 
-   const closeOptions = () => {
-      isEditorOptions.value = false;
-   };
-
    const closeEditorAndEvent = () => {
       if (isEditor.value || isEvent.value) {
          isEvent.value = false;
          isEditor.value = false;
+         setDefaultValueForSelectedDay()
       }
    };
 
@@ -50,6 +64,6 @@ export const useEditor = defineStore("editor", () => {
       selectDayAndOpenEditor,
       openEditor,
       openEventList,
-      closeOptions,
+      closeEditorAndEvent
    };
 });

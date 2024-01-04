@@ -2,19 +2,20 @@
   <Transition :name="monthAnimationName" mode="out-in">
     <ul class="days-list" :key="currentMonth.month()">
       <CalendarDaysItem
-        v-for="{ id, day, weekdayId, isActive, isCurrent } in calculateDaysInMonth"
+        v-for="{ id, day, year, weekdayId, isActive, isCurrent } in calculateDaysInMonth"
         :key="id"
         :id="id"
         :day="day"
+        :year="year"
         :weekdayId="weekdayId"
         :is-active="isActive"
         :is-current="isCurrent"
-        :is-selected="id === editor.selectedDay"
+        :is-selected="id === editor.selectedDay.id"
       ></CalendarDaysItem>
     </ul>
   </Transition>
 
-  <CalendarToolsEditor v-if="editor.isEditor"></CalendarToolsEditor>
+  <CalendarToolsEventEditor v-if="editor.isEditor"></CalendarToolsEventEditor>
   <CalendarToolsEventsList v-if="editor.isEvent"></CalendarToolsEventsList>
 </template>
 
@@ -88,14 +89,16 @@ const setDays = (
 
   for (let d = startingDay; d <= daysInMonth; d++) {
     const dayId: Dayjs = month.date(d);
-    const id: string = dayId.format("YYYY-MM-DD");
-    const day: number = Number(dayId.format("D"));
-    const selectedWeekDayId: number = setWeekdayId(dayId);
+    const id = Number(dayId.format("YYYYMMDD"));
+    const day = Number(dayId.format("D"));
+    const year = Number(dayId.format("YYYY"));
+    const selectedWeekDayId = setWeekdayId(dayId);
     const isCurrent = setCurrentDay(id);
 
     days.push({
       id: id,
       day: day,
+      year: year,
       weekdayId: selectedWeekDayId,
       isActive: isActive,
       isCurrent: isCurrent,
@@ -110,8 +113,8 @@ const setWeekdayId = (day: Dayjs) => {
   return dayId;
 };
 
-const setCurrentDay = (id: string) => {
-  const currentDate = dayjs().format("YYYY-MM-DD");
+const setCurrentDay = (id: number) => {
+  const currentDate = Number(dayjs().format("YYYMMDD"));
   return currentDate === id ? true : false;
 };
 </script>

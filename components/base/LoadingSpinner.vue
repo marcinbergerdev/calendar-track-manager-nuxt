@@ -1,13 +1,18 @@
 <template>
-  <div class="background">
-    <div class="loading-spinner">
-      <div class="circle"></div>
-      <div class="orbit"></div>
-    </div>
+  <div class="background" v-if="isBackground"></div>
+
+  <div class="loading-spinner" :class="mode">
+    <div class="circle"></div>
+    <div class="orbit"></div>
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+defineProps<{
+  mode?: string;
+  isBackground: boolean;
+}>();
+</script>
 
 <style scoped lang="scss">
 .background {
@@ -16,14 +21,18 @@
   left: 0;
   z-index: 10;
 
-  display: grid;
-  place-items: center;
-
   width: 100%;
-  height: 100vh;
+  height: 100%;
   background-color: color-mix(in srgb, var(--bg-clr) 60%, transparent);
 }
+
 .loading-spinner {
+  position: absolute;
+  inset: 50% 50%;
+  translate: -50% -50%;
+
+  z-index: 15;
+
   height: 6rem;
   width: 6rem;
   animation: loading-spinner-animation infinite 1000ms ease;
@@ -49,6 +58,12 @@
     transform: rotate(0deg) scale(1);
     border: calc(6rem * 0.1) solid var(--primary-clr);
     animation: loading-spinner-circle-animation infinite 4000ms ease;
+  }
+}
+
+.event {
+  .circle {
+    color: var(--bg-clr);
   }
 }
 
