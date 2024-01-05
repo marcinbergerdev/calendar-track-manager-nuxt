@@ -8,9 +8,11 @@
 
     <p v-if="error.isError">{{ error.message }}</p>
 
-    <ul class="events-list">
+    <p v-if="isEmpty">Add events...</p>
+
+    <ul class="events-list" v-else>
       <CalendarToolsEventsItem
-        v-for="{ id, title, time, note, isCompleted, isNotification } in events"
+        v-for="({ title, time, note, isCompleted, isNotification }, id) in events"
         :key="id"
         :id="id"
         :title="title"
@@ -18,6 +20,7 @@
         :note="note"
         :is-completed="isCompleted"
         :is-notification="isNotification"
+        @events-list-update="updateEventListAfterDeleting"
       ></CalendarToolsEventsItem>
     </ul>
 
@@ -30,39 +33,52 @@
 <script setup lang="ts">
 import { Event } from "@/types/Date";
 import { useEditor } from "@/store/useEditor";
-import { useModal } from "@/store/useModal";
 
 const editor = useEditor();
 const isLoadingSpinner = ref(false);
+const isEmpty = ref(false);
+
 const error = ref<any>({
   name: "error.name",
   message: "",
   isError: false,
 });
 
-const events = ref<any>([
-  {
-    id: 0,
-    title: "Kurs niemieckiego",
-    time: "10:00",
-    note: `Zrób notatki, pamiętaj aby dużo sie wsłuchiwać i zadawać pytania
-    jeżeli cokolwiek bedzie dla mnie nie jasne to pytaj odrazu
-    `,
-    isCompleted: false,
-    isNotification: false,
-  },
-]);
+const events = ref<Event | null>(null);
+
+const getUserEvents = async () => {
+  const selectedDay = editor.selectedDay;
+
+  try {
+    const response: any = await getUserEventsFetch(selectedDay.id, selectedDay.year);
+
+    if (!response) {
+      setEmptyListHandler();
+    } else {
+      setEventHandler(response);
+    }
+  } catch (err) {
+    error.value = err;
+  }
+};
+
+const setEmptyListHandler = () => {
+  isEmpty.value = true;
+};
+
+const setEventHandler = (response: any) => {
+  const selectedEvents: Event = response;
+  events.value = selectedEvents;
+};
+
+const updateEventListAfterDeleting = async () => {
+  await getUserEvents();
+};
 
 onMounted(async () => {
-  // const selectedDay = editor.selectedDay;
-  // isLoadingSpinner.value = true;
-  // try {
-  //   const data = await getEvents(selectedDay.id, selectedDay.year);
-  //   console.log(data);
-  // } catch (err) {
-  //   error.value = err;
-  // }
-  // isLoadingSpinner.value = false;
+  isLoadingSpinner.value = true;
+  await getUserEvents();
+  isLoadingSpinner.value = false;
 });
 </script>
 
@@ -71,7 +87,7 @@ onMounted(async () => {
   position: absolute;
   top: 0;
   right: 0;
-  z-index: 10;
+  z-index: 15;
 
   display: flex;
   flex-direction: column;
@@ -88,6 +104,7 @@ onMounted(async () => {
     top: 50%;
     right: -13%;
     transform: translate(13%, -50%);
+    z-index: 20;
 
     width: 26rem;
     height: 35rem;
@@ -103,6 +120,7 @@ onMounted(async () => {
   gap: 5rem 0;
 
   padding: 4rem 1.5rem;
+  width: 100%;
   overflow: auto;
 
   @media (width >= 950px) {

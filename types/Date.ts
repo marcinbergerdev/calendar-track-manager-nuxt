@@ -33,9 +33,11 @@ export type Selected = {
    year: number | null;
 };
 
-export type Event = {
-   id: number;
-   day: number;
+export interface Event {
+   [key: string]: EventElement;
+ }
+
+export type EventElement = {
    title: string;
    time: string;
    note: string;
@@ -45,7 +47,5 @@ export type Event = {
 
 export type SelectedDay = {
    id: number;
-   day: number;
    year: number;
 };
-

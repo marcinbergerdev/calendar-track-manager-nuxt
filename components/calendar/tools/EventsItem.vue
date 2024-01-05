@@ -1,18 +1,18 @@
 <template>
   <li class="event-element">
     <header class="event-header">
-      <h2 class="event-header__title">{{ title }}</h2>
-      <span class="event-header__time">{{ time }}</span>
+      <h2 class="event-header__title">{{ titleEmptyValidation }}</h2>
+      <span class="event-header__time">{{ timeEmptyValidation }}</span>
     </header>
 
     <section class="event-note">
       <p>
-        {{ note }}
+        {{ noteEmptyValidation }}
       </p>
     </section>
 
     <section class="event-actions">
-      <BaseButton class="delete">
+      <BaseButton class="delete" @click="deleteEvent(id)">
         <svg
           class="delete-icon"
           xmlns="http://www.w3.org/2000/svg"
@@ -65,14 +65,36 @@
 import { useEditor } from "../../../store/useEditor";
 const editor = useEditor();
 
-defineProps<{
-  id: number;
+const emit = defineEmits<{
+  (e: "events-list-update"): void;
+}>();
+
+const props = defineProps<{
+  id: string;
   title: string;
   time: string;
   note: string;
   isCompleted: boolean;
   isNotification: boolean;
 }>();
+const { title, note, time } = toRefs(props);
+
+const titleEmptyValidation = computed(() => {
+  return title.value || "Brak tytułu";
+});
+const noteEmptyValidation = computed(() => {
+  return note.value || "Brak notatki...";
+});
+const timeEmptyValidation = computed(() => {
+  return time.value || "Brak godz.";
+});
+
+const deleteEvent = async (eventId: string) => {
+  const selectedDay = editor.selectedDay;
+
+  await deleteUserEventFetch(selectedDay.id, selectedDay.year, eventId);
+  emit('events-list-update');
+};
 </script>
 
 <style scoped lang="scss">

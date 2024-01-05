@@ -99,7 +99,7 @@
 </template>
 
 <script setup lang="ts">
-import { Event } from "@/types/Date";
+import { EventElement } from "@/types/Date";
 import { useEditor } from "../../../store/useEditor";
 const editor = useEditor();
 const [isNotification, toggleNotification] = useToggle();
@@ -120,9 +120,7 @@ const setNotificationStatus = () => {
 const saveEvent = async () => {
   const selectedDay = editor.selectedDay;
 
-  const eventData: Event = {
-    id: selectedDay.id,
-    day: selectedDay.day,
+  const eventData: EventElement = {
     title: eventTitle.value,
     time: eventTime.value,
     note: eventNote.value,
@@ -130,7 +128,7 @@ const saveEvent = async () => {
     isNotification: isEventNotification.value,
   };
 
-  await writeUserData(selectedDay.year, eventData);
+  await writeUserEventsFetch(selectedDay.id, selectedDay.year, eventData);
 };
 </script>
 
@@ -139,7 +137,7 @@ const saveEvent = async () => {
   position: absolute;
   top: 0;
   right: 0;
-  z-index: 10;
+  z-index: 20;
 
   display: flex;
   flex-direction: column;

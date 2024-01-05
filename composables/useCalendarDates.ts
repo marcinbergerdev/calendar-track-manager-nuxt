@@ -1,7 +1,7 @@
-import { Event } from "@/types/Date";
-import { getDatabase, ref, onValue, push } from "firebase/database";
+import { EventElement } from "@/types/Date";
+import { getDatabase, ref, onValue, push, set, remove} from "firebase/database";
 
-export const getEvents = (id: number, year: number) => {
+export const getUserEventsFetch = (id: number, year: number) => {
    return new Promise((resolve, reject) => {
       const userId = useCookie("userUidStatus");
 
@@ -28,17 +28,29 @@ export const getEvents = (id: number, year: number) => {
    });
 };
 
-export const writeUserData = async (year: number, event: Event) => {
+export const writeUserEventsFetch = async (
+   dayId: number,
+   year: number,
+   event: EventElement
+) => {
    const userId = useCookie("userUidStatus");
 
    const db = getDatabase();
-   await push(ref(db, `users/${userId.value}/calendar/${year}/${event.id}`), {
-      id: event.id,
-      day: event.day,
+   const eventList = ref(db, `users/${userId.value}/calendar/${year}/${dayId}`);
+   const newEventList = push(eventList);
+
+   set(newEventList, {
       title: event.title,
       time: event.time,
       note: event.note,
       isCompleted: event.isCompleted,
       isNotification: event.isNotification,
    });
+};
+
+export const deleteUserEventFetch = async (dayId: number, year: number, eventId: string) => {
+   const userId = useCookie("userUidStatus");
+   const db = getDatabase();
+
+   remove(ref(db, `users/${userId.value}/calendar/${year}/${dayId}/${eventId}` ));
 };

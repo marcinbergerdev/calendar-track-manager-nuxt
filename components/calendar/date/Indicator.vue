@@ -55,7 +55,6 @@ const { updatedDate } = defineProps<{
   updatedDate: Dayjs;
 }>();
 
-
 const extractedDate = computed<Extracted>(() => {
   return {
     monthId: updatedDate.month(),
@@ -101,6 +100,11 @@ const openDateSelector = () => (isDateSelector.value = true);
 .calendar-selector {
   position: relative;
   gap: 0 1rem;
+  z-index: 15;
+
+  @media (width >= 950px) {
+    z-index: 25;
+  }
 
   &__button {
     width: 3rem;

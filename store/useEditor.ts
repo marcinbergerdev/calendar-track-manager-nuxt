@@ -2,7 +2,7 @@ import { defineStore } from "pinia";
 import { SelectedDay } from "@/types/Date";
 
 export const useEditor = defineStore("editor", () => {
-   const selectedDay: SelectedDay = reactive({ id: 0, day: 0, year: 0 });
+   const selectedDay: SelectedDay = reactive({ id: 0, year: 0 });
 
    const isEditor = ref<boolean>(false);
    const isEvent = ref<boolean>(false);
@@ -14,27 +14,26 @@ export const useEditor = defineStore("editor", () => {
       };
    });
 
-   const selectDayAndOpenEditor = (id: number, day: number, year: number) => {
+   const selectDayAndOpenEditor = (id: number, year: number) => {
       isEditorOptions.value =
          !isEditorOptions.value || isSelectedOtherDay.value(selectedDay.id, id);
 
       if (isEditorOptions.value) {
-         setSelectedDay(id, day, year);
+         closeEditorAndEvent();
+         setSelectedDay(id, year);
          return;
       }
 
       setDefaultValueForSelectedDay();
    };
 
-   const setSelectedDay = (id: number, day: number, year: number) => {
+   const setSelectedDay = (id: number, year: number) => {
       selectedDay.id = id;
-      selectedDay.day = day;
       selectedDay.year = year;
    };
 
    const setDefaultValueForSelectedDay = () => {
       selectedDay.id = 0;
-      selectedDay.day = 0;
       selectedDay.year = 0;
    };
 

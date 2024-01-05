@@ -53,8 +53,8 @@ const setClasses = computed(() => {
   return classes;
 });
 
-const selectDay = () => {;
-  editor.selectDayAndOpenEditor(id.value, day.value, year.value);
+const selectDay = () => {
+  editor.selectDayAndOpenEditor(id.value, year.value);
 };
 </script>
 
