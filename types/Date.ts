@@ -35,13 +35,14 @@ export type Selected = {
 
 export interface Event {
    [key: string]: EventElement;
- }
+}
 
 export type EventElement = {
+   eventId?: string;
    title: string;
    time: string;
    note: string;
-   isCompleted: boolean;
+   isCompleted?: boolean;
    isNotification: boolean;
 };
 
@@ -49,3 +50,11 @@ export type SelectedDay = {
    id: number;
    year: number;
 };
+
+export type Error = {
+   name: string,
+   message: string,
+   isError: boolean
+};
+
+

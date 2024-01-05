@@ -14,7 +14,7 @@
       <CalendarToolsEventsItem
         v-for="({ title, time, note, isCompleted, isNotification }, id) in events"
         :key="id"
-        :id="id"
+        :event-id="id"
         :title="title"
         :time="time"
         :note="note"
@@ -31,33 +31,36 @@
 </template>
 
 <script setup lang="ts">
-import { Event } from "@/types/Date";
+import { Event, Error } from "@/types/Date";
 import { useEditor } from "@/store/useEditor";
 
 const editor = useEditor();
 const isLoadingSpinner = ref(false);
 const isEmpty = ref(false);
 
-const error = ref<any>({
-  name: "error.name",
+const error = ref<Error>({
+  name: "",
   message: "",
   isError: false,
 });
 
-const events = ref<Event | null>(null);
+const events = ref<Event | unknown>(null);
 
 const getUserEvents = async () => {
   const selectedDay = editor.selectedDay;
 
   try {
-    const response: any = await getUserEventsFetch(selectedDay.id, selectedDay.year);
+    const response: Event | unknown = await getUserEventsFetch(
+      selectedDay.id,
+      selectedDay.year
+    );
 
     if (!response) {
       setEmptyListHandler();
     } else {
       setEventHandler(response);
     }
-  } catch (err) {
+  } catch (err: any) {
     error.value = err;
   }
 };
@@ -66,9 +69,11 @@ const setEmptyListHandler = () => {
   isEmpty.value = true;
 };
 
-const setEventHandler = (response: any) => {
-  const selectedEvents: Event = response;
-  events.value = selectedEvents;
+const setEventHandler = (response: Event | unknown) => {
+  if (!!response) {
+    const selectedEvents: Event | unknown = response;
+    events.value = selectedEvents;
+  }
 };
 
 const updateEventListAfterDeleting = async () => {

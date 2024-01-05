@@ -12,7 +12,7 @@
     </section>
 
     <section class="event-actions">
-      <BaseButton class="delete" @click="deleteEvent(id)">
+      <BaseButton class="delete" @click="deleteSelectedEvent">
         <svg
           class="delete-icon"
           xmlns="http://www.w3.org/2000/svg"
@@ -25,7 +25,7 @@
             d="M208.49 191.51a12 12 0 0 1-17 17L128 145l-63.51 63.49a12 12 0 0 1-17-17L111 128L47.51 64.49a12 12 0 0 1 17-17L128 111l63.51-63.52a12 12 0 0 1 17 17L145 128Z"
           /></svg
       ></BaseButton>
-      <BaseButton class="edit" @click="editor.openEditor()"
+      <BaseButton class="edit" @click="editSelectedEvent"
         ><svg
           class="edit-icon"
           xmlns="http://www.w3.org/2000/svg"
@@ -62,38 +62,67 @@
 </template>
 
 <script setup lang="ts">
+import { EventElement } from '@/types/Date'
 import { useEditor } from "../../../store/useEditor";
 const editor = useEditor();
 
 const emit = defineEmits<{
   (e: "events-list-update"): void;
+  (
+    e: "event-edit",
+    title: string,
+    time: string,
+    note: string,
+    isNotification: boolean
+  ): void;
 }>();
 
 const props = defineProps<{
-  id: string;
+  eventId: string;
   title: string;
   time: string;
   note: string;
   isCompleted: boolean;
   isNotification: boolean;
 }>();
-const { title, note, time } = toRefs(props);
+const { eventId, title, note, time, isNotification } = toRefs(props);
 
 const titleEmptyValidation = computed(() => {
   return title.value || "Brak tytułu";
 });
+
 const noteEmptyValidation = computed(() => {
   return note.value || "Brak notatki...";
 });
+
 const timeEmptyValidation = computed(() => {
   return time.value || "Brak godz.";
 });
 
-const deleteEvent = async (eventId: string) => {
+const deleteSelectedEvent = async () => {
   const selectedDay = editor.selectedDay;
+  await deleteUserEventFetch(selectedDay.id, selectedDay.year, eventId.value);
 
-  await deleteUserEventFetch(selectedDay.id, selectedDay.year, eventId);
-  emit('events-list-update');
+  emit("events-list-update");
+};
+
+const editSelectedEvent = () => {
+  const isSelectedEvent = editor.selectedEvent;
+  const setNewEventDataInput = editor.setNewEventDataInput;
+
+  if (!isSelectedEvent) {
+    const newEventData: EventElement = {
+      eventId: eventId.value,
+      title: title.value,
+      time: time.value,
+      note: note.value,
+      isNotification: isNotification.value,
+    };
+
+    setNewEventDataInput(newEventData);
+  }
+
+  editor.openEditor();
 };
 </script>
 

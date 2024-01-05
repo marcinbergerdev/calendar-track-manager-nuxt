@@ -90,8 +90,19 @@
           @click="editor.closeEditorAndEvent()"
           >Wyjdź</BaseButton
         >
-        <BaseButton mode="filled-lt" class="editor-actions__button" @click="saveEvent"
+        <BaseButton
+          v-if="!editor.selectedEvent"
+          mode="filled-lt"
+          class="editor-actions__button"
+          @click="saveEvent"
           >Zapisz</BaseButton
+        >
+        <BaseButton
+          v-else
+          mode="filled-lt"
+          class="editor-actions__button"
+          @click="editEvent"
+          >Edytuj</BaseButton
         >
       </article>
     </section>
@@ -130,6 +141,39 @@ const saveEvent = async () => {
 
   await writeUserEventsFetch(selectedDay.id, selectedDay.year, eventData);
 };
+
+const editEvent = async () => {
+  const selectedDay = editor.selectedDay;
+  const selectedEvent = editor.selectedEvent;
+
+  const eventData: EventElement = {
+    title: eventTitle.value,
+    time: eventTime.value,
+    note: eventNote.value,
+    isNotification: isEventNotification.value,
+  };
+
+  if (selectedEvent) {
+    await setNewEventDataFetch(
+      selectedDay.id,
+      selectedDay.year,
+      selectedEvent.eventId || "test",
+      eventData
+    );
+    editor.openEventList();
+  }
+};
+
+onMounted(() => {
+  const isEventEdited = editor.selectedEvent;
+
+  if (!!isEventEdited) {
+    eventTitle.value = isEventEdited.title;
+    eventTime.value = isEventEdited.time;
+    eventNote.value = isEventEdited.note;
+    isEventNotification.value = isEventEdited.isNotification;
+  }
+});
 </script>
 
 <style scoped lang="scss">
