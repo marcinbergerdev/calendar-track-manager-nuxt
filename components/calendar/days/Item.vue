@@ -54,7 +54,7 @@ const setClasses = computed(() => {
 });
 
 const selectDay = () => {
-  editor.selectDayAndOpenEditor(id.value, year.value);
+  editor.toggleEditorAndSetDay(id.value, year.value);
 };
 </script>
 

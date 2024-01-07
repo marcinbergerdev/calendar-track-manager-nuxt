@@ -47,14 +47,20 @@ export type EventElement = {
 };
 
 export type SelectedDay = {
-   id: number;
-   year: number;
+   eventId?: string;
+   dayId?: number;
+   id?: number;
+   day?: number;
+   year?: number;
+   title?: string;
+   time?: string;
+   note?: string;
+   isCompleted?: boolean;
+   isNotification?: boolean;
 };
 
 export type Error = {
-   name: string,
-   message: string,
-   isError: boolean
+   name: string;
+   message: string;
+   isError: boolean;
 };
-
-

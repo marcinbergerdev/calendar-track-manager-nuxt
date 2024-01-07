@@ -2,36 +2,48 @@ import { defineStore } from "pinia";
 import { SelectedDay, EventElement } from "@/types/Date";
 
 export const useEditor = defineStore("editor", () => {
-   const selectedDay: SelectedDay = reactive({ id: 0, year: 0 });
+   const selectedDay = reactive<SelectedDay>({});
    const selectedEvent = ref<EventElement | null>(null);
 
    const isEditor = ref<boolean>(false);
    const isEvent = ref<boolean>(false);
    const isEditorOptions = ref<boolean>(false);
 
-
    const isSelectedOtherDay = computed(() => {
-      return (selectedDay: number | null, id: number): boolean => {
-         return selectedDay !== id;
+      return (id: number): boolean => {
+         return selectedDay.id !== id;
       };
    });
 
-   const selectDayAndOpenEditor = (id: number, year: number) => {
-      isEditorOptions.value =
-         !isEditorOptions.value || isSelectedOtherDay.value(selectedDay.id, id);
-
-      if (isEditorOptions.value) {
-         closeEditorAndEvent();
-         setSelectedDay(id, year);
-         return;
+   const toggleEditorAndSetDay = (id: number, year: number) => {
+      if (isEditorOptions.value && !isSelectedOtherDay.value(id)) {
+         return closeEditorOptions();
       }
 
-      setDefaultValueForSelectedDay();
+      closeEditorAndEvent();
+      setSelectedDay(id, year);
+      isEditorOptions.value = true;
    };
 
    const setSelectedDay = (id: number, year: number) => {
-      selectedDay.id = id;
-      selectedDay.year = year;
+      if (selectedDay) {
+         selectedDay.id = id;
+         selectedDay.year = year;
+      }
+   };
+
+   const closeEditorOptions = () => {
+      isEditorOptions.value = false;
+      closeEditorAndEvent();
+      return;
+   };
+
+   const closeEditorAndEvent = () => {
+      if (isEditor.value || isEvent.value) {
+         isEvent.value = false;
+         isEditor.value = false;
+         setDefaultValueForSelectedDay();
+      }
    };
 
    const setDefaultValueForSelectedDay = () => {
@@ -40,14 +52,8 @@ export const useEditor = defineStore("editor", () => {
       selectedEvent.value = null;
    };
 
-   const setNewEventDataInput = (newEventData: EventElement) => {
-      selectedEvent.value = newEventData;
-   };
-
    const openEditor = () => {
-      if (isEvent.value) {
-         isEvent.value = false;
-      }
+      if (isEvent.value) isEvent.value = false;
       isEditor.value = true;
    };
 
@@ -59,12 +65,8 @@ export const useEditor = defineStore("editor", () => {
       isEvent.value = true;
    };
 
-   const closeEditorAndEvent = () => {
-      if (isEditor.value || isEvent.value) {
-         isEvent.value = false;
-         isEditor.value = false;
-         setDefaultValueForSelectedDay();
-      }
+   const setNewEventDataInput = (newEventData: EventElement) => {
+      selectedEvent.value = newEventData;
    };
 
    return {
@@ -73,7 +75,7 @@ export const useEditor = defineStore("editor", () => {
       isEditor,
       isEvent,
       isEditorOptions,
-      selectDayAndOpenEditor,
+      toggleEditorAndSetDay,
       setNewEventDataInput,
       openEditor,
       openEventList,

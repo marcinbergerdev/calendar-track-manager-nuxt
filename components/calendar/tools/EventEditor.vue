@@ -130,37 +130,41 @@ const setNotificationStatus = () => {
 
 const saveEvent = async () => {
   const selectedDay = editor.selectedDay;
+  
+  if (!!selectedDay.id && !!selectedDay.year) {
+    const eventData: EventElement = {
+      title: eventTitle.value,
+      time: eventTime.value,
+      note: eventNote.value,
+      isCompleted: false,
+      isNotification: isEventNotification.value,
+    };
 
-  const eventData: EventElement = {
-    title: eventTitle.value,
-    time: eventTime.value,
-    note: eventNote.value,
-    isCompleted: false,
-    isNotification: isEventNotification.value,
-  };
-
-  await writeUserEventsFetch(selectedDay.id, selectedDay.year, eventData);
+    await writeUserEventsFetch(selectedDay.id, selectedDay.year, eventData);
+  }
 };
 
 const editEvent = async () => {
   const selectedDay = editor.selectedDay;
   const selectedEvent = editor.selectedEvent;
 
-  const eventData: EventElement = {
-    title: eventTitle.value,
-    time: eventTime.value,
-    note: eventNote.value,
-    isNotification: isEventNotification.value,
-  };
+  if (!!selectedDay.id && !!selectedDay.year) {
+    const eventData: EventElement = {
+      title: eventTitle.value,
+      time: eventTime.value,
+      note: eventNote.value,
+      isNotification: isEventNotification.value,
+    };
 
-  if (selectedEvent) {
-    await setNewEventDataFetch(
-      selectedDay.id,
-      selectedDay.year,
-      selectedEvent.eventId || "test",
-      eventData
-    );
-    editor.openEventList();
+    if (selectedEvent) {
+      await setNewEventDataFetch(
+        selectedDay.id,
+        selectedDay.year,
+        selectedEvent.eventId || "test",
+        eventData
+      );
+      editor.openEventList();
+    }
   }
 };
 

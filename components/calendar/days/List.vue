@@ -47,6 +47,7 @@ const calculateDaysInMonth = computed<Day[]>(() => {
     ...selectedCurrenDays,
     ...selectedNextDays,
   ];
+
   return days;
 });
 

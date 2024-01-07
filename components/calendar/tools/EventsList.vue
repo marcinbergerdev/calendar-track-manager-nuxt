@@ -49,19 +49,22 @@ const events = ref<Event | unknown>(null);
 const getUserEvents = async () => {
   const selectedDay = editor.selectedDay;
 
-  try {
-    const response: Event | unknown = await getUserEventsFetch(
-      selectedDay.id,
-      selectedDay.year
-    );
+  if (!!selectedDay.id && !!selectedDay.year) {
+    try {
+      const response: Event | unknown = await getUserEventsFetch(
+        selectedDay.id,
+        selectedDay.year
+      );
 
-    if (!response) {
-      setEmptyListHandler();
-    } else {
+      if (!response) {
+        setEmptyListHandler();
+        return;
+      }
+
       setEventHandler(response);
+    } catch (err: any) {
+      error.value = err;
     }
-  } catch (err: any) {
-    error.value = err;
   }
 };
 
@@ -70,10 +73,7 @@ const setEmptyListHandler = () => {
 };
 
 const setEventHandler = (response: Event | unknown) => {
-  if (!!response) {
-    const selectedEvents: Event | unknown = response;
-    events.value = selectedEvents;
-  }
+  events.value = response;
 };
 
 const updateEventListAfterDeleting = async () => {

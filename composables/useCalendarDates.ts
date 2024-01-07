@@ -36,11 +36,7 @@ export const getUserEventsFetch = (id: number, year: number) => {
    });
 };
 
-export const writeUserEventsFetch = async (
-   dayId: number,
-   year: number,
-   event: EventElement
-) => {
+export const writeUserEventsFetch = async (dayId: number, year: number, event: EventElement) => {
    const userId = useCookie("userUidStatus");
 
    const db = getDatabase();

@@ -62,7 +62,7 @@
 </template>
 
 <script setup lang="ts">
-import { EventElement } from '@/types/Date'
+import { EventElement } from "@/types/Date";
 import { useEditor } from "../../../store/useEditor";
 const editor = useEditor();
 
@@ -101,9 +101,11 @@ const timeEmptyValidation = computed(() => {
 
 const deleteSelectedEvent = async () => {
   const selectedDay = editor.selectedDay;
-  await deleteUserEventFetch(selectedDay.id, selectedDay.year, eventId.value);
 
-  emit("events-list-update");
+  if (!!selectedDay.id && selectedDay.year) {
+    await deleteUserEventFetch(selectedDay.id, selectedDay.year, eventId.value);
+    emit("events-list-update");
+  }
 };
 
 const editSelectedEvent = () => {

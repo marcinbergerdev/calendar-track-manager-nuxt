@@ -19,7 +19,7 @@ const editor = useEditor();
 const openEditor = () => {
   editor.openEditor();
 };
-const openEventList = async () => {
+const openEventList = () => {
   editor.openEventList();
 };
 </script>
