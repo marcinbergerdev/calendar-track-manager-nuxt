@@ -58,9 +58,3 @@ export type SelectedDay = {
    isCompleted?: boolean;
    isNotification?: boolean;
 };
-
-export type Error = {
-   name: string;
-   message: string;
-   isError: boolean;
-};

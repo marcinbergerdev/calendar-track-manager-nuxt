@@ -15,8 +15,8 @@
     </ul>
   </Transition>
 
-  <CalendarToolsEventEditor v-if="editor.isEditor"></CalendarToolsEventEditor>
-  <CalendarToolsEventsList v-if="editor.isEvent"></CalendarToolsEventsList>
+  <CalendarManagerEventsEditor v-if="editor.isEditor"></CalendarManagerEventsEditor>
+  <CalendarManagerEvents v-if="editor.isEvent"></CalendarManagerEvents>
 </template>
 
 <script setup lang="ts">

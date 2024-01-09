@@ -14,10 +14,7 @@ export const getUserEventsFetch = (id: number, year: number) => {
       const userId = useCookie("userUidStatus");
 
       const db = getDatabase();
-      const starCountRef = ref(
-         db,
-         `users/${userId.value}/calendar/${year}/${id}`
-      );
+      const starCountRef = ref(db, `users/${userId.value}/calendar/${year}/${id}`);
 
       onValue(
          starCountRef,
@@ -26,17 +23,17 @@ export const getUserEventsFetch = (id: number, year: number) => {
             resolve(data);
          },
          (error) => {
-            reject({
-               name: error.name,
-               message: "Something goes wrong, try later!",
-               isError: true,
-            });
+            reject(error.name);
          }
       );
    });
 };
 
-export const writeUserEventsFetch = async (dayId: number, year: number, event: EventElement) => {
+export const writeUserEventsFetch = async (
+   dayId: number,
+   year: number,
+   event: EventElement
+) => {
    const userId = useCookie("userUidStatus");
 
    const db = getDatabase();

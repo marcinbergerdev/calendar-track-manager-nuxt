@@ -1,4 +1,5 @@
-.date-selector-container {
+.date-selector-container,
+.events-error-container{
    @media (width >= 768px) {
       &::-webkit-scrollbar {
          width: 7px;

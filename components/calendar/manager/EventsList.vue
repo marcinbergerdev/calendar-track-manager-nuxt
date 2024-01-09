@@ -1,50 +1,34 @@
 <template>
-  <div class="events-container">
-    <BaseLoadingSpinner
-      mode="event"
-      :is-background="false"
-      v-if="isLoadingSpinner"
-    ></BaseLoadingSpinner>
+  <BaseLoadingSpinner mode="event" :is-background="false" v-if="isLoadingSpinner" />
 
-    <p v-if="error.isError">{{ error.message }}</p>
+  <ul class="events-list">
+    <CalendarManagerEventsItem
+      v-for="({ title, time, note, isCompleted, isNotification }, id) in events"
+      :key="id"
+      :event-id="id"
+      :title="title"
+      :time="time"
+      :note="note"
+      :is-completed="isCompleted"
+      :is-notification="isNotification"
+      @events-list-update="updateEventListAfterDeleting"
+    ></CalendarManagerEventsItem>
+  </ul>
 
-    <p v-if="isEmpty">Add events...</p>
-
-    <ul class="events-list" v-else>
-      <CalendarToolsEventsItem
-        v-for="({ title, time, note, isCompleted, isNotification }, id) in events"
-        :key="id"
-        :event-id="id"
-        :title="title"
-        :time="time"
-        :note="note"
-        :is-completed="isCompleted"
-        :is-notification="isNotification"
-        @events-list-update="updateEventListAfterDeleting"
-      ></CalendarToolsEventsItem>
-    </ul>
-
-    <BaseButton mode="filled-lt" class="events-exit" @click="editor.closeEditorAndEvent()"
-      >Wyjdź</BaseButton
-    >
-  </div>
+  <BaseButton mode="filled-lt" class="events-exit" @click="editor.closeEditorAndEvent()"
+    >Wyjdź</BaseButton
+  >
 </template>
 
 <script setup lang="ts">
-import { Event, Error } from "@/types/Date";
+import { Event } from "@/types/Date";
 import { useEditor } from "@/store/useEditor";
 
 const editor = useEditor();
+const events = ref<Event | unknown>(null);
+
 const isLoadingSpinner = ref(false);
 const isEmpty = ref(false);
-
-const error = ref<Error>({
-  name: "",
-  message: "",
-  isError: false,
-});
-
-const events = ref<Event | unknown>(null);
 
 const getUserEvents = async () => {
   const selectedDay = editor.selectedDay;
@@ -63,7 +47,7 @@ const getUserEvents = async () => {
 
       setEventHandler(response);
     } catch (err: any) {
-      error.value = err;
+      throw createError(err);
     }
   }
 };
@@ -88,36 +72,6 @@ onMounted(async () => {
 </script>
 
 <style scoped lang="scss">
-.events-container {
-  position: absolute;
-  top: 0;
-  right: 0;
-  z-index: 15;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 1rem 0;
-
-  padding: 0 0.3rem;
-  width: 100%;
-  height: 100vh;
-  background-color: var(--primary-clr);
-
-  @media (width >= 950px) {
-    top: 50%;
-    right: -13%;
-    transform: translate(13%, -50%);
-    z-index: 20;
-
-    width: 26rem;
-    height: 35rem;
-    border: 2px solid var(--bg-clr);
-    border-radius: 1.5rem;
-  }
-}
-
 .events-list {
   flex: 1;
   display: flex;

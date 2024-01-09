@@ -9,9 +9,9 @@
       {{ day }}
     </BaseButton>
 
-    <CalendarToolsOptions
+    <CalendarManagerOptions
       v-if="isSelected && editor.isEditorOptions"
-    ></CalendarToolsOptions>
+    ></CalendarManagerOptions>
   </li>
 </template>
 
