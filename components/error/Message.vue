@@ -1,10 +1,9 @@
 
-import { BaseButton } from '#build/components';
 <template>
   <div class="events-error-container">
     <p class="events-error">{{ error }}</p>
 
-    <BaseButton @click="handleError">Back</BaseButton>
+    <BaseButton mode="filled-drk" class="events-close-error" @click="handleError">Close</BaseButton>
   </div>
 </template>
 
@@ -12,7 +11,7 @@ import { BaseButton } from '#build/components';
 import { useEditor } from "@/store/useEditor";
 const events = useEditor();
 
-const props = defineProps({
+defineProps({
   error: Object,
 });
 
@@ -27,11 +26,18 @@ const handleError = () => {
   padding: 2rem;
   width: 100%;
   overflow-y: auto;
+  text-align: center;
 }
 
 .events-error {
   font-size: 1.5rem;
   text-align: center;
   overflow-wrap: break-word;
+}
+
+.events-close-error{
+  margin-top: 2rem;
+  padding: 0.3rem 1rem;
+  font-size: 1.5rem;
 }
 </style>

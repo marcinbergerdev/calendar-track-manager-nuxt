@@ -22,7 +22,21 @@
             :class="calculateNotificationStatus"
           >
             <svg
-              v-if="!isNotification"
+              v-if="!isEventNotification"
+              class="notification-switch__slider-icon"
+              xmlns="http://www.w3.org/2000/svg"
+              width="1em"
+              height="1em"
+              viewBox="0 0 256 256"
+            >
+              <path
+                fill="currentColor"
+                d="M208.49 191.51a12 12 0 0 1-17 17L128 145l-63.51 63.49a12 12 0 0 1-17-17L111 128L47.51 64.49a12 12 0 0 1 17-17L128 111l63.51-63.52a12 12 0 0 1 17 17L145 128Z"
+              />
+            </svg>
+
+            <svg
+              v-else
               class="notification-switch__slider-icon"
               xmlns="http://www.w3.org/2000/svg"
               width="1em"
@@ -36,20 +50,7 @@
                 clip-rule="evenodd"
               />
             </svg>
-
-            <svg
-              v-else
-              class="notification-switch__slider-icon"
-              xmlns="http://www.w3.org/2000/svg"
-              width="1em"
-              height="1em"
-              viewBox="0 0 256 256"
-            >
-              <path
-                fill="currentColor"
-                d="M208.49 191.51a12 12 0 0 1-17 17L128 145l-63.51 63.49a12 12 0 0 1-17-17L111 128L47.51 64.49a12 12 0 0 1 17-17L128 111l63.51-63.52a12 12 0 0 1 17 17L145 128Z"
-              /></svg
-          ></span>
+          </span>
         </label>
 
         <div class="notifications-title">
@@ -83,29 +84,31 @@
         ></textarea>
       </article>
 
-      <article class="editor-actions">
+      <article class="editor-actions" v-if="!editor.selectedEvent">
         <BaseButton
-          mode="filled-lt"
+          mode="filled-drk"
           class="editor-actions__button"
           @click="editor.closeEditorAndEvent()"
           >Wyjdź</BaseButton
         >
-        <BaseButton
-          v-if="!editor.selectedEvent"
-          mode="filled-lt"
-          class="editor-actions__button"
-          @click="saveEvent"
+        <BaseButton mode="filled-drk" class="editor-actions__button" @click="saveEvent"
           >Zapisz</BaseButton
         >
+      </article>
+      <article class="editor-actions" v-else>
         <BaseButton
-          v-else
-          mode="filled-lt"
+          mode="filled-drk"
           class="editor-actions__button"
-          @click="editEvent"
+          @click="editor.openEventList()"
+          >Back</BaseButton
+        >
+
+        <BaseButton mode="filled-drk" class="editor-actions__button" @click="editEvent"
           >Edytuj</BaseButton
         >
       </article>
     </section>
+    
   </div>
 </template>
 
@@ -113,7 +116,6 @@
 import { EventElement } from "@/types/Date";
 import { useEditor } from "../../../store/useEditor";
 const editor = useEditor();
-const [isNotification, toggleNotification] = useToggle();
 
 const eventTitle = ref("");
 const eventTime = ref("");
@@ -121,16 +123,12 @@ const eventNote = ref("");
 const isEventNotification = ref(true);
 
 const calculateNotificationStatus = computed(() => {
-  return !isNotification.value ? "checked" : "not-checked";
+  return isEventNotification.value ? "checked" : "not-checked";
 });
-
-const setNotificationStatus = () => {
-  toggleNotification();
-};
 
 const saveEvent = async () => {
   const selectedDay = editor.selectedDay;
-  
+
   if (!!selectedDay.id && !!selectedDay.year) {
     const eventData: EventElement = {
       title: eventTitle.value,
@@ -156,11 +154,11 @@ const editEvent = async () => {
       isNotification: isEventNotification.value,
     };
 
-    if (selectedEvent) {
+    if (!!selectedEvent && !!selectedEvent.eventId) {
       await setNewEventDataFetch(
         selectedDay.id,
         selectedDay.year,
-        selectedEvent.eventId || "test",
+        selectedEvent.eventId,
         eventData
       );
       editor.openEventList();
@@ -168,7 +166,7 @@ const editEvent = async () => {
   }
 };
 
-onMounted(() => {
+const checkIfEventBeingEdited = () => {
   const isEventEdited = editor.selectedEvent;
 
   if (!!isEventEdited) {
@@ -177,6 +175,10 @@ onMounted(() => {
     eventNote.value = isEventEdited.note;
     isEventNotification.value = isEventEdited.isNotification;
   }
+};
+
+onMounted(() => {
+  checkIfEventBeingEdited();
 });
 </script>
 
@@ -222,7 +224,7 @@ onMounted(() => {
     border-radius: 0.8rem;
     border: 0;
     background-color: var(--bg-clr);
-    color: var(--text-clr);
+    color: var(--text-clr-drk);
   }
 }
 
@@ -285,7 +287,7 @@ onMounted(() => {
   display: flex;
   align-items: center;
   font-size: 1.8rem;
-  color: var(--text-clr);
+  color: var(--text-clr-r);
 
   @media (width >= 950px) {
     font-size: 1.5rem;
@@ -333,7 +335,7 @@ onMounted(() => {
     height: 100%;
     resize: none;
     padding: 1rem;
-    color: var(--text-clr);
+    color: var(--text-clr-drk);
     background-color: var(--bg-clr);
     outline: none;
     border: 0;

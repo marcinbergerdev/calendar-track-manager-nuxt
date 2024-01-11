@@ -23,7 +23,7 @@ export const getUserEventsFetch = (id: number, year: number) => {
             resolve(data);
          },
          (error) => {
-            reject(error.name);
+            reject(error);
          }
       );
    });

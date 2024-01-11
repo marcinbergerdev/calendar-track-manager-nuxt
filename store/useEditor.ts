@@ -6,7 +6,7 @@ export const useEditor = defineStore("editor", () => {
    const selectedEvent = ref<EventElement | null>(null);
 
    const isEditor = ref<boolean>(false);
-   const isEvent = ref<boolean>(false);
+   const isEvents = ref<boolean>(false);
    const isEditorOptions = ref<boolean>(false);
 
    const isSelectedOtherDay = computed(() => {
@@ -39,8 +39,8 @@ export const useEditor = defineStore("editor", () => {
    };
 
    const closeEditorAndEvent = () => {
-      if (isEditor.value || isEvent.value) {
-         isEvent.value = false;
+      if (isEditor.value || isEvents.value) {
+         isEvents.value = false;
          isEditor.value = false;
          setDefaultValueForSelectedDay();
       }
@@ -53,7 +53,7 @@ export const useEditor = defineStore("editor", () => {
    };
 
    const openEditor = () => {
-      if (isEvent.value) isEvent.value = false;
+      if (isEvents.value) isEvents.value = false;
       isEditor.value = true;
    };
 
@@ -62,7 +62,7 @@ export const useEditor = defineStore("editor", () => {
          isEditor.value = false;
          selectedEvent.value = null;
       }
-      isEvent.value = true;
+      isEvents.value = true;
    };
 
    const setNewEventDataInput = (newEventData: EventElement) => {
@@ -73,7 +73,7 @@ export const useEditor = defineStore("editor", () => {
       selectedDay,
       selectedEvent,
       isEditor,
-      isEvent,
+      isEvents,
       isEditorOptions,
       toggleEditorAndSetDay,
       setNewEventDataInput,

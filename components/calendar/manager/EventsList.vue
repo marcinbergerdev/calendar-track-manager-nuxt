@@ -1,7 +1,17 @@
 <template>
   <BaseLoadingSpinner mode="event" :is-background="false" v-if="isLoadingSpinner" />
 
-  <ul class="events-list">
+  <div class="events-empty-message-container" v-if="isEmpty">
+    <p class="events-empty-message-container__message">Add your events...</p>
+    <BaseButton
+      mode="filled-drk"
+      class="events-empty-message-container__button"
+      @click="redirectToEventEditor"
+      >add event</BaseButton
+    >
+  </div>
+
+  <ul class="events-list" v-else>
     <CalendarManagerEventsItem
       v-for="({ title, time, note, isCompleted, isNotification }, id) in events"
       :key="id"
@@ -15,7 +25,7 @@
     ></CalendarManagerEventsItem>
   </ul>
 
-  <BaseButton mode="filled-lt" class="events-exit" @click="editor.closeEditorAndEvent()"
+  <BaseButton mode="filled-drk" class="events-exit" @click="editor.closeEditorAndEvent()"
     >Wyjdź</BaseButton
   >
 </template>
@@ -30,6 +40,10 @@ const events = ref<Event | unknown>(null);
 const isLoadingSpinner = ref(false);
 const isEmpty = ref(false);
 
+const redirectToEventEditor = () => {
+  editor.openEditor();
+};
+
 const getUserEvents = async () => {
   const selectedDay = editor.selectedDay;
 
@@ -41,7 +55,7 @@ const getUserEvents = async () => {
       );
 
       if (!response) {
-        setEmptyListHandler();
+        setEmptyMessageHandler();
         return;
       }
 
@@ -52,7 +66,7 @@ const getUserEvents = async () => {
   }
 };
 
-const setEmptyListHandler = () => {
+const setEmptyMessageHandler = () => {
   isEmpty.value = true;
 };
 
@@ -72,6 +86,22 @@ onMounted(async () => {
 </script>
 
 <style scoped lang="scss">
+.events-empty-message-container {
+  flex: 1;
+  text-align: center;
+  padding-top: 5rem;
+
+  &__message {
+    font-size: 1.6rem;
+  }
+
+  &__button {
+    margin-top: 1rem;
+    font-size: 1.4rem;
+    padding: 0.3rem 1rem;
+  }
+}
+
 .events-list {
   flex: 1;
   display: flex;

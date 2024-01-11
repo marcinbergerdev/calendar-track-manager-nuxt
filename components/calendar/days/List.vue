@@ -16,7 +16,7 @@
   </Transition>
 
   <CalendarManagerEventsEditor v-if="editor.isEditor"></CalendarManagerEventsEditor>
-  <CalendarManagerEvents v-if="editor.isEvent"></CalendarManagerEvents>
+  <CalendarManagerEvents v-if="editor.isEvents"></CalendarManagerEvents>
 </template>
 
 <script setup lang="ts">

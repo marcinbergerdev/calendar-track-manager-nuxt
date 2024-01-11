@@ -20,9 +20,21 @@ defineProps<{
 .empty,
 .border,
 .filled,
-.filled-lt {
+.filled-lt,
+.filled-drk {
   border-radius: 1.5rem;
   transition: 0.15s ease-in-out;
+}
+
+.filled,
+.filled-lt,
+.filled-drk {
+  opacity: 0.7;
+
+  &:hover {
+    opacity: 1;
+    transition: 0.15s ease-in-out;
+  }
 }
 
 .empty {
@@ -49,22 +61,17 @@ defineProps<{
   }
 }
 
-.filled,
-.filled-lt {
-  opacity: 0.7;
-
-  &:hover {
-    opacity: 1;
-    transition: 0.15s ease-in-out;
-  }
-}
-
 .filled {
   background-color: var(--primary-clr);
   color: var(--text-clr);
 }
 .filled-lt {
   background-color: var(--bg-clr);
+}
+
+.filled-drk {
+  background-color: var(--bg-clr);
+  color: var(--text-clr-drk);
 }
 
 .border-calendar-day {
