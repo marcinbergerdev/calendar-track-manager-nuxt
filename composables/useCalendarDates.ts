@@ -14,7 +14,10 @@ export const getUserEventsFetch = (id: number, year: number) => {
       const userId = useCookie("userUidStatus");
 
       const db = getDatabase();
-      const starCountRef = ref(db, `users/${userId.value}/calendar/${year}/${id}`);
+      const starCountRef = ref(
+         db,
+         `users/${userId.value}/calendar/${year}/${id}`
+      );
 
       onValue(
          starCountRef,
@@ -40,7 +43,7 @@ export const writeUserEventsFetch = async (
    const eventList = ref(db, `users/${userId.value}/calendar/${year}/${dayId}`);
    const newEventList = push(eventList);
 
-   set(newEventList, {
+   return await set(newEventList, {
       title: event.title,
       time: event.time,
       note: event.note,
@@ -49,7 +52,7 @@ export const writeUserEventsFetch = async (
    });
 };
 
-export const setNewEventDataFetch = async (
+export const editNewEventDataFetch = async (
    dayId: number,
    year: number,
    eventId: string,
@@ -59,13 +62,31 @@ export const setNewEventDataFetch = async (
 
    const db = getDatabase();
 
-   update(
+   await update(
       ref(db, `users/${userId.value}/calendar/${year}/${dayId}/${eventId}`),
       {
          title: event.title,
          time: event.time,
          note: event.note,
          isNotification: event.isNotification,
+      }
+   );
+};
+
+export const toggleCompletionEventFetch = async (
+   dayId: number,
+   year: number,
+   eventId: string,
+   isChecked: boolean
+) => {
+   const userId = useCookie("userUidStatus");
+
+   const db = getDatabase();
+
+   update(
+      ref(db, `users/${userId.value}/calendar/${year}/${dayId}/${eventId}`),
+      {
+         isCompleted: isChecked,
       }
    );
 };

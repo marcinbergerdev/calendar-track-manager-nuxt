@@ -15,7 +15,7 @@
     </ul>
   </Transition>
 
-  <CalendarManagerEventsEditor v-if="editor.isEditor"></CalendarManagerEventsEditor>
+  <CalendarManagerEditor v-if="editor.isEditor"></CalendarManagerEditor>
   <CalendarManagerEvents v-if="editor.isEvents"></CalendarManagerEvents>
 </template>
 
@@ -115,7 +115,7 @@ const setWeekdayId = (day: Dayjs) => {
 };
 
 const setCurrentDay = (id: number) => {
-  const currentDate = Number(dayjs().format("YYYMMDD"));
+  const currentDate = Number(dayjs().format("YYYYMMDD"));
   return currentDate === id ? true : false;
 };
 </script>

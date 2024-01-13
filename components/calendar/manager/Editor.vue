@@ -1,7 +1,7 @@
 <template>
-  <div class="events-container">
+  <div class="editor-container">
     <NuxtErrorBoundary>
-      <CalendarManagerEventsList />
+      <CalendarManagerEditorForm />
 
       <template #error="{ error }">
         <ErrorMessage :error="error"></ErrorMessage>
@@ -11,29 +11,30 @@
 </template>
 
 <style scoped lang="scss">
-.events-container {
+.editor-container {
   position: absolute;
   top: 0;
   right: 0;
-  z-index: 15;
+  z-index: 20;
 
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  gap: 1rem 0;
+  align-items: center;
+  gap: 2rem 0;
 
-  padding: 0 0.3rem;
+  padding: 2rem;
   width: 100%;
   height: 100vh;
+  overflow: auto;
   background-color: var(--primary-clr);
 
   @media (width >= 950px) {
     top: 50%;
     right: -13%;
     transform: translate(13%, -50%);
-    z-index: 20;
 
-    width: 26rem;
+    padding: 2rem 1.5rem;
+    width: 27rem;
     height: 35rem;
     border: 2px solid var(--bg-clr);
     border-radius: 1.5rem;

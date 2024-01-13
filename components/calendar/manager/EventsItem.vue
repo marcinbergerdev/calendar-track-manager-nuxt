@@ -42,7 +42,7 @@
             d="M19 19H8.158c-.026 0-.053.01-.079.01c-.033 0-.066-.009-.1-.01H5V5h6.847l2-2H5c-1.103 0-2 .896-2 2v14c0 1.104.897 2 2 2h14a2 2 0 0 0 2-2v-8.668l-2 2V19z"
           /></svg
       ></BaseButton>
-      <BaseButton class="check"
+      <BaseButton class="check" @click="toggleEventAsDone"
         ><svg
           class="check-icon"
           xmlns="http://www.w3.org/2000/svg"
@@ -64,7 +64,6 @@
 <script setup lang="ts">
 import { EventElement } from "@/types/Date";
 import { useEditor } from "../../../store/useEditor";
-const editor = useEditor();
 
 const emit = defineEmits<{
   (e: "events-list-update"): void;
@@ -85,7 +84,15 @@ const props = defineProps<{
   isCompleted: boolean;
   isNotification: boolean;
 }>();
-const { eventId, title, note, time, isNotification } = toRefs(props);
+
+const { eventId, title, note, time, isCompleted, isNotification } = toRefs(props);
+
+const editor = useEditor();
+const isSelectedEvent = editor.selectedEvent;
+const setNewEventDataInput = editor.setNewEventDataInput;
+const selectedDay = editor.selectedDay;
+
+const isEventChecked = ref(false);
 
 const titleEmptyValidation = computed(() => {
   return title.value || "Brak tytułu";
@@ -109,9 +116,6 @@ const deleteSelectedEvent = async () => {
 };
 
 const editSelectedEvent = () => {
-  const isSelectedEvent = editor.selectedEvent;
-  const setNewEventDataInput = editor.setNewEventDataInput;
-
   if (!isSelectedEvent) {
     const newEventData: EventElement = {
       eventId: eventId.value,
@@ -125,6 +129,24 @@ const editSelectedEvent = () => {
   }
 
   editor.openEditor();
+};
+
+const toggleEventAsDone = async () => {
+  isEventChecked.value = !isCompleted.value;
+
+  if (!!selectedDay.id && selectedDay.year) {
+    try {
+      await toggleCompletionEventFetch(
+        selectedDay.id,
+        selectedDay.year,
+        eventId.value,
+        isEventChecked.value
+      );
+      emit("events-list-update");
+    } catch (err: any) {
+      throw createError(err);
+    }
+  }
 };
 </script>
 
