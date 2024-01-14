@@ -77,16 +77,18 @@ export const toggleCompletionEventFetch = async (
    dayId: number,
    year: number,
    eventId: string,
-   isChecked: boolean
+   isChecked: boolean,
+   isNotification: boolean
 ) => {
    const userId = useCookie("userUidStatus");
 
    const db = getDatabase();
 
-   update(
+   return await update(
       ref(db, `users/${userId.value}/calendar/${year}/${dayId}/${eventId}`),
       {
          isCompleted: isChecked,
+         isNotification: !isNotification || false,
       }
    );
 };
@@ -99,7 +101,7 @@ export const deleteUserEventFetch = async (
    const userId = useCookie("userUidStatus");
    const db = getDatabase();
 
-   remove(
+   return await remove(
       ref(db, `users/${userId.value}/calendar/${year}/${dayId}/${eventId}`)
    );
 };

@@ -1,5 +1,5 @@
 <template>
-  <li class="event-element">
+  <li class="event-element" :class="eventChecked">
     <header class="event-header">
       <h2 class="event-header__title">{{ titleEmptyValidation }}</h2>
       <span class="event-header__time">{{ timeEmptyValidation }}</span>
@@ -25,6 +25,7 @@
             d="M208.49 191.51a12 12 0 0 1-17 17L128 145l-63.51 63.49a12 12 0 0 1-17-17L111 128L47.51 64.49a12 12 0 0 1 17-17L128 111l63.51-63.52a12 12 0 0 1 17 17L145 128Z"
           /></svg
       ></BaseButton>
+
       <BaseButton class="edit" @click="editSelectedEvent"
         ><svg
           class="edit-icon"
@@ -42,6 +43,7 @@
             d="M19 19H8.158c-.026 0-.053.01-.079.01c-.033 0-.066-.009-.1-.01H5V5h6.847l2-2H5c-1.103 0-2 .896-2 2v14c0 1.104.897 2 2 2h14a2 2 0 0 0 2-2v-8.668l-2 2V19z"
           /></svg
       ></BaseButton>
+
       <BaseButton class="check" @click="toggleEventAsDone"
         ><svg
           class="check-icon"
@@ -89,10 +91,13 @@ const { eventId, title, note, time, isCompleted, isNotification } = toRefs(props
 
 const editor = useEditor();
 const isSelectedEvent = editor.selectedEvent;
-const setNewEventDataInput = editor.setNewEventDataInput;
+const setNewEventDataInputs = editor.setNewEventDataInput;
 const selectedDay = editor.selectedDay;
-
 const isEventChecked = ref(false);
+
+const eventChecked = computed(() => {
+  return { "event-checked": isCompleted.value };
+});
 
 const titleEmptyValidation = computed(() => {
   return title.value || "Brak tytułu";
@@ -110,8 +115,12 @@ const deleteSelectedEvent = async () => {
   const selectedDay = editor.selectedDay;
 
   if (!!selectedDay.id && selectedDay.year) {
-    await deleteUserEventFetch(selectedDay.id, selectedDay.year, eventId.value);
-    emit("events-list-update");
+    try {
+      await deleteUserEventFetch(selectedDay.id, selectedDay.year, eventId.value);
+      emit("events-list-update");
+    } catch (err: any) {
+      throw createError(err);
+    }
   }
 };
 
@@ -125,7 +134,7 @@ const editSelectedEvent = () => {
       isNotification: isNotification.value,
     };
 
-    setNewEventDataInput(newEventData);
+    setNewEventDataInputs(newEventData);
   }
 
   editor.openEditor();
@@ -140,8 +149,11 @@ const toggleEventAsDone = async () => {
         selectedDay.id,
         selectedDay.year,
         eventId.value,
-        isEventChecked.value
+        isEventChecked.value,
+        isNotification.value
       );
+
+      console.log(isCompleted.value);
       emit("events-list-update");
     } catch (err: any) {
       throw createError(err);
@@ -185,6 +197,7 @@ const toggleEventAsDone = async () => {
 }
 
 .event-actions {
+  position: relative;
   display: flex;
   gap: 0 1rem;
 
@@ -239,5 +252,24 @@ const toggleEventAsDone = async () => {
       }
     }
   }
+}
+
+.event-checked {
+  text-decoration-line: line-through;
+  opacity: 0.5;
+}
+
+.error-delete-message {
+  position: absolute;
+  top: 5rem;
+  left: 0;
+  z-index: 1;
+
+  width: 100%;
+  padding: 1rem 1rem;
+  font-size: 1.3rem;
+  background-color: var(--text-clr);
+  color: var(--primary-clr);
+  border-radius: 0.5rem;
 }
 </style>
