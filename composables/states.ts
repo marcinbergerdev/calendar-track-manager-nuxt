@@ -14,5 +14,5 @@ export const useMonthAnimationName = () =>
 
 export const useSelectedData = () =>
    useState<Selected>("selectedData", () => {
-      return { month: 0, year: null };
+      return { month: 0, year: 0 };
    });

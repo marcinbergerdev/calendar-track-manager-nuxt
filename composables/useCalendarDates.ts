@@ -9,7 +9,7 @@ import {
    update,
 } from "firebase/database";
 
-export const getUserEventsFetch = (id: number, year: number) => {
+export const getUserEventsFetch = (year: number, id?: number) => {
    return new Promise<Events>((resolve, reject) => {
       const userId = useCookie("userUidStatus");
 

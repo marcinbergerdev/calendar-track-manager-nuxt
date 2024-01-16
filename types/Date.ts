@@ -30,7 +30,7 @@ export type Extracted = {
 
 export type Selected = {
    month: number;
-   year: number | null;
+   year: number;
 };
 
 export type Events = {

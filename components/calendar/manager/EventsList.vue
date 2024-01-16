@@ -49,7 +49,7 @@ const getUserEvents = async () => {
 
   if (!!selectedDay.id && !!selectedDay.year) {
     try {
-      const response = await getUserEventsFetch(selectedDay.id, selectedDay.year);
+      const response = await getUserEventsFetch(selectedDay.year, selectedDay.id);
 
       if (!response) {
         setEmptyMessageHandler();
