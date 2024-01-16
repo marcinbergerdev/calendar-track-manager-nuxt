@@ -1,4 +1,4 @@
-import { EventElement } from "@/types/Date";
+import { Events, EventElement } from "@/types/Date";
 import {
    getDatabase,
    ref,
@@ -10,7 +10,7 @@ import {
 } from "firebase/database";
 
 export const getUserEventsFetch = (id: number, year: number) => {
-   return new Promise((resolve, reject) => {
+   return new Promise<Events>((resolve, reject) => {
       const userId = useCookie("userUidStatus");
 
       const db = getDatabase();

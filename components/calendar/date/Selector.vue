@@ -4,7 +4,7 @@
       <ul class="year-selector-list" v-if="!isYearOrMonthSelector">
         <li
           class="year-element"
-          :class="isActiveYear(year)"
+          :class="isCurrentYear(year)"
           v-for="(year, id) in selectListOfYear"
           :key="id"
           @click="setYearAndMoveToMonth(year)"
@@ -16,6 +16,7 @@
       <ul class="month-selector-list" v-else>
         <li
           class="month-element"
+          :class="isCurrentMonth(month)"
           v-for="(month, id) in selectedMonth"
           :key="id"
           @click="setMonth(id)"
@@ -37,8 +38,12 @@ const selectorContainer = ref<HTMLElement | null>(null);
 const isYearOrMonthSelector = ref(false);
 const newSelectedData = { month: 0, year: 0 };
 
-const isActiveYear = computed(() => {
+const isCurrentYear = computed(() => {
   return (year: number) => (year === dayjs().year() ? "active-year" : null);
+});
+
+const isCurrentMonth = computed(() => {
+  return (month: string) => (month === dayjs().format("MMM") ? "active-month" : null);
 });
 
 const selectedMonth = computed<string[]>(() => {
@@ -46,9 +51,9 @@ const selectedMonth = computed<string[]>(() => {
 });
 
 const selectListOfYear = computed(() => {
-  const yearDifference = 100;
-  const firstYear = dayjs().year() - yearDifference;
-  const lastYear = dayjs().year() + yearDifference;
+  const yearDifferenceNumber = 100;
+  const firstYear = dayjs().year() - yearDifferenceNumber;
+  const lastYear = dayjs().year() + yearDifferenceNumber;
 
   scrollToCurrentYear();
 
@@ -58,12 +63,12 @@ const selectListOfYear = computed(() => {
 
 const scrollToCurrentYear = () => {
   const containerElement = selectorContainer.value;
-  const middleOfElement = 1425;
+  const middleHeightOfElement = 1425;
 
   containerElement?.scrollTo({
     top:
       (containerElement.scrollHeight - containerElement.clientHeight) / 2 ||
-      middleOfElement,
+      middleHeightOfElement,
   });
 };
 
@@ -78,10 +83,10 @@ const selectYears = (firstYear: number, lastYear: number) => {
 const setYearAndMoveToMonth = (year: number) => {
   newSelectedData.year = year;
   isYearOrMonthSelector.value = true;
-  setAnimationDirectionByDataUpdate(year);
+  setAnimationDirectionByDateUpdate(year);
 };
 
-const setAnimationDirectionByDataUpdate = (year: number) => {
+const setAnimationDirectionByDateUpdate = (year: number) => {
   year >= dayjs().year()
     ? (monthAnimationName.value = "next")
     : (monthAnimationName.value = "previous");
@@ -151,7 +156,8 @@ onClickOutside(selectorContainer, closeDataSelector);
   padding: 1.5rem 0;
 }
 
-.active-year {
+.active-year,
+.active-month {
   font-weight: 600;
   color: var(--primary-clr);
   background-color: var(--text-clr);

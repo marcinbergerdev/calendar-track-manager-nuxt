@@ -33,9 +33,11 @@ export type Selected = {
    year: number | null;
 };
 
-export interface Event {
+export type Events = {
    [key: string]: EventElement;
-}
+};
+export type EventsList = [string, EventElement];
+
 
 export type EventElement = {
    eventId?: string;

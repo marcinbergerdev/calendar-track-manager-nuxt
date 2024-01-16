@@ -6,9 +6,7 @@
     </header>
 
     <section class="event-note">
-      <p>
-        {{ noteEmptyValidation }}
-      </p>
+      <p>{{ noteEmptyValidation }}</p>
     </section>
 
     <section class="event-actions">
@@ -160,6 +158,17 @@ const toggleEventAsDone = async () => {
     }
   }
 };
+
+
+
+onMounted(() => {
+  console.log(eventId.value);
+  console.log(title.value);
+  console.log(time.value);
+  console.log(note.value);
+  console.log(isCompleted.value);
+  console.log(isNotification.value);
+});
 </script>
 
 <style scoped lang="scss">

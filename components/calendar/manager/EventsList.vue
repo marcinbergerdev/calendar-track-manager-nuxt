@@ -13,14 +13,14 @@
 
   <ul class="events-list" v-else>
     <CalendarManagerEventsItem
-      v-for="({ title, time, note, isCompleted, isNotification }, id) in events"
-      :key="id"
-      :event-id="id"
-      :title="title"
-      :time="time"
-      :note="note"
-      :is-completed="isCompleted"
-      :is-notification="isNotification"
+      v-for="event in events"
+      :key="event[0]"
+      :event-id="event[0]"
+      :title="event[1].title"
+      :time="event[1].time"
+      :note="event[1].note"
+      :is-completed="event[1].isCompleted"
+      :is-notification="event[1].isNotification"
       @events-list-update="updateEventListAfterDeleting"
     ></CalendarManagerEventsItem>
   </ul>
@@ -31,11 +31,11 @@
 </template>
 
 <script setup lang="ts">
-import { Event } from "@/types/Date";
+import { Events, EventsList } from "@/types/Date";
 import { useEditor } from "@/store/useEditor";
 
 const editor = useEditor();
-const events = ref<Event | unknown>(null);
+const events = ref<EventsList[]>([]);
 
 const isLoadingSpinner = ref(false);
 const isEmpty = ref(false);
@@ -49,17 +49,14 @@ const getUserEvents = async () => {
 
   if (!!selectedDay.id && !!selectedDay.year) {
     try {
-      const response: Event | unknown = await getUserEventsFetch(
-        selectedDay.id,
-        selectedDay.year
-      );
+      const response = await getUserEventsFetch(selectedDay.id, selectedDay.year);
 
       if (!response) {
         setEmptyMessageHandler();
         return;
       }
 
-      setEventHandler(response);
+      sortingEventsByHour(response);
     } catch (err: any) {
       throw createError(err);
     }
@@ -70,12 +67,29 @@ const setEmptyMessageHandler = () => {
   isEmpty.value = true;
 };
 
-const setEventHandler = (response: Event | unknown) => {
-  events.value = response;
+const sortingEventsByHour = (response: Events) => {
+  const events: EventsList[] = Object.entries(response);
+
+  const sortedEvents = events.sort((a, b) => {
+    const timeA = a[1].time.split(":").map(Number);
+    const timeB = b[1].time.split(":").map(Number);
+
+    if (timeA[0] !== timeB[0]) {
+      return timeA[0] - timeB[0];
+    } else {
+      return timeA[1] - timeB[1];
+    }
+  });
+
+  setEventsHandler(sortedEvents);
 };
 
-const updateEventListAfterDeleting = async () => {
-  await getUserEvents();
+const setEventsHandler = (sortedEvents: EventsList[]) => {
+  events.value = sortedEvents;
+};
+
+const updateEventListAfterDeleting = () => {
+  getUserEvents();
 };
 
 onMounted(async () => {
