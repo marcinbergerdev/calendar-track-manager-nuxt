@@ -112,11 +112,13 @@ const timeEmptyValidation = computed(() => {
 const deleteSelectedEvent = async () => {
   const selectedDay = editor.selectedDay;
 
-  try {
-    await deleteUserEventFetch(selectedDay.id, selectedDay.year, eventId.value);
-    emit("events-list-update");
-  } catch (err: any) {
-    throw createError(err);
+  if (!!selectedDay.id && !!selectedDay.year) {
+    try {
+      await deleteUserEventFetch(selectedDay.id, selectedDay.year, eventId.value);
+      emit("events-list-update");
+    } catch (err: any) {
+      throw createError(err);
+    }
   }
 };
 
@@ -139,18 +141,20 @@ const editSelectedEvent = () => {
 const toggleEventAsDone = async () => {
   isEventChecked.value = !isCompleted.value;
 
-  try {
-    await toggleCompletionEventFetch(
-      selectedDay.id,
-      selectedDay.year,
-      eventId.value,
-      isEventChecked.value,
-      isNotification.value
-    );
+  if (!!selectedDay.id && !!selectedDay.year) {
+    try {
+      await toggleCompletionEventFetch(
+        selectedDay.id,
+        selectedDay.year,
+        eventId.value,
+        isEventChecked.value,
+        isNotification.value
+      );
 
-    emit("events-list-update");
-  } catch (err: any) {
-    throw createError(err);
+      emit("events-list-update");
+    } catch (err: any) {
+      throw createError(err);
+    }
   }
 };
 </script>

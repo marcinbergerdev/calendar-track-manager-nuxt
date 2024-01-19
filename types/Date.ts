@@ -50,11 +50,11 @@ export type EventElement = {
 };
 
 export type SelectedDay = {
-   eventId: string;
-   dayId: number;
-   id: number;
-   day: number;
-   year: number;
+   eventId?: string;
+   dayId?: number;
+   id?: number;
+   day?: number;
+   year?: number;
    title?: string;
    time?: string;
    note?: string;
