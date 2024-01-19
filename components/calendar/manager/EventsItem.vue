@@ -112,13 +112,11 @@ const timeEmptyValidation = computed(() => {
 const deleteSelectedEvent = async () => {
   const selectedDay = editor.selectedDay;
 
-  if (!!selectedDay.id && selectedDay.year) {
-    try {
-      await deleteUserEventFetch(selectedDay.id, selectedDay.year, eventId.value);
-      emit("events-list-update");
-    } catch (err: any) {
-      throw createError(err);
-    }
+  try {
+    await deleteUserEventFetch(selectedDay.id, selectedDay.year, eventId.value);
+    emit("events-list-update");
+  } catch (err: any) {
+    throw createError(err);
   }
 };
 
@@ -141,34 +139,20 @@ const editSelectedEvent = () => {
 const toggleEventAsDone = async () => {
   isEventChecked.value = !isCompleted.value;
 
-  if (!!selectedDay.id && selectedDay.year) {
-    try {
-      await toggleCompletionEventFetch(
-        selectedDay.id,
-        selectedDay.year,
-        eventId.value,
-        isEventChecked.value,
-        isNotification.value
-      );
+  try {
+    await toggleCompletionEventFetch(
+      selectedDay.id,
+      selectedDay.year,
+      eventId.value,
+      isEventChecked.value,
+      isNotification.value
+    );
 
-      console.log(isCompleted.value);
-      emit("events-list-update");
-    } catch (err: any) {
-      throw createError(err);
-    }
+    emit("events-list-update");
+  } catch (err: any) {
+    throw createError(err);
   }
 };
-
-
-
-onMounted(() => {
-  console.log(eventId.value);
-  console.log(title.value);
-  console.log(time.value);
-  console.log(note.value);
-  console.log(isCompleted.value);
-  console.log(isNotification.value);
-});
 </script>
 
 <style scoped lang="scss">

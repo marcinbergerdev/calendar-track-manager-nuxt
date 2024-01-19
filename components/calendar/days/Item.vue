@@ -27,8 +27,9 @@ const props = defineProps<{
   isActive: boolean;
   isCurrent: boolean;
   isSelected: boolean;
+  isEvent?: boolean
 }>();
-const { id, day, year, weekdayId, isActive, isCurrent, isSelected } = toRefs(props);
+const { id, day, year, weekdayId, isActive, isCurrent, isSelected, isEvent} = toRefs(props);
 
 const setClasses = computed(() => {
   const classes = [];
@@ -49,7 +50,11 @@ const setClasses = computed(() => {
   if (isSelected.value) {
     classes.push("selected-day");
   }
-
+  
+  if (isEvent.value) {
+    classes.push("selected-day");
+  }
+  
   return classes;
 });
 
@@ -104,7 +109,11 @@ const selectDay = () => {
 }
 
 .selected-day {
-  box-shadow: 0px 0px 8px rgba(#fff, 0.8);
+  box-shadow: 0px 0px 8px rgba(#fff, 1);
   border: 2px solid var(--text-clr);
 }
+// .selected-day {
+//   box-shadow: 0px 0px 8px rgba(#3b5dbd, 1);
+//   border: 2px solid #3b5dbd;
+// }
 </style>

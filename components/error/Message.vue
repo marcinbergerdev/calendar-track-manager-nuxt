@@ -1,4 +1,3 @@
-
 <template>
   <div class="events-error-container">
     <p class="events-error">{{ error }}</p>

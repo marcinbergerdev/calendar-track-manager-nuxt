@@ -2,8 +2,6 @@
   <ClientOnly>
     <section class="calendar-container">
       <CalendarDateIndicator
-        @previous="setPreviousMonth"
-        @next="setNextMonth"
         :updated-date="updateCurrentData"
       ></CalendarDateIndicator>
 
@@ -22,7 +20,6 @@
 
 <script setup lang="ts">
 const dateSelector = useSelectedData();
-
 const dayjs = useDayjs();
 
 const updatePreviousData = computed(() => {
@@ -32,7 +29,12 @@ const updatePreviousData = computed(() => {
 
 const updateCurrentData = computed(() => {
   const monthCounter = 0;
-  return updateDate(monthCounter);
+  const currentMonth = updateDate(monthCounter);
+  
+  dateSelector.value.month = currentMonth.month();
+  dateSelector.value.year = currentMonth.year();  
+
+  return currentMonth;
 });
 
 const updateNextData = computed(() => {
@@ -56,17 +58,11 @@ const setDate = (monthCounter: number, month: number) => {
   return dayjs().add(monthCounter + month, "month");
 };
 
-const setPreviousMonth = () => {
-  changeMonth(-1);
-};
+onMounted(() => {
+  dateSelector.value.year = dayjs().year();
+});
 
-const setNextMonth = () => {
-  changeMonth(1);
-};
 
-const changeMonth = (increment: number) => {
-  dateSelector.value.month += increment;
-};
 </script>
 
 <style scoped lang="scss">

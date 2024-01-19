@@ -2,7 +2,7 @@
   <Transition :name="monthAnimationName" mode="out-in">
     <ul class="days-list" :key="currentMonth.month()">
       <CalendarDaysItem
-        v-for="{ id, day, year, weekdayId, isActive, isCurrent } in calculateDaysInMonth"
+        v-for="{id, day, year, weekdayId, isActive, isCurrent, isEvent} in calculateDaysInMonth"
         :key="id"
         :id="id"
         :day="day"
@@ -11,6 +11,7 @@
         :is-active="isActive"
         :is-current="isCurrent"
         :is-selected="id === editor.selectedDay.id"
+        :is-event="isEvent"
       ></CalendarDaysItem>
     </ul>
   </Transition>
@@ -21,12 +22,16 @@
 
 <script setup lang="ts">
 import { Dayjs } from "dayjs";
-import { Day } from "@/types/Date";
+import { Day, Events } from "@/types/Date";
 import { useEditor } from "../../../store/useEditor";
 
 const dayjs = useDayjs();
 const monthAnimationName = useMonthAnimationName();
+const dateSelector = useSelectedData();
 const editor = useEditor();
+
+const days = ref<Day[]>([]);
+const recordedEvents = ref<Events | null>(null);
 
 const { previousMonth, currentMonth, nextMonth } = defineProps<{
   previousMonth: Dayjs;
@@ -35,20 +40,7 @@ const { previousMonth, currentMonth, nextMonth } = defineProps<{
 }>();
 
 const calculateDaysInMonth = computed<Day[]>(() => {
-  const selectedPreviousDays = setPreviousDays(previousMonth);
-  const selectedCurrenDays = setCurrentDays(currentMonth);
-  const selectedNextDays = setNextDays(
-    [...selectedPreviousDays, ...selectedCurrenDays],
-    nextMonth
-  );
-
-  const days: Day[] = [
-    ...selectedPreviousDays,
-    ...selectedCurrenDays,
-    ...selectedNextDays,
-  ];
-
-  return days;
+  return days.value || [];
 });
 
 const setPreviousDays = (previousMonth: Dayjs) => {
@@ -80,12 +72,7 @@ const setNextDays = (amountOfPreviousAndCurrentDays: Day[], nextMonth: Dayjs) =>
   return selectedDays;
 };
 
-const setDays = (
-  month: Dayjs,
-  daysInMonth: number,
-  startingDay: number,
-  isActive: boolean
-) => {
+const setDays = (month: Dayjs, daysInMonth: number, startingDay: number, isActive: boolean) => {
   let days: Day[] = [];
 
   for (let d = startingDay; d <= daysInMonth; d++) {
@@ -118,6 +105,53 @@ const setCurrentDay = (id: number) => {
   const currentDate = Number(dayjs().format("YYYYMMDD"));
   return currentDate === id ? true : false;
 };
+
+const getUserEvents = async (year: number) => {
+  try {
+    const response = await getUserListOfEventsInSelectedYear(year);
+    return response;
+  } catch (err: any) {
+    throw new Error(err);
+  }
+};
+
+const setClassToRecordedEvents = async (recordedEvents: Events) => {
+  const eventsInMonth = days.value;
+  const savedEvents = Object.keys(recordedEvents).map(Number);
+
+  eventsInMonth.forEach((event) => {
+    savedEvents.forEach((el) => {
+      if (event.id === el) {
+        event.isEvent = true;
+      }
+    });
+  });
+
+  return eventsInMonth;
+};
+
+watchEffect(async () => {
+  const selectedPreviousDays = setPreviousDays(previousMonth);
+  const selectedCurrenDays = setCurrentDays(currentMonth);
+  const selectedNextDays = setNextDays(
+    [...selectedPreviousDays, ...selectedCurrenDays],
+    nextMonth
+  );
+
+  const selectedDays: Day[] = [
+    ...selectedPreviousDays,
+    ...selectedCurrenDays,
+    ...selectedNextDays,
+  ];
+
+  days.value = selectedDays;
+  if (!!recordedEvents.value) setClassToRecordedEvents(recordedEvents.value);
+});
+
+watchEffect(async () => {
+  const events = await getUserEvents(dateSelector.value.year);
+  recordedEvents.value = events;
+});
 </script>
 
 <style scoped lang="scss">

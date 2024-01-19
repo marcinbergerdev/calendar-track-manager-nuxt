@@ -47,19 +47,17 @@ const redirectToEventEditor = () => {
 const getUserEvents = async () => {
   const selectedDay = editor.selectedDay;
 
-  if (!!selectedDay.id && !!selectedDay.year) {
-    try {
-      const response = await getUserEventsFetch(selectedDay.year, selectedDay.id);
+  try {
+    const response = await getUserEventsFetch(selectedDay.year, selectedDay.id);
 
-      if (!response) {
-        setEmptyMessageHandler();
-        return;
-      }
-
-      sortingEventsByHour(response);
-    } catch (err: any) {
-      throw createError(err);
+    if (!response) {
+      setEmptyMessageHandler();
+      return;
     }
+
+    sortingEventsByHour(response);
+  } catch (err: any) {
+    throw createError(err);
   }
 };
 
@@ -103,7 +101,10 @@ onMounted(async () => {
 .events-empty-message-container {
   flex: 1;
   text-align: center;
-  padding-top: 5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 
   &__message {
     font-size: 1.6rem;

@@ -9,18 +9,40 @@ import {
    update,
 } from "firebase/database";
 
-export const getUserEventsFetch = (year: number, id?: number) => {
+export const getUserEventsFetch = (year: number, id: number) => {
    return new Promise<Events>((resolve, reject) => {
       const userId = useCookie("userUidStatus");
 
       const db = getDatabase();
-      const starCountRef = ref(
+
+      const selectedEvents = ref(
          db,
          `users/${userId.value}/calendar/${year}/${id}`
       );
 
       onValue(
-         starCountRef,
+         selectedEvents,
+         (snapshot) => {
+            const data = snapshot.val();
+            resolve(data);
+         },
+         (error) => {
+            reject(error);
+         }
+      );
+   });
+};
+
+export const getUserListOfEventsInSelectedYear = (year: number) => {
+   return new Promise<Events>((resolve, reject) => {
+      const userId = useCookie("userUidStatus");
+
+      const db = getDatabase();
+
+      const selectedEvents = ref(db, `users/${userId.value}/calendar/${year}`);
+
+      onValue(
+         selectedEvents,
          (snapshot) => {
             const data = snapshot.val();
             resolve(data);

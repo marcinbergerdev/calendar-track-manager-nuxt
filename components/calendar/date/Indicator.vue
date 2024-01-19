@@ -40,11 +40,14 @@
 <script setup lang="ts">
 import { Dayjs } from "dayjs";
 import { Extracted } from "@/types/Date";
+import { useEditor } from "~/store/useEditor";
 
 const isDateSelector = useDateSelectorVisibility();
 const monthAnimationName = useMonthAnimationName();
+const editor = useEditor();
 const dayjs = useDayjs();
 const dateLang = dayjs.locale();
+const dateSelector = useSelectedData();
 
 const emit = defineEmits<{
   previous: [];
@@ -67,12 +70,18 @@ const extractedDate = computed<Extracted>(() => {
 
 const setPreviousMonth = () => {
   monthAnimationName.value = "previous";
-  emit("previous");
+  changeMonth(-1);
+  editor.closeEditorAndEvent();
 };
 
 const setNextMonth = () => {
   monthAnimationName.value = "next";
-  emit("next");
+  changeMonth(+1);
+  editor.closeEditorAndEvent();
+};
+
+const changeMonth = (increment: number) => {
+  dateSelector.value.month += increment;
 };
 
 const openDateSelector = () => (isDateSelector.value = true);
