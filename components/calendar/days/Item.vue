@@ -19,7 +19,16 @@
 import { useEditor } from "../../../store/useEditor";
 const editor = useEditor();
 
-const { id, day, year, weekdayId, isActive, isCurrent, isSelected, isEvent} = defineProps<{
+const {
+  id,
+  day,
+  year,
+  weekdayId,
+  isActive,
+  isCurrent,
+  isSelected,
+  isEvent,
+} = defineProps<{
   id: number;
   day: number;
   year: number;
@@ -27,7 +36,7 @@ const { id, day, year, weekdayId, isActive, isCurrent, isSelected, isEvent} = de
   isActive: boolean;
   isCurrent: boolean;
   isSelected: boolean;
-  isEvent?: boolean
+  isEvent?: boolean;
 }>();
 
 const setClasses = computed(() => {
@@ -49,11 +58,11 @@ const setClasses = computed(() => {
   if (isSelected) {
     classes.push("selected-day");
   }
-  
+
   if (isEvent) {
     classes.push("selected-day");
   }
-  
+
   return classes;
 });
 
@@ -103,16 +112,7 @@ const selectDay = () => {
 }
 
 .selected-day {
-  box-shadow: 0px 0px 8px rgba(#fff, 0.8);
-  border: 2px solid var(--text-clr);
+  box-shadow: 0px 0px 6px rgba(#fff, 0.8);
+  border: 4px solid #000;
 }
-
-.selected-day {
-  box-shadow: 0px 0px 8px rgba(#fff, 1);
-  border: 2px solid var(--text-clr);
-}
-// .selected-day {
-//   box-shadow: 0px 0px 8px rgba(#3b5dbd, 1);
-//   border: 2px solid #3b5dbd;
-// }
 </style>
