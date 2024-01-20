@@ -15,7 +15,7 @@
   position: absolute;
   top: 0;
   right: 0;
-  z-index: 15;
+  z-index: 20;
 
   display: flex;
   flex-direction: column;
@@ -30,11 +30,11 @@
   @media (width >= 950px) {
     top: 50%;
     right: -13%;
+    z-index: 25;
     transform: translate(13%, -50%);
-    z-index: 20;
 
     width: 26rem;
-    height: 35rem;
+    height: 40rem;
     border: 2px solid var(--bg-clr);
     border-radius: 1.5rem;
   }

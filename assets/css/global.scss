@@ -65,55 +65,54 @@ button {
 .auth-header,
 .redirect-box,
 .calendar-header,
-.calendar-selector{
+.calendar-selector {
    @include default-flex;
 }
 
-
 .previous-enter-from,
 .next-leave-to {
-  transform: translateX(1rem);
-  opacity: 0;
+   transform: translateX(1rem);
+   opacity: 0;
 }
 
 .previous-leave-to,
 .next-enter-from {
-  transform: translateX(-1rem);
-  opacity: 0;
+   transform: translateX(-1rem);
+   opacity: 0;
 }
 
 .previous-enter-to,
 .previous-leave-from,
 .next-enter-to,
 .next-leave-from {
-  transform: translateX(0rem);
-  opacity: 1;
+   transform: translateX(0rem);
+   opacity: 1;
 }
 
 .previous-enter-active,
 .previous-leave-active,
 .next-enter-active,
 .next-leave-active {
-  transition: 0.22s ease-in-out;
+   transition: 0.22s ease-in-out;
 }
 
 .selector-enter-from {
    transform: scale(0.6);
- }
- 
- .selector-enter-to {
+}
+
+.selector-enter-to {
    transform: scale(1);
- }
- 
- .selector-leave-from {
+}
+
+.selector-leave-from {
    opacity: 1;
- }
- 
- .selector-leave-to {
+}
+
+.selector-leave-to {
    opacity: 0;
- }
- 
- .selector-enter-active,
- .selector-leave-active {
+}
+
+.selector-enter-active,
+.selector-leave-active {
    transition: 0.2s ease-in-out;
- }
+}
