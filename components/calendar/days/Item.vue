@@ -19,7 +19,7 @@
 import { useEditor } from "../../../store/useEditor";
 const editor = useEditor();
 
-const props = defineProps<{
+const { id, day, year, weekdayId, isActive, isCurrent, isSelected, isEvent} = defineProps<{
   id: number;
   day: number;
   year: number;
@@ -29,29 +29,28 @@ const props = defineProps<{
   isSelected: boolean;
   isEvent?: boolean
 }>();
-const { id, day, year, weekdayId, isActive, isCurrent, isSelected, isEvent} = toRefs(props);
 
 const setClasses = computed(() => {
   const classes = [];
   const lastWeekdayId = 7;
 
-  if (!isActive.value) {
+  if (!isActive) {
     classes.push("inactive-day");
   }
 
-  if (weekdayId.value === lastWeekdayId) {
+  if (weekdayId === lastWeekdayId) {
     classes.push("active-weekdays");
   }
 
-  if (isCurrent.value) {
+  if (isCurrent) {
     classes.push("active-current-day");
   }
 
-  if (isSelected.value) {
+  if (isSelected) {
     classes.push("selected-day");
   }
   
-  if (isEvent.value) {
+  if (isEvent) {
     classes.push("selected-day");
   }
   
@@ -59,7 +58,7 @@ const setClasses = computed(() => {
 });
 
 const selectDay = () => {
-  editor.toggleEditorAndSetDay(id.value, year.value);
+  editor.toggleEditorAndSetDay(id, year);
 };
 </script>
 

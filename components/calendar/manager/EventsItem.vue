@@ -76,7 +76,7 @@ const emit = defineEmits<{
   ): void;
 }>();
 
-const props = defineProps<{
+const { eventId, title, note, time, isCompleted, isNotification } = defineProps<{
   eventId: string;
   title: string;
   time: string;
@@ -85,8 +85,6 @@ const props = defineProps<{
   isNotification: boolean;
 }>();
 
-const { eventId, title, note, time, isCompleted, isNotification } = toRefs(props);
-
 const editor = useEditor();
 const isSelectedEvent = editor.selectedEvent;
 const setNewEventDataInputs = editor.setNewEventDataInput;
@@ -94,19 +92,19 @@ const selectedDay = editor.selectedDay;
 const isEventChecked = ref(false);
 
 const eventChecked = computed(() => {
-  return { "event-checked": isCompleted.value };
+  return { "event-checked": isCompleted };
 });
 
 const titleEmptyValidation = computed(() => {
-  return title.value || "Brak tytułu";
+  return title || "Brak tytułu";
 });
 
 const noteEmptyValidation = computed(() => {
-  return note.value || "Brak notatki...";
+  return note || "Brak notatki...";
 });
 
 const timeEmptyValidation = computed(() => {
-  return time.value || "Brak godz.";
+  return time || "Brak godz.";
 });
 
 const deleteSelectedEvent = async () => {
@@ -114,7 +112,7 @@ const deleteSelectedEvent = async () => {
 
   if (!!selectedDay.id && !!selectedDay.year) {
     try {
-      await deleteUserEventFetch(selectedDay.id, selectedDay.year, eventId.value);
+      await deleteUserEventFetch(selectedDay.id, selectedDay.year, eventId);
       emit("events-list-update");
     } catch (err: any) {
       throw createError(err);
@@ -125,11 +123,11 @@ const deleteSelectedEvent = async () => {
 const editSelectedEvent = () => {
   if (!isSelectedEvent) {
     const newEventData: EventElement = {
-      eventId: eventId.value,
-      title: title.value,
-      time: time.value,
-      note: note.value,
-      isNotification: isNotification.value,
+      eventId: eventId,
+      title: title,
+      time: time,
+      note: note,
+      isNotification: isNotification,
     };
 
     setNewEventDataInputs(newEventData);
@@ -139,16 +137,16 @@ const editSelectedEvent = () => {
 };
 
 const toggleEventAsDone = async () => {
-  isEventChecked.value = !isCompleted.value;
+  isEventChecked.value = !isCompleted;
 
   if (!!selectedDay.id && !!selectedDay.year) {
     try {
       await toggleCompletionEventFetch(
         selectedDay.id,
         selectedDay.year,
-        eventId.value,
+        eventId,
         isEventChecked.value,
-        isNotification.value
+        isNotification
       );
 
       emit("events-list-update");

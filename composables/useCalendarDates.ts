@@ -17,7 +17,7 @@ export const getUserEventsFetch = (year: number, id: number) => {
 
       const selectedEvents = ref(
          db,
-         `users"/${userId.value}/calendar/${year}/${id}`
+         `users/${userId.value}/calendar/${year}/${id}`
       );
 
       onValue(
@@ -33,7 +33,7 @@ export const getUserEventsFetch = (year: number, id: number) => {
    });
 };
 
-export const getUserListOfEventsInSelectedYear = (year: number) => {
+export const getUserListOfSavedEventsInSelectedYear = (year: number) => {
    return new Promise<Events>((resolve, reject) => {
       const userId = useCookie("userUidStatus");
 

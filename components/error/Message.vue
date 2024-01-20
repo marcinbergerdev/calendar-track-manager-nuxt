@@ -2,7 +2,13 @@
   <div class="events-error-container">
     <p class="events-error">{{ error }}</p>
 
-    <BaseButton mode="filled-drk" class="events-close-error" @click="handleError">Close</BaseButton>
+    <BaseButton
+      mode="filled-drk"
+      class="events-close-error"
+      v-if="isCloseButton"
+      @click="handleError"
+      >Close</BaseButton
+    >
   </div>
 </template>
 
@@ -10,9 +16,10 @@
 import { useEditor } from "@/store/useEditor";
 const events = useEditor();
 
-defineProps({
-  error: Object,
-});
+const { error, isCloseButton = true } = defineProps<{
+  error: Object;
+  isCloseButton: boolean;
+}>();
 
 const handleError = () => {
   clearError();
@@ -34,7 +41,7 @@ const handleError = () => {
   overflow-wrap: break-word;
 }
 
-.events-close-error{
+.events-close-error {
   margin-top: 2rem;
   padding: 0.3rem 1rem;
   font-size: 1.5rem;

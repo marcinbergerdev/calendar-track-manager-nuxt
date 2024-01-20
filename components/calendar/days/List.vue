@@ -71,7 +71,12 @@ const setNextDays = (amountOfPreviousAndCurrentDays: Day[], nextMonth: Dayjs) =>
   return selectedDays;
 };
 
-const setDays = (month: Dayjs, daysInMonth: number, startingDay: number, isActive: boolean) => {
+const setDays = (
+  month: Dayjs,
+  daysInMonth: number,
+  startingDay: number,
+  isActive: boolean
+) => {
   let days: Day[] = [];
 
   for (let d = startingDay; d <= daysInMonth; d++) {
@@ -105,12 +110,12 @@ const setCurrentDay = (id: number) => {
   return currentDate === id ? true : false;
 };
 
-const getUserEvents = async (year: number) => {
+const getUserSavedEvents = async (year: number) => {
   try {
-    const response = await getUserListOfEventsInSelectedYear(year);
+    const response = await getUserListOfSavedEventsInSelectedYear(year);
     return response;
   } catch (err: any) {
-    throw new Error(err);
+    throw createError(err);
   }
 };
 
@@ -148,7 +153,7 @@ watchEffect(async () => {
 });
 
 watchEffect(async () => {
-  const events = await getUserEvents(dateSelector.value.year);
+  const events = await getUserSavedEvents(dateSelector.value.year);
   editor.recordedEvents = events;
 });
 </script>

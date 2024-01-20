@@ -1,18 +1,16 @@
 <template>
   <ClientOnly>
     <section class="calendar-container">
-      <CalendarDateIndicator
-        :updated-date="updateCurrentData"
-      ></CalendarDateIndicator>
+      <CalendarDateIndicator :updated-date="updateCurrentDate"></CalendarDateIndicator>
 
       <div class="calendar-days">
         <CalendarDaysWeekdays></CalendarDaysWeekdays>
 
-        <CalendarDaysList
-          :previous-month="updatePreviousData"
-          :current-month="updateCurrentData"
-          :next-month="updateNextData"
-        ></CalendarDaysList>
+        <CalendarDaysContainer
+          :previous-month="updatePreviousDate"
+          :current-month="updateCurrentDate"
+          :next-month="updateNextDate"
+        ></CalendarDaysContainer>
       </div>
     </section>
   </ClientOnly>
@@ -22,22 +20,22 @@
 const dateSelector = useSelectedData();
 const dayjs = useDayjs();
 
-const updatePreviousData = computed(() => {
+const updatePreviousDate = computed(() => {
   const monthCounter = -1;
   return updateDate(monthCounter);
 });
 
-const updateCurrentData = computed(() => {
+const updateCurrentDate = computed(() => {
   const monthCounter = 0;
   const currentMonth = updateDate(monthCounter);
-  
+
   dateSelector.value.month = currentMonth.month();
-  dateSelector.value.year = currentMonth.year();  
+  dateSelector.value.year = currentMonth.year();
 
   return currentMonth;
 });
 
-const updateNextData = computed(() => {
+const updateNextDate = computed(() => {
   const monthCounter = 1;
   return updateDate(monthCounter);
 });
@@ -61,8 +59,6 @@ const setDate = (monthCounter: number, month: number) => {
 onMounted(() => {
   dateSelector.value.year = dayjs().year();
 });
-
-
 </script>
 
 <style scoped lang="scss">

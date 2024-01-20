@@ -90,10 +90,14 @@
         @click="editor.closeEditorAndEvent()"
         >Wyjdź</BaseButton
       >
-      <BaseButton mode="filled-drk" class="editor-actions__button" @click="saveAndRefreshEvents"
+      <BaseButton
+        mode="filled-drk"
+        class="editor-actions__button"
+        @click="saveAndRefreshEvents"
         >Zapisz</BaseButton
       >
     </article>
+
     <article class="editor-actions" v-else>
       <BaseButton
         mode="filled-drk"
@@ -130,6 +134,8 @@ const calculateNotificationStatus = computed(() => {
 });
 
 const saveAndRefreshEvents = async () => {
+  clearError();
+
   const selectedDay = editor.selectedDay;
 
   if (!!selectedDay.id && !!selectedDay.year) {
@@ -147,14 +153,17 @@ const saveAndRefreshEvents = async () => {
 };
 
 const saveUserEventsAndHandleAnimation = async (id: number, year: number, eventData: EventElement) => {
+  clearError();
   isAddedAnimation.value = true;
 
   try {
     await saveUserEventsFetch(id, year, eventData);
   } catch (err: any) {
     throw createError(err);
+  } finally {
+    isAddedAnimation.value = false;
   }
-  isAddedAnimation.value = false;
+
   resetEventsForm();
 };
 
@@ -171,7 +180,7 @@ const editEvents = async () => {
     };
 
     if (!!selectedEvent && !!selectedEvent.eventId) {
-      editNewEventData(
+      await editNewEventData(
         selectedDay.id,
         selectedDay.year,
         selectedEvent.eventId,
@@ -181,28 +190,26 @@ const editEvents = async () => {
   }
 };
 
-const editNewEventData = async (
-  id: number,
-  year: number,
-  eventId: string,
-  eventData: EventElement
-) => {
+const editNewEventData = async (id: number, year: number, eventId: string,  eventData: EventElement) => {
+  clearError();
   isAddedAnimation.value = true;
+
   try {
     await editNewEventDataFetch(id, year, eventId, eventData);
   } catch (err: any) {
     throw createError(err);
   }
+
   isAddedAnimation.value = false;
   editor.openEventList();
 };
 
 const getUserEvents = async (year: number) => {
   try {
-    const response = await getUserListOfEventsInSelectedYear(year);
+    const response = await getUserListOfSavedEventsInSelectedYear(year);
     editor.recordedEvents = response;
   } catch (err: any) {
-    throw new Error(err);
+    throw createError(err);
   }
 };
 
