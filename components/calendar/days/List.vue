@@ -31,7 +31,6 @@ const dateSelector = useSelectedData();
 const editor = useEditor();
 
 const days = ref<Day[]>([]);
-const recordedEvents = ref<Events | null>(null);
 
 const { previousMonth, currentMonth, nextMonth } = defineProps<{
   previousMonth: Dayjs;
@@ -145,12 +144,12 @@ watchEffect(async () => {
   ];
 
   days.value = selectedDays;
-  if (!!recordedEvents.value) setClassToRecordedEvents(recordedEvents.value);
+  if (!!editor.recordedEvents) setClassToRecordedEvents(editor.recordedEvents);
 });
 
 watchEffect(async () => {
   const events = await getUserEvents(dateSelector.value.year);
-  recordedEvents.value = events;
+  editor.recordedEvents = events;
 });
 </script>
 

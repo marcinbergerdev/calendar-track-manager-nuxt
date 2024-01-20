@@ -17,7 +17,7 @@ export const getUserEventsFetch = (year: number, id: number) => {
 
       const selectedEvents = ref(
          db,
-         `users/${userId.value}/calendar/${year}/${id}`
+         `users"/${userId.value}/calendar/${year}/${id}`
       );
 
       onValue(
@@ -54,7 +54,7 @@ export const getUserListOfEventsInSelectedYear = (year: number) => {
    });
 };
 
-export const writeUserEventsFetch = async (
+export const saveUserEventsFetch = async (
    dayId: number,
    year: number,
    event: EventElement

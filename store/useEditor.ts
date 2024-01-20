@@ -1,9 +1,10 @@
 import { defineStore } from "pinia";
-import { SelectedDay, EventElement } from "@/types/Date";
+import { SelectedDay, EventElement, Events} from "@/types/Date";
 
 export const useEditor = defineStore("editor", () => {
    const selectedDay = reactive<SelectedDay>({});
    const selectedEvent = ref<EventElement | null>(null);
+   const recordedEvents = ref<Events | null>(null);
 
    const isEditor = ref<boolean>(false);
    const isEvents = ref<boolean>(false);
@@ -72,6 +73,7 @@ export const useEditor = defineStore("editor", () => {
    return {
       selectedDay,
       selectedEvent,
+      recordedEvents,
       isEditor,
       isEvents,
       isEditorOptions,

@@ -90,7 +90,7 @@
         @click="editor.closeEditorAndEvent()"
         >Wyjdź</BaseButton
       >
-      <BaseButton mode="filled-drk" class="editor-actions__button" @click="saveEvent"
+      <BaseButton mode="filled-drk" class="editor-actions__button" @click="saveAndRefreshEvents"
         >Zapisz</BaseButton
       >
     </article>
@@ -102,7 +102,7 @@
         >Back</BaseButton
       >
 
-      <BaseButton mode="filled-drk" class="editor-actions__button" @click="editEvent"
+      <BaseButton mode="filled-drk" class="editor-actions__button" @click="editEvents"
         >Edytuj</BaseButton
       >
     </article>
@@ -114,7 +114,9 @@
 <script setup lang="ts">
 import { EventElement } from "@/types/Date";
 import { useEditor } from "../../../store/useEditor";
+
 const editor = useEditor();
+const dateSelector = useSelectedData();
 
 const eventTitle = ref("");
 const eventTime = ref("");
@@ -127,7 +129,7 @@ const calculateNotificationStatus = computed(() => {
   return isEventNotification.value ? "checked" : "not-checked";
 });
 
-const saveEvent = async () => {
+const saveAndRefreshEvents = async () => {
   const selectedDay = editor.selectedDay;
 
   if (!!selectedDay.id && !!selectedDay.year) {
@@ -139,29 +141,24 @@ const saveEvent = async () => {
       isNotification: isEventNotification.value,
     };
 
-    try {
-      await writeUserEvents(selectedDay.id, selectedDay.year, eventData);
-    } catch (err: any) {
-      throw createError(err);
-    }
+    await saveUserEventsAndHandleAnimation(selectedDay.id, selectedDay.year, eventData);
+    getUserEvents(dateSelector.value.year);
   }
 };
 
-const writeUserEvents = async (id: number, year: number, eventData: EventElement) => {
+const saveUserEventsAndHandleAnimation = async (id: number, year: number, eventData: EventElement) => {
   isAddedAnimation.value = true;
-  await writeUserEventsFetch(id, year, eventData);
+
+  try {
+    await saveUserEventsFetch(id, year, eventData);
+  } catch (err: any) {
+    throw createError(err);
+  }
   isAddedAnimation.value = false;
   resetEventsForm();
 };
 
-const resetEventsForm = () => {
-  eventTitle.value = "";
-  eventTime.value = "";
-  eventNote.value = "";
-  isEventNotification.value = true;
-};
-
-const editEvent = async () => {
+const editEvents = async () => {
   const selectedDay = editor.selectedDay;
   const selectedEvent = editor.selectedEvent;
 
@@ -174,25 +171,39 @@ const editEvent = async () => {
     };
 
     if (!!selectedEvent && !!selectedEvent.eventId) {
-      try {
-        await editNewEventData(
-          selectedDay.id,
-          selectedDay.year,
-          selectedEvent.eventId,
-          eventData
-        );
-      } catch (err: any) {
-        throw createError(err);
-      }
+      editNewEventData(
+        selectedDay.id,
+        selectedDay.year,
+        selectedEvent.eventId,
+        eventData
+      );
     }
   }
 };
 
-const editNewEventData = async (id: number, year: number, eventId: string, eventData: EventElement) => {
+const editNewEventData = async (
+  id: number,
+  year: number,
+  eventId: string,
+  eventData: EventElement
+) => {
   isAddedAnimation.value = true;
-  await editNewEventDataFetch(id, year, eventId, eventData);
+  try {
+    await editNewEventDataFetch(id, year, eventId, eventData);
+  } catch (err: any) {
+    throw createError(err);
+  }
   isAddedAnimation.value = false;
   editor.openEventList();
+};
+
+const getUserEvents = async (year: number) => {
+  try {
+    const response = await getUserListOfEventsInSelectedYear(year);
+    editor.recordedEvents = response;
+  } catch (err: any) {
+    throw new Error(err);
+  }
 };
 
 const checkIfEventBeingEdited = () => {
@@ -204,6 +215,13 @@ const checkIfEventBeingEdited = () => {
     eventNote.value = isEventEdited.note;
     isEventNotification.value = isEventEdited.isNotification;
   }
+};
+
+const resetEventsForm = () => {
+  eventTitle.value = "";
+  eventTime.value = "";
+  eventNote.value = "";
+  isEventNotification.value = true;
 };
 
 onMounted(() => {
