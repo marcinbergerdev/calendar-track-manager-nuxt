@@ -1,6 +1,7 @@
 <template>
   <section class="editor-animation-container">
     <div class="animation-icon-container">
+
       <span class="animation-icon-box">
         <svg
           class="animation-icon-box__icon"
@@ -17,7 +18,9 @@
         </svg>
       </span>
 
+
       <span class="animation-icon-box__text">Dodawanie...</span>
+
     </div>
   </section>
 </template>

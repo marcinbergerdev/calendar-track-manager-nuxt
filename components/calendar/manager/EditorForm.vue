@@ -7,7 +7,9 @@
       v-model.trim="eventTitle"
     />
 
+
     <div class="editor-notifications-container">
+
       <label class="notification-switch">
         <input
           class="notification-switch__input"
@@ -15,6 +17,8 @@
           checked
           v-model="isEventNotification"
         />
+
+
         <span
           class="notification-switch__slider checked"
           @click="setNotificationStatus"
@@ -52,6 +56,7 @@
         </span>
       </label>
 
+
       <div class="notifications-title">
         <svg
           class="notifications-title__icon"
@@ -68,12 +73,15 @@
         <p class="notifications-title__text">Powiadomienia</p>
       </div>
 
+
       <input class="notifications-time-selector" type="time" v-model="eventTime" />
+
     </div>
   </section>
 
   <section class="editor-text">
     <article class="editor-note">
+
       <label class="editor-note__title" for="message">Notatka:</label>
       <textarea
         class="editor-note__message"
@@ -81,34 +89,44 @@
         id="message"
         v-model="eventNote"
       ></textarea>
+
     </article>
+
 
     <article class="editor-actions" v-if="!editor.selectedEvent">
+
       <BaseButton
         mode="filled-drk"
         class="editor-actions__button"
-        @click="editor.closeEditorAndEvent()"
-        >Wyjdź</BaseButton
-      >
+        @click="editor.closeEditorAndEvent()">
+        Wyjdź
+      </BaseButton>
+
+
       <BaseButton
         mode="filled-drk"
         class="editor-actions__button"
-        @click="saveAndRefreshEvents"
-        >Zapisz</BaseButton
-      >
+        @click="saveAndRefreshEvents">
+        Zapisz
+      </BaseButton>
+
     </article>
 
+
     <article class="editor-actions" v-else>
+
       <BaseButton
         mode="filled-drk"
         class="editor-actions__button"
-        @click="editor.openEventList()"
-        >Back</BaseButton
-      >
+        @click="editor.openEventList()">
+        Back
+      </BaseButton>
 
-      <BaseButton mode="filled-drk" class="editor-actions__button" @click="editEvents"
-        >Edytuj</BaseButton
-      >
+
+      <BaseButton mode="filled-drk" class="editor-actions__button" @click="editEvents">
+        Edytuj
+      </BaseButton>
+
     </article>
   </section>
 
@@ -152,7 +170,11 @@ const saveAndRefreshEvents = async () => {
   }
 };
 
-const saveUserEventsAndHandleAnimation = async (id: number, year: number, eventData: EventElement) => {
+const saveUserEventsAndHandleAnimation = async (
+  id: number,
+  year: number,
+  eventData: EventElement
+) => {
   clearError();
   isAddedAnimation.value = true;
 
@@ -190,7 +212,12 @@ const editEvents = async () => {
   }
 };
 
-const editNewEventData = async (id: number, year: number, eventId: string,  eventData: EventElement) => {
+const editNewEventData = async (
+  id: number,
+  year: number,
+  eventId: string,
+  eventData: EventElement
+) => {
   clearError();
   isAddedAnimation.value = true;
 

@@ -5,6 +5,7 @@
     </h2>
 
     <section class="calendar-selector">
+
       <BaseButton class="calendar-selector__button previous" @click="setPreviousMonth">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
           <path
@@ -14,16 +15,20 @@
         </svg>
       </BaseButton>
 
+
       <Transition :name="monthAnimationName" mode="out-in">
         <BaseButton
           class="calendar-selector__month"
           :key="extractedDate.monthId"
           @click="openDateSelector"
-          >{{ extractedDate.month }} {{ extractedDate.year }}</BaseButton
         >
+          {{ extractedDate.month }} {{ extractedDate.year }}
+        </BaseButton>
       </Transition>
 
+
       <CalendarDateSelector></CalendarDateSelector>
+
 
       <BaseButton class="calendar-selector__button next" @click="setNextMonth">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
@@ -33,6 +38,7 @@
           />
         </svg>
       </BaseButton>
+
     </section>
   </header>
 </template>

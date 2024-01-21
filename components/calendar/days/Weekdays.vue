@@ -1,8 +1,10 @@
 <template>
   <ul class="weeks-list">
+
     <li class="weeks-list__week" v-for="(day, id) in calculatedWeekdays" :key="id">
       {{ day }}
     </li>
+    
   </ul>
 </template>
 

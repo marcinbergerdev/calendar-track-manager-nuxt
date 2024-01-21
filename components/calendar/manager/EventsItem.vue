@@ -1,5 +1,6 @@
 <template>
   <li class="event-element" :class="eventChecked">
+
     <header class="event-header">
       <h2 class="event-header__title">{{ titleEmptyValidation }}</h2>
       <span class="event-header__time">{{ timeEmptyValidation }}</span>
@@ -10,6 +11,7 @@
     </section>
 
     <section class="event-actions">
+
       <BaseButton class="delete" @click="deleteSelectedEvent">
         <svg
           class="delete-icon"
@@ -23,6 +25,7 @@
             d="M208.49 191.51a12 12 0 0 1-17 17L128 145l-63.51 63.49a12 12 0 0 1-17-17L111 128L47.51 64.49a12 12 0 0 1 17-17L128 111l63.51-63.52a12 12 0 0 1 17 17L145 128Z"
           /></svg
       ></BaseButton>
+
 
       <BaseButton class="edit" @click="editSelectedEvent"
         ><svg
@@ -42,6 +45,7 @@
           /></svg
       ></BaseButton>
 
+
       <BaseButton class="check" @click="toggleEventAsDone"
         ><svg
           class="check-icon"
@@ -57,7 +61,9 @@
             clip-rule="evenodd"
           /></svg
       ></BaseButton>
+
     </section>
+
   </li>
 </template>
 

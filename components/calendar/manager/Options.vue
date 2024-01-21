@@ -1,14 +1,19 @@
 <template>
   <section class="option-container">
+
     <BaseButton
       mode="empty"
       class="option-container__button editButton"
       @click="openEditor"
-      >Edytuj</BaseButton
     >
-    <BaseButton mode="empty" class="option-container__button" @click="openEventList"
-      >Zobacz</BaseButton
-    >
+      Edytuj
+    </BaseButton>
+
+
+    <BaseButton mode="empty" class="option-container__button" @click="openEventList">
+      Zobacz
+    </BaseButton>
+
   </section>
 </template>
 
@@ -19,6 +24,7 @@ const editor = useEditor();
 const openEditor = () => {
   editor.openEditor();
 };
+
 const openEventList = () => {
   editor.openEventList();
 };

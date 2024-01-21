@@ -1,15 +1,19 @@
 <template>
   <BaseLoadingSpinner mode="event" :is-background="false" v-if="isLoadingSpinner" />
 
+
   <div class="events-empty-message-container" v-if="isEmpty">
     <p class="events-empty-message-container__message">Add your events...</p>
+
     <BaseButton
       mode="filled-drk"
       class="events-empty-message-container__button"
       @click="redirectToEventEditor"
-      >add event</BaseButton
     >
+      add event
+    </BaseButton>
   </div>
+
 
   <ul class="events-list" v-else>
     <CalendarManagerEventsItem
@@ -46,7 +50,7 @@ const redirectToEventEditor = () => {
 
 const getUserEvents = async () => {
   const selectedDay = editor.selectedDay;
-  
+
   if (!!selectedDay.id && !!selectedDay.year) {
     try {
       const response = await getUserEventsFetch(selectedDay.year, selectedDay.id);

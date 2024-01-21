@@ -1,5 +1,6 @@
 <template>
   <div class="date-selector-container" ref="selectorContainer" v-if="isDateSelector">
+
     <Transition name="selector" mode="out-in">
       <ul class="year-selector-list" v-if="!isYearOrMonthSelector">
         <li
@@ -13,6 +14,7 @@
         </li>
       </ul>
 
+
       <ul class="month-selector-list" v-else>
         <li
           class="month-element"
@@ -25,6 +27,7 @@
         </li>
       </ul>
     </Transition>
+    
   </div>
 </template>
 

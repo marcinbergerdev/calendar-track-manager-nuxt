@@ -1,5 +1,6 @@
 <template>
   <li class="day-container">
+
     <BaseButton
       mode="border-calendar-day"
       class="day-item"
@@ -9,9 +10,11 @@
       {{ day }}
     </BaseButton>
 
+
     <CalendarManagerOptions
       v-if="isSelected && editor.isEditorOptions"
     ></CalendarManagerOptions>
+
   </li>
 </template>
 

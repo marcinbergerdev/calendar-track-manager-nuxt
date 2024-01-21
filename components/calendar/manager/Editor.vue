@@ -1,11 +1,14 @@
 <template>
   <div class="editor-container">
     <NuxtErrorBoundary>
+
       <CalendarManagerEditorForm />
+
 
       <template #error="{ error }">
         <ErrorMessage :error="error"></ErrorMessage>
       </template>
+
     </NuxtErrorBoundary>
   </div>
 </template>

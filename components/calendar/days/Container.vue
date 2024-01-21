@@ -1,14 +1,17 @@
 <template>
   <NuxtErrorBoundary>
+
     <CalendarDaysList
       :previous-month="previousMonth"
       :current-month="currentMonth"
       :next-month="nextMonth"
     ></CalendarDaysList>
 
+
     <template #error="{ error }">
       <ErrorMessage :error="error" :is-close-button="false"></ErrorMessage>
     </template>
+    
   </NuxtErrorBoundary>
 </template>
 
@@ -20,4 +23,5 @@ defineProps<{
   currentMonth: Dayjs;
   nextMonth: Dayjs;
 }>();
+
 </script>
