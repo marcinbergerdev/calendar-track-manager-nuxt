@@ -112,7 +112,6 @@ const selectDay = () => {
 }
 
 .selected-day {
-  box-shadow: 0px 0px 6px rgba(#fff, 0.8);
-  border: 4px solid #000;
+  box-shadow: inset 0px 0px 12px rgba(#b7b8b8, 0.8);
 }
 </style>
