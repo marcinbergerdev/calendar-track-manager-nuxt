@@ -1,8 +1,7 @@
 <template>
-  <section>
-    <div>
-
-      <BaseButton view="empty">
+  <section class="sorting-container">
+    <div class="sorting-box">
+      <BaseButton class="sorting-box__button">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="1em"
@@ -16,8 +15,7 @@
         </svg>
       </BaseButton>
 
-
-      <BaseButton view="empty">
+      <BaseButton class="sorting-box__button">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="1em"
@@ -30,7 +28,6 @@
           />
         </svg>
       </BaseButton>
-
     </div>
   </section>
 </template>
@@ -38,4 +35,22 @@
 <script setup lang="ts"></script>
 
 <style scoped lang="scss">
+.sorting-container {
+}
+
+.sorting-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 0.7rem 0.5rem;
+  width: 9rem;
+  border: 2px solid var(--text-clr);
+
+  &__button {
+    display: grid;
+    place-items: center;
+    font-size: 2.7rem;
+  }
+}
 </style>
