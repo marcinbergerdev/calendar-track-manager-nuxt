@@ -23,12 +23,12 @@
     <p class="redirect-box__text">or</p>
     <p class="redirect-box__text">You don't have an account yet?</p>
 
-    <BaseButton :link="true" path="/signup" class="redirect-box__link" mode="border"
+    <BaseButton :link="true" path="/signup" view="border" class="redirect-box__link"
       >Sign up</BaseButton
     >
   </div>
 
-  <BaseButton @click="logInTestUserHandler" class="redirect-box__link" mode="border"
+  <BaseButton @click="logInTestUserHandler" view="border" class="redirect-box__link"
     >Try test account</BaseButton
   >
 </template>

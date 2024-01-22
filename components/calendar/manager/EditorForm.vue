@@ -96,7 +96,7 @@
     <article class="editor-actions" v-if="!editor.selectedEvent">
 
       <BaseButton
-        mode="filled-drk"
+        view="filled-drk"
         class="editor-actions__button"
         @click="editor.closeEditorAndEvent()">
         Wyjdź
@@ -104,7 +104,7 @@
 
 
       <BaseButton
-        mode="filled-drk"
+        view="filled-drk"
         class="editor-actions__button"
         @click="saveAndRefreshEvents">
         Zapisz
@@ -116,14 +116,14 @@
     <article class="editor-actions" v-else>
 
       <BaseButton
-        mode="filled-drk"
+        view="filled-drk"
         class="editor-actions__button"
         @click="editor.openEventList()">
         Back
       </BaseButton>
 
 
-      <BaseButton mode="filled-drk" class="editor-actions__button" @click="editEvents">
+      <BaseButton view="filled-drk" class="editor-actions__button" @click="editEvents">
         Edytuj
       </BaseButton>
 

@@ -6,7 +6,7 @@
     <p class="events-empty-message-container__message">Add your events...</p>
 
     <BaseButton
-      mode="filled-drk"
+      view="filled-drk"
       class="events-empty-message-container__button"
       @click="redirectToEventEditor"
     >
@@ -29,7 +29,7 @@
     ></CalendarManagerEventsItem>
   </ul>
 
-  <BaseButton mode="filled-drk" class="events-exit" @click="editor.closeEditorAndEvent()"
+  <BaseButton view="filled-drk" class="events-exit" @click="editor.closeEditorAndEvent()"
     >Wyjdź</BaseButton
   >
 </template>

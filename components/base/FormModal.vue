@@ -14,12 +14,12 @@
       </section>
 
       <footer class="footer-dialog">
-        <BaseButton class="footer-dialog__button" mode="filled" @click="closeModal"
+        <BaseButton view="filled" class="footer-dialog__button" @click="closeModal"
           >Cancel</BaseButton
         >
         <BaseButton
+          view="border"
           class="footer-dialog__button"
-          mode="border"
           v-if="isConfirm"
           @click="confirmModal"
           >Ok</BaseButton

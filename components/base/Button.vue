@@ -1,9 +1,9 @@
 <template>
-  <NuxtLink v-if="link" :class="mode" :to="path">
+  <NuxtLink v-if="link" :class="view" :to="path">
     <slot />
   </NuxtLink>
 
-  <button v-else :class="mode">
+  <button v-else :class="view">
     <slot />
   </button>
 </template>
@@ -11,7 +11,7 @@
 <script setup lang="ts">
 defineProps<{
   link?: boolean;
-  mode?: string | object;
+  view?: string | object;
   path?: string;
 }>();
 </script>

@@ -27,7 +27,7 @@
 
   <div class="redirect-box">
     <p class="redirect-box__text">If you have an account log in here!</p>
-    <BaseButton :link="true" path="/login" class="redirect-box__link" mode="border"
+    <BaseButton :link="true" path="/login" view="border" class="redirect-box__link"
       >Log in</BaseButton
     >
   </div>

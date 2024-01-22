@@ -2,7 +2,7 @@
   <section class="option-container">
 
     <BaseButton
-      mode="empty"
+      view="empty"
       class="option-container__button editButton"
       @click="openEditor"
     >
@@ -10,7 +10,7 @@
     </BaseButton>
 
 
-    <BaseButton mode="empty" class="option-container__button" @click="openEventList">
+    <BaseButton view="empty" class="option-container__button" @click="openEventList">
       Zobacz
     </BaseButton>
 

@@ -1,5 +1,5 @@
 <template>
-  <BaseButton mode="empty" @click="signOut">sign out</BaseButton>
+  <BaseButton view="empty" @click="signOut">sign out</BaseButton>
 </template>
 
 <script setup lang="ts">

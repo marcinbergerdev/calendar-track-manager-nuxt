@@ -1,9 +1,9 @@
 <template>
   <!-- dark mode icons -->
   <BaseButton
-    v-if="isMoon"
+    view="empty"
     class="dark-mode-button"
-    mode="empty"
+    v-if="isMoon"
     @click="switchDarkModeHandler"
   >
     <ClientOnly>
@@ -17,9 +17,9 @@
 
   <!--hamburger  -->
   <BaseButton
-    v-if="isHamburger"
+    :view="isHamburgerActive"
     class="hamburger"
-    :mode="isHamburgerActive"
+    v-if="isHamburger"
     @click="openMobileMenu"
   >
     <div class="hamburger-inner"></div>

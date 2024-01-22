@@ -3,7 +3,7 @@
     <p class="events-error">{{ error }}</p>
 
     <BaseButton
-      mode="filled-drk"
+      view="filled-drk"
       class="events-close-error"
       v-if="isCloseButton"
       @click="handleError"

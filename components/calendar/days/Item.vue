@@ -2,7 +2,7 @@
   <li class="day-container">
 
     <BaseButton
-      mode="border-calendar-day"
+      view="border-calendar-day"
       class="day-item"
       :class="setClasses"
       @click="selectDay"
