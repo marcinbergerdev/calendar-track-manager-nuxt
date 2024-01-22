@@ -22,7 +22,7 @@ defineProps<{
   z-index: 10;
 
   width: 100%;
-  height: 100%;
+  height: 100vh;
   background-color: color-mix(in srgb, var(--bg-clr) 60%, transparent);
 }
 

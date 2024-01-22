@@ -18,9 +18,6 @@
     font-size: 2.3rem;
     font-weight: 400;
     color: var(--auth-title-clr);
-
-    @media (width >= 768px) {
-    }
   }
 }
 </style>

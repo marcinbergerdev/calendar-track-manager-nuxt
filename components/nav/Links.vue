@@ -7,8 +7,5 @@
 <script setup lang="ts">
 const menuLinks = ref([
   { path: "/note", name: "note" },
-  { path: "/list", name: "list" },
 ]);
 </script>
-
-<style scoped lang="scss"></style>

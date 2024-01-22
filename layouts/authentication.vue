@@ -2,7 +2,6 @@
   <div class="auth-container">
     <BaseLoadingSpinner v-if="isLoadingSpinner" :is-background="true"/>
 
-
     <BaseFormModal
       v-if="modal.isModal"
       :title="modal.values.title"
@@ -13,13 +12,15 @@
     <AuthHeader />
 
     <main class="auth-content-container">
+
       <section class="auth-box">
         <header class="auth-box-header">
           <h2 class="auth-box-header__title">Welcome</h2>
         </header>
-        <!-- here -->
+        
         <slot />
       </section>
+
     </main>
   </div>
 </template>

@@ -1,18 +1,24 @@
 <template>
   <ClientOnly>
-    <section class="calendar-container">
-      <CalendarDateIndicator :updated-date="updateCurrentDate"></CalendarDateIndicator>
 
-      <div class="calendar-days">
-        <CalendarDaysWeekdays></CalendarDaysWeekdays>
+    <div class="calendar-wrapper">
+      <section class="calendar-container">
 
-        <CalendarDaysContainer
-          :previous-month="updatePreviousDate"
-          :current-month="updateCurrentDate"
-          :next-month="updateNextDate"
-        ></CalendarDaysContainer>
-      </div>
-    </section>
+        <CalendarDateIndicator :updated-date="updateCurrentDate"></CalendarDateIndicator>
+
+        <div class="calendar-days">
+          <CalendarDaysWeekdays></CalendarDaysWeekdays>
+
+          <CalendarDaysContainer
+            :previous-month="updatePreviousDate"
+            :current-month="updateCurrentDate"
+            :next-month="updateNextDate"
+          ></CalendarDaysContainer>
+        </div>
+        
+      </section>
+    </div>
+
   </ClientOnly>
 </template>
 
@@ -62,6 +68,14 @@ onMounted(() => {
 </script>
 
 <style scoped lang="scss">
+.calendar-wrapper {
+  display: grid;
+  place-items: center;
+  padding: 3rem 0;
+  height: 100%;
+  overflow: auto;
+}
+
 .calendar-container {
   padding: 2rem 0.9rem;
   width: min(70rem, 95%);

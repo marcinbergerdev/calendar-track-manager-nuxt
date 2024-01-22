@@ -1,6 +1,9 @@
 <template>
   <div>
-    note
+    <section>
+      
+    
+    </section>
   </div>
 </template>
 

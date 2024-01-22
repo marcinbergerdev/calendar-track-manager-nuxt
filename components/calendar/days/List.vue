@@ -1,9 +1,16 @@
 <template>
   <Transition :name="monthAnimationName" mode="out-in">
     <ul class="days-list" :key="currentMonth.month()">
-
       <CalendarDaysItem
-        v-for="{id, day, year, weekdayId, isActive, isCurrent, isEvent} in calculateDaysInMonth"
+        v-for="{
+          id,
+          day,
+          year,
+          weekdayId,
+          isActive,
+          isCurrent,
+          isEvent,
+        } in calculateDaysInMonth"
         :key="id"
         :id="id"
         :day="day"
@@ -14,18 +21,19 @@
         :is-selected="id === editor.selectedDay.id"
         :is-event="isEvent"
       ></CalendarDaysItem>
-
     </ul>
   </Transition>
 
-  <CalendarManagerEditor v-if="editor.isEditor"></CalendarManagerEditor>
-  <CalendarManagerEvents v-if="editor.isEvents"></CalendarManagerEvents>
+  <Component :is="showManagerOptions"></Component>
 </template>
 
 <script setup lang="ts">
 import { Dayjs } from "dayjs";
 import { Day, Events } from "@/types/Date";
 import { useEditor } from "../../../store/useEditor";
+
+const CalendarManagerEditor = resolveComponent("CalendarManagerEditor");
+const CalendarManagerEvents = resolveComponent("CalendarManagerEvents");
 
 const dayjs = useDayjs();
 const monthAnimationName = useMonthAnimationName();
@@ -39,6 +47,11 @@ const { previousMonth, currentMonth, nextMonth } = defineProps<{
   currentMonth: Dayjs;
   nextMonth: Dayjs;
 }>();
+
+const showManagerOptions = computed(() => {
+  if (editor.isEditor) return CalendarManagerEditor;
+  if (editor.isEvents) return CalendarManagerEvents;
+});
 
 const calculateDaysInMonth = computed<Day[]>(() => {
   return days.value || [];
