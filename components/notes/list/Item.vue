@@ -42,8 +42,8 @@
 
 
     <section class="note-message">
-      <NotesContentMessage></NotesContentMessage>
-      <NotesContentChecklist></NotesContentChecklist>
+      <!-- <NotesContentMessage></NotesContentMessage> -->
+      <NotesContentCheckList></NotesContentCheckList>
     </section>
 
 
@@ -65,7 +65,10 @@
   </li>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+
+
+</script>
 
 <style scoped lang="scss">
 .note-item {

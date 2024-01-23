@@ -1,6 +1,6 @@
 <template>
   <NuxtErrorBoundary>
-    <NotesContainerList></NotesContainerList>
+    <NotesList></NotesList>
 
     <template #error="{ error }">
       <ErrorMessage :error="error" :is-close-button="false"></ErrorMessage>
