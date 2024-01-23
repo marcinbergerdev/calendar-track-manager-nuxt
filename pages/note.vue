@@ -1,6 +1,8 @@
 <template>
   <div class="notes-wrapper">
     <NotesSortingButtons />
+    <NotesContainer></NotesContainer>
+
   </div>
 </template>
 
@@ -14,6 +16,7 @@
   padding: 2rem 1rem;
   width: 100%;
   height: 100%;
+  overflow: auto;
 }
 
 

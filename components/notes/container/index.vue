@@ -1,12 +1,13 @@
 <template>
-  <div>
-  </div>
+  <NuxtErrorBoundary>
+    <NotesContainerList></NotesContainerList>
+
+    <template #error="{ error }">
+      <ErrorMessage :error="error" :is-close-button="false"></ErrorMessage>
+    </template>
+  </NuxtErrorBoundary>
 </template>
 
-<script setup lang="ts">
+<script setup lang="ts"></script>
 
-</script>
-
-<style scoped lang="scss">
-
-</style>
+<style scoped lang="scss"></style>
