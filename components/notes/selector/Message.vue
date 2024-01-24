@@ -1,13 +1,8 @@
 <template>
-  <div>
-
-  </div>
+  <label for="message">Event</label>
+  <textarea name="message" id="message"></textarea>
 </template>
 
-<script setup lang="ts">
+<script setup lang="ts"></script>
 
-</script>
-
-<style scoped lang="scss">
-
-</style>
+<style scoped lang="scss"></style>

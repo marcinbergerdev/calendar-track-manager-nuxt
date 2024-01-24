@@ -1,7 +1,6 @@
 <template>
-  <li class="note-item">
-
-    <BaseButton view="empty" class="note-item__edit">
+  <li class="task-item">
+    <BaseButton view="empty" class="task-item__edit">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="1em"
@@ -19,8 +18,11 @@
       </svg>
     </BaseButton>
 
+    <section class="task-message-title">
+      <h2 class="task-message-title__name">Zakupy</h2>
+    </section>
 
-    <BaseButton view="empty" class="note-item__check">
+    <BaseButton view="empty" class="task-item__check">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="1em"
@@ -40,16 +42,14 @@
       </svg>
     </BaseButton>
 
-
-    <section class="note-message">
-      <!-- <NotesContentMessage></NotesContentMessage> -->
-      <NotesContentCheckList></NotesContentCheckList>
+    <section class="task-message">
+      <NotesTasksContentMessage></NotesTasksContentMessage>
+      <!-- <NotesTasksContentCheckList></NotesTasksContentCheckList> -->
     </section>
 
-
-    <BaseButton view="empty" class="note-item__delete">
+    <BaseButton view="empty" class="task-item__delete">
       <svg
-        class="note-item__delete-icon"
+        class="task-item__delete-icon"
         xmlns="http://www.w3.org/2000/svg"
         width="1em"
         height="1em"
@@ -61,23 +61,37 @@
         />
       </svg>
     </BaseButton>
-    
   </li>
 </template>
 
 <script setup lang="ts">
-
-
+const checklist = ref([
+  {
+    id: 0,
+    title: "Zakupy",
+    tasks: [
+      { id: 0, description: "mleko i jajka", isCheck: false },
+      { id: 1, description: "ser", isCheck: false },
+      { id: 2, description: "banany", isCheck: false },
+      { id: 3, description: "colka", isCheck: false },
+      { id: 4, description: "szynke", isCheck: false },
+      { id: 5, description: "zupe", isCheck: false },
+      { id: 6, description: "cytryne", isCheck: false },
+      { id: 7, description: "majonez", isCheck: false },
+    ],
+    type: "checklist",
+  },
+]);
 </script>
 
 <style scoped lang="scss">
-.note-item {
+.task-item {
   display: grid;
   grid-template-areas:
-    " editButton checkButton"
-    "noteMessage noteMessage"
-    "deleteButton deleteButton";
-  grid-template-columns: repeat(2, 1fr);
+    "editButton title checkButton"
+    "noteMessage noteMessage noteMessage"
+    "deleteButton deleteButton deleteButton";
+  grid-template-columns: repeat(3, 1fr);
   grid-template-rows: 1fr 4fr 1fr;
 
   padding: 1rem 1.5rem;
@@ -95,12 +109,16 @@
   }
 
   &__edit {
+    display: flex;
     grid-area: editButton;
+    align-self: center;
     justify-self: flex-start;
   }
 
   &__check {
+    display: flex;
     grid-area: checkButton;
+    align-self: center;
     justify-self: flex-end;
   }
 
@@ -116,7 +134,17 @@
   }
 }
 
-.note-message {
+.task-message-title {
+  grid-area: title;
+  place-self: center;
+
+  &__name {
+    font-size: 2.3rem;
+    color: var(--text-clr);
+  }
+}
+
+.task-message {
   grid-area: noteMessage;
   color: var(--text-clr);
   overflow: hidden;

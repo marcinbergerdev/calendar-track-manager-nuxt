@@ -1,5 +1,5 @@
 <template>
-  <p class="note-message-text">
+  <p class="task-message-text">
     Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis, officia
     architecto, sint vel natus voluptates dolore quidem neque eveniet itaque praesentium
     beatae officiis tenetur odio! Vitae ratione odio est nihil voluptas earum, id fugit
@@ -16,7 +16,7 @@
 <script setup lang="ts"></script>
 
 <style scoped lang="scss">
-.note-message-text {
+.task-message-text {
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 13;
