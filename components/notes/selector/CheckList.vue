@@ -49,14 +49,14 @@
   flex-direction: column;
   align-items: center;
   gap: 2rem 0;
-  flex: 1;
+  
   width: 100%;
   min-height: 25rem;
-  max-height: 46vh;
+  max-height: 52vh;
   overflow: hidden;
 
   @media (width >= 768px) {
-    max-height: 40vh;
+    max-height: 34vh;
     align-items: flex-start;
   }
 }
@@ -112,6 +112,7 @@
   flex-direction: column;
   align-items: center;
   gap: 3rem;
+
   margin-top: 2rem;
   overflow: auto;
 

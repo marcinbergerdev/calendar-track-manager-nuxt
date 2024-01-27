@@ -18,7 +18,7 @@
 
   label {
     font-size: 2.3rem;
-    color: var(--text-clr);
+    color: var(--text-clr)
   }
 
   textarea {
@@ -33,7 +33,6 @@
     border: 0;
     outline: 2px solid var(--text-clr);
     resize: none;
-
     &:focus {
       box-shadow: 0px 0px 10px rgba(#fff, 0.8);
     }

@@ -4,15 +4,27 @@
 
     <div class="selector-modal-container">
       <form class="selector-form" @submit.prevent="saveTask">
-        <header class="selector-header">
+        <header class="selector-header" :class="setToggleOnSlidingZipper">
           <div class="selector-input-box">
             <label for="taskMessage">Message</label>
-            <input type="radio" id="taskMessage" name="option" checked />
+            <input
+              type="radio"
+              id="taskMessage"
+              name="option"
+              value="message"
+              v-model="toggleOptions"
+            />
           </div>
 
           <div class="selector-input-box">
             <label for="tasks">Checklist</label>
-            <input type="radio" id="tasks" name="option" />
+            <input
+              type="radio"
+              id="tasks"
+              name="option"
+              value="checklist"
+              v-model="toggleOptions"
+            />
           </div>
         </header>
 
@@ -26,7 +38,7 @@
             <div class="variants-box" v-for="(variant, id) in colorsVariant" :key="id">
               <label
                 :for="variant.name"
-                :style="{ 'background-color': variant.color}"
+                :style="{ 'background-color': variant.color }"
               ></label>
               <input
                 type="radio"
@@ -63,17 +75,22 @@ const colorsVariant = [
   { name: "yellow", color: "#FFBB24" },
   { name: "red", color: "#CA3F2C" },
   { name: "green", color: "#68C023" },
-  { name: "blue", color: "#2159E9"},
+  { name: "blue", color: "#2159E9" },
   { name: "black", color: "#161616" },
 ];
-const isChecklist = ref(false);
 
+
+const toggleOptions = ref("message");
 const NotesSelectorMessage = resolveComponent("NotesSelectorMessage");
 const NotesSelectorCheckList = resolveComponent("NotesSelectorCheckList");
 
 const renderingManagerOptions = computed(() => {
-  if (isChecklist.value) return NotesSelectorCheckList;
+  if (toggleOptions.value === 'checklist') return NotesSelectorCheckList;
   return NotesSelectorMessage;
+});
+
+const setToggleOnSlidingZipper = computed(() => {
+  return { "sliding-zipper": toggleOptions.value === 'checklist' };
 });
 </script>
 
@@ -150,6 +167,26 @@ const renderingManagerOptions = computed(() => {
     background-color: rgba(#fff, 0.2);
     border-radius: 5rem;
     outline: 2px solid var(--text-clr);
+    transition: transform .15s ease-in-out;
+  }
+}
+
+.sliding-zipper{
+  &::before {
+    transform: translateX(100%);
+    transition: .2s ease-in-out;
+  }
+}
+
+.selector-input-box {
+  input {
+    display: none;
+  }
+
+  label {
+    @media (width >= 768px) {
+      cursor: pointer;
+    }
   }
 }
 
@@ -161,12 +198,6 @@ const renderingManagerOptions = computed(() => {
   flex: 1;
   gap: 3rem 0;
   width: min(100%, 85%);
-}
-
-.selector-input-box {
-  input {
-    display: none;
-  }
 }
 
 .selector-title {
@@ -194,17 +225,12 @@ const renderingManagerOptions = computed(() => {
     }
   }
 }
-
 .selector-colors-variant {
   display: flex;
   flex-flow: wrap row;
   justify-content: center;
   width: 100%;
   gap: 2rem;
-  
-  @media (width >= 768px) {
-    margin-top: 1rem;
-  }
 }
 
 .variants-box {
