@@ -2,10 +2,10 @@
   <section class="selector-checklist-container">
     <h3 class="selector-checklist-title">Tasks</h3>
 
-    <BaseButton view="empty" class="selector-add-task">
-      <p class="selector-add-task__text">Add</p>
+    <div view="empty" class="selector-add-task">
+      <input class="selector-add-task__addInput" type="text" placeholder="Add...">
 
-      <span class="selector-add-task__box">
+      <BaseButton class="selector-add-task__box">
         <svg
           class="selector-add-task__box-icon"
           xmlns="http://www.w3.org/2000/svg"
@@ -15,8 +15,8 @@
         >
           <path fill="currentColor" d="M11.5 12.5H6v-1h5.5V6h1v5.5H18v1h-5.5V18h-1z" />
         </svg>
-      </span>
-    </BaseButton>
+      </BaseButton>
+    </div>
 
     <!-- <p class="selector-empty-checklist">Your list is empty.</p> -->
 
@@ -49,7 +49,7 @@
   flex-direction: column;
   align-items: center;
   gap: 2rem 0;
-  
+
   width: 100%;
   min-height: 25rem;
   max-height: 52vh;
@@ -73,16 +73,18 @@
 
   padding: 0.5rem 1.5rem;
   width: min(100%, 20rem);
+  color: var(--text-clr);
   border: 2px solid var(--text-clr);
   border-radius: 2.5rem;
 
-  @media (width >= 768px) {
-    border-radius: 3rem;
-    margin: 0;
-  }
-
-  &__text {
+  &__addInput {
+    width: 100%;
+    height: 100%;
     font-size: 1.6rem;
+    background-color: transparent;
+    border: 0;
+    outline: none;
+    color: var(--text-clr);
   }
 
   &__box {
@@ -94,6 +96,11 @@
       display: flex;
       font-size: 2.5rem;
     }
+  }
+
+  @media (width >= 768px) {
+    border-radius: 3rem;
+    margin: 0;
   }
 }
 
