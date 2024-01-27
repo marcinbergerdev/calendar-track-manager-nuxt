@@ -1,9 +1,10 @@
 <template>
-  <li>
-    <p>Zakupy</p>
-    
-    <BaseButton>
+  <li class="selector-task">
+    <p class="selector-task__title">{{te}}Zakupy</p>
+
+    <BaseButton view="empty" class="selector-delete-task">
       <svg
+        class="selector-delete-task__icon"
         xmlns="http://www.w3.org/2000/svg"
         width="1em"
         height="1em"
@@ -18,6 +19,36 @@
   </li>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
 
-<style scoped lang="scss"></style>
+defineProps<{
+  te: number
+}>();
+
+
+</script>
+
+<style scoped lang="scss">
+
+.selector-task {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0.7rem 1rem;
+  width: min(100%, 22rem);
+  border: 1px solid var(--text-clr);
+
+  &__title {
+    font-size: 1.5rem;
+    color: var(--text-clr);
+  }
+}
+
+.selector-delete-task {
+  &__icon {
+    display: flex;
+    color: var(--error-clr);
+  }
+}
+</style>
