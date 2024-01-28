@@ -16,7 +16,6 @@
             />
           </div>
 
-
           <div class="selector-input-box">
             <label for="tasks">Checklist</label>
             <input
@@ -29,34 +28,33 @@
           </div>
         </header>
 
-
         <div class="selector-form-content">
           <section class="selector-title">
             <label for="title">Title</label>
             <input type="text" id="title" name="title" placeholder="title" />
           </section>
 
-
           <section class="selector-colors-variant">
-            <div class="variants-box" v-for="(variant, id) in colorsVariant" :key="id">
+            <div class="variants-box" v-for="(variant, id) in colors" :key="id">
               <label
                 :for="variant.name"
-                :style="{ 'background-color': variant.color }"
+                :style="setBackgroundColor(variant.color)"
+                :class="setActiveVariant(variant.name)"
               ></label>
+
               <input
                 type="radio"
                 :id="variant.name"
                 name="color"
-                :checked="variant.checked"
+                :value="variant.name"
+                v-model="colorVariant"
               />
             </div>
           </section>
 
-
           <section class="selector-options">
-          <Component :is="renderingManagerOptions"> </Component>
+            <Component :is="renderingManagerOptions"> </Component>
           </section>
-
 
           <section class="selector-interaction">
             <BaseButton view="border-lt" class="selector-interaction__button"
@@ -76,8 +74,8 @@
 </template>
 
 <script setup lang="ts">
-const colorsVariant = [
-  { name: "grey", color: "#BCBCBC", checked: true },
+const colors = [
+  { name: "grey", color: "#BCBCBC" },
   { name: "purple", color: "#AF31CE" },
   { name: "yellow", color: "#FFBB24" },
   { name: "red", color: "#CA3F2C" },
@@ -86,7 +84,9 @@ const colorsVariant = [
   { name: "black", color: "#161616" },
 ];
 
+const colorVariant = ref("grey");
 const toggleOptions = ref("message");
+
 const NotesSelectorMessage = resolveComponent("NotesSelectorMessage");
 const NotesSelectorCheckList = resolveComponent("NotesSelectorCheckList");
 
@@ -97,6 +97,18 @@ const renderingManagerOptions = computed(() => {
 
 const setToggleOnSlidingZipper = computed(() => {
   return { "checklist-active": toggleOptions.value === "checklist" };
+});
+
+const setActiveVariant = computed(() => {
+  return (variantName: string) => {
+    return { "variant-active": variantName === colorVariant.value };
+  };
+});
+
+const setBackgroundColor = computed(() => {
+  return (color: string) => {
+    return { "background-color": color };
+  };
 });
 </script>
 
@@ -245,6 +257,10 @@ const setToggleOnSlidingZipper = computed(() => {
     display: block;
     width: 2rem;
     height: 2rem;
+
+    @media (width >= 768px) {
+      cursor: pointer;
+    }
   }
 
   input {
@@ -252,8 +268,11 @@ const setToggleOnSlidingZipper = computed(() => {
   }
 }
 
+.variant-active {
+  box-shadow: 0px 0px 10px rgba(#fff, 0.8);
+}
 
-.selector-options{
+.selector-options {
   display: flex;
   flex-direction: column;
   justify-content: center;
