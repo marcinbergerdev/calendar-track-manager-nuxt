@@ -1,7 +1,7 @@
 <template>
   <li class="note-item-create">
 
-    <BaseButton class="note-create-button">
+    <BaseButton class="note-create-button" @click="openNoteSelector">
       <svg
         class="note-create-button__icon"
         xmlns="http://www.w3.org/2000/svg"
@@ -16,7 +16,17 @@
   </li>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useNotes } from '@/store/useNotes';
+
+const notes = useNotes();
+
+const openNoteSelector = () => {
+  notes.isNoteSelector = true;
+}
+</script>
+
+
 
 <style scoped lang="scss">
 .note-item-create {

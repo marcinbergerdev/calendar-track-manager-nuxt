@@ -1,8 +1,8 @@
 <template>
   <div class="notes-wrapper">
     <NotesSortingButtons />
+    <NotesSelector v-if="notes.isNoteSelector"></NotesSelector>
 
-    <NotesSelector></NotesSelector>
 
     <NuxtErrorBoundary>
       <NotesTasks></NotesTasks>
@@ -14,7 +14,12 @@
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useNotes } from '@/store/useNotes';
+
+const notes = useNotes();
+
+</script>
 
 <style scoped lang="scss">
 .notes-wrapper {
