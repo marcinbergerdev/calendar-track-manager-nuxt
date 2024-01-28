@@ -1,11 +1,10 @@
 <template>
-  <section class="selector-checklist-container">
     <h3 class="selector-checklist-title">Tasks</h3>
 
     <div view="empty" class="selector-add-task">
       <input class="selector-add-task__addInput" type="text" placeholder="Add...">
 
-      <BaseButton class="selector-add-task__box">
+      <BaseButton view="empty" class="selector-add-task__box">
         <svg
           class="selector-add-task__box-icon"
           xmlns="http://www.w3.org/2000/svg"
@@ -38,29 +37,11 @@
       <NotesSelectorCheckListItem :te="15"></NotesSelectorCheckListItem>
       <NotesSelectorCheckListItem :te="16"></NotesSelectorCheckListItem>
     </ul>
-  </section>
 </template>
 
 <script setup lang="ts"></script>
 
 <style scoped lang="scss">
-.selector-checklist-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2rem 0;
-
-  width: 100%;
-  min-height: 25rem;
-  max-height: 52vh;
-  overflow: hidden;
-
-  @media (width >= 768px) {
-    max-height: 34vh;
-    align-items: flex-start;
-  }
-}
-
 .selector-checklist-title {
   font-size: 2.3rem;
   color: var(--text-clr);
@@ -79,12 +60,11 @@
 
   &__addInput {
     width: 100%;
-    height: 100%;
     font-size: 1.6rem;
+    color: var(--text-clr);
     background-color: transparent;
     border: 0;
     outline: none;
-    color: var(--text-clr);
   }
 
   &__box {
@@ -113,14 +93,14 @@
 }
 
 .selector-checklist {
-  width: 100%;
-  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 3rem;
-
+  
   margin-top: 2rem;
+  width: 100%;
+  height: 100%;
   overflow: auto;
 
   @media (width >= 768px) {

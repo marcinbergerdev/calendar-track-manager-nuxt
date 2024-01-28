@@ -16,6 +16,7 @@
             />
           </div>
 
+
           <div class="selector-input-box">
             <label for="tasks">Checklist</label>
             <input
@@ -28,11 +29,13 @@
           </div>
         </header>
 
+
         <div class="selector-form-content">
           <section class="selector-title">
             <label for="title">Title</label>
             <input type="text" id="title" name="title" placeholder="title" />
           </section>
+
 
           <section class="selector-colors-variant">
             <div class="variants-box" v-for="(variant, id) in colorsVariant" :key="id">
@@ -49,7 +52,11 @@
             </div>
           </section>
 
+
+          <section class="selector-options">
           <Component :is="renderingManagerOptions"> </Component>
+          </section>
+
 
           <section class="selector-interaction">
             <BaseButton view="border-lt" class="selector-interaction__button"
@@ -79,18 +86,17 @@ const colorsVariant = [
   { name: "black", color: "#161616" },
 ];
 
-
 const toggleOptions = ref("message");
 const NotesSelectorMessage = resolveComponent("NotesSelectorMessage");
 const NotesSelectorCheckList = resolveComponent("NotesSelectorCheckList");
 
 const renderingManagerOptions = computed(() => {
-  if (toggleOptions.value === 'checklist') return NotesSelectorCheckList;
+  if (toggleOptions.value === "checklist") return NotesSelectorCheckList;
   return NotesSelectorMessage;
 });
 
 const setToggleOnSlidingZipper = computed(() => {
-  return { "sliding-zipper": toggleOptions.value === 'checklist' };
+  return { "checklist-active": toggleOptions.value === "checklist" };
 });
 </script>
 
@@ -167,14 +173,14 @@ const setToggleOnSlidingZipper = computed(() => {
     background-color: rgba(#fff, 0.2);
     border-radius: 5rem;
     outline: 2px solid var(--text-clr);
-    transition: transform .15s ease-in-out;
+    transition: transform 0.15s ease-in-out;
   }
 }
 
-.sliding-zipper{
+.checklist-active {
   &::before {
     transform: translateX(100%);
-    transition: .2s ease-in-out;
+    transition: 0.2s ease-in-out;
   }
 }
 
@@ -243,6 +249,23 @@ const setToggleOnSlidingZipper = computed(() => {
 
   input {
     display: none;
+  }
+}
+
+
+.selector-options{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1;
+  gap: 0.8rem 0;
+  width: 100%;
+  min-height: 25rem;
+  max-height: 52vh;
+
+  @media (width >= 768px) {
+    max-height: 34vh;
+    align-items: flex-start;
   }
 }
 
