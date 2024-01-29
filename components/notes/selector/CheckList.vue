@@ -1,45 +1,79 @@
 <template>
-    <h3 class="selector-checklist-title">Tasks</h3>
+  <h3 class="selector-checklist-title">Tasks</h3>
 
-    <div view="empty" class="selector-add-task">
-      <input class="selector-add-task__addInput" type="text" placeholder="Add...">
+  <div view="empty" class="selector-add-task">
+    <input
+      class="selector-add-task__addInput"
+      type="text"
+      placeholder="Add..."
+      v-model="taskName"
+    />
 
-      <BaseButton view="empty" class="selector-add-task__box">
-        <svg
-          class="selector-add-task__box-icon"
-          xmlns="http://www.w3.org/2000/svg"
-          width="1em"
-          height="1em"
-          viewBox="0 0 24 24"
-        >
-          <path fill="currentColor" d="M11.5 12.5H6v-1h5.5V6h1v5.5H18v1h-5.5V18h-1z" />
-        </svg>
-      </BaseButton>
-    </div>
+    <BaseButton
+      type="button"
+      view="empty"
+      class="selector-add-task__box"
+      @click="addTaskHandler"
+    >
+      <svg
+        class="selector-add-task__box-icon"
+        xmlns="http://www.w3.org/2000/svg"
+        width="1em"
+        height="1em"
+        viewBox="0 0 24 24"
+      >
+        <path fill="currentColor" d="M11.5 12.5H6v-1h5.5V6h1v5.5H18v1h-5.5V18h-1z" />
+      </svg>
+    </BaseButton>
+  </div>
 
-    <!-- <p class="selector-empty-checklist">Your list is empty.</p> -->
+  <ul class="selector-checklist">
+    <li v-if="checklist.length === 0">
+      <p class="selector-empty-checklist">Your list is empty.</p>
+    </li>
 
-    <ul class="selector-checklist">
-      <NotesSelectorCheckListItem :te="1"></NotesSelectorCheckListItem>
-      <NotesSelectorCheckListItem :te="2"></NotesSelectorCheckListItem>
-      <NotesSelectorCheckListItem :te="3"></NotesSelectorCheckListItem>
-      <NotesSelectorCheckListItem :te="4"></NotesSelectorCheckListItem>
-      <NotesSelectorCheckListItem :te="5"></NotesSelectorCheckListItem>
-      <NotesSelectorCheckListItem :te="6"></NotesSelectorCheckListItem>
-      <NotesSelectorCheckListItem :te="7"></NotesSelectorCheckListItem>
-      <NotesSelectorCheckListItem :te="8"></NotesSelectorCheckListItem>
-      <NotesSelectorCheckListItem :te="9"></NotesSelectorCheckListItem>
-      <NotesSelectorCheckListItem :te="10"></NotesSelectorCheckListItem>
-      <NotesSelectorCheckListItem :te="11"></NotesSelectorCheckListItem>
-      <NotesSelectorCheckListItem :te="12"></NotesSelectorCheckListItem>
-      <NotesSelectorCheckListItem :te="13"></NotesSelectorCheckListItem>
-      <NotesSelectorCheckListItem :te="14"></NotesSelectorCheckListItem>
-      <NotesSelectorCheckListItem :te="15"></NotesSelectorCheckListItem>
-      <NotesSelectorCheckListItem :te="16"></NotesSelectorCheckListItem>
-    </ul>
+    <NotesSelectorCheckListItem
+      v-for="({ name }, id) in checklist"
+      :key="id"
+      :id="id"
+      :name="name"
+      v-else
+      @delete-task="deleteTask"
+    ></NotesSelectorCheckListItem>
+  </ul>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { Task } from "@/types/Notes";
+
+const emit = defineEmits<{
+  (e: "update-note-content", content: Task[]): void;
+}>();
+
+const checklist = ref<Task[]>([]);
+const taskName = ref("");
+
+const addTaskHandler = () => {
+  checklist.value.push({
+    name: taskName.value,
+  });
+  resetAddInput();
+};
+
+const deleteTask = (id: number) => {
+  let updatedCheckList: Task[] = [...checklist.value];
+  updatedCheckList.splice(id, 1)
+  checklist.value = updatedCheckList;
+};
+
+const resetAddInput = () => {
+  taskName.value = "";
+};
+
+watchEffect(() => {
+  emit("update-note-content", checklist.value);
+});
+</script>
 
 <style scoped lang="scss">
 .selector-checklist-title {
@@ -85,9 +119,9 @@
 }
 
 .selector-empty-checklist {
+  margin-top: 6rem;
   width: 100%;
   font-size: 2rem;
-  margin-top: 6rem;
   text-align: center;
   color: var(--text-clr);
 }
@@ -97,7 +131,7 @@
   flex-direction: column;
   align-items: center;
   gap: 3rem;
-  
+
   margin-top: 2rem;
   width: 100%;
   height: 100%;

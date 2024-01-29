@@ -12,7 +12,6 @@
         />
       </div>
 
-
       <div class="selector-input-box">
         <label for="tasks">Checklist</label>
         <input
@@ -26,12 +25,16 @@
     </header>
 
     <div class="selector-form-content">
-    
       <section class="selector-title">
         <label for="title">Title</label>
-        <input type="text" id="title" name="title" placeholder="title" />
+        <input
+          type="text"
+          id="title"
+          name="title"
+          placeholder="title"
+          v-model.trim="noteTitle"
+        />
       </section>
-
 
       <section class="selector-colors-variant">
         <div class="variants-box" v-for="(variant, id) in notes.colors" :key="id">
@@ -40,7 +43,6 @@
             :style="setBackgroundColor(variant.color)"
             :class="setActiveVariant(variant.name)"
           ></label>
-
 
           <input
             type="radio"
@@ -52,11 +54,10 @@
         </div>
       </section>
 
-
-      <section class="selector-options">
-        <Component :is="renderingManagerOptions"> </Component>
+      <section class="selector-content-options">
+        <Component :is="renderingManagerOptions" @update-note-content="handleNoteContent">
+        </Component>
       </section>
-
 
       <section class="selector-interaction">
         <BaseButton
@@ -68,25 +69,27 @@
           Close
         </BaseButton>
 
-
         <BaseButton view="border-lt" class="selector-interaction__button" type="submit">
           Save
         </BaseButton>
       </section>
-
     </div>
   </form>
 </template>
 
 <script setup lang="ts">
+import { NuxtError } from "nuxt/app";
+import { Task } from "@/types/Notes";
 import { useNotes } from "@/store/useNotes";
-
-const notes = useNotes();
-const colorVariant = ref("grey");
-const toggleOptions = ref("message");
 
 const NotesSelectorMessage = resolveComponent("NotesSelectorMessage");
 const NotesSelectorCheckList = resolveComponent("NotesSelectorCheckList");
+const notes = useNotes();
+
+const toggleOptions = ref("message");
+const noteTitle = ref("");
+const colorVariant = ref("grey");
+const noteContent = ref<string | Task[]>("");
 
 const renderingManagerOptions = computed(() => {
   if (toggleOptions.value === "checklist") return NotesSelectorCheckList;
@@ -109,10 +112,49 @@ const setBackgroundColor = computed(() => {
   };
 });
 
-const saveNote = () => {
-  console.log("test");
+const handleNoteContent = (content: string | Task[]) => {
+  noteContent.value = content;
 };
 
+const saveNote = async () => {
+  const emptyNoteTitle = "Brak tytuł";
+  const validatedNoteContent = formContentValidation(noteContent.value);
+
+  saveUserNote(
+    toggleOptions.value,
+    noteTitle.value || emptyNoteTitle,
+    colorVariant.value,
+    validatedNoteContent
+  );
+};
+
+const formContentValidation = (content: string | Task[]) => {
+  const emptyContentMessage = "Brak zadania";
+
+  if (content === "" || content.length === 0) {
+    return emptyContentMessage;
+  }
+
+  return content;
+};
+
+const saveUserNote = async (
+  toggleOptions: string,
+  noteTitle: string,
+  colorVariant: string,
+  noteContent: string | Task[]
+) => {
+  try {
+    await saveUserNotesMessageFetch(toggleOptions, noteTitle, colorVariant, noteContent);
+  } catch (err: unknown) {
+    if (typeof err === "string") {
+    } else if (err === Object || err !== null) {
+      throw createError(err as Partial<NuxtError>);
+    } else {
+      throw createError("Something goes wrong!, try later.");
+    }
+  }
+};
 </script>
 
 <style scoped lang="scss">
@@ -242,7 +284,7 @@ const saveNote = () => {
   box-shadow: 0px 0px 10px rgba(#fff, 0.8);
 }
 
-.selector-options {
+.selector-content-options {
   display: flex;
   flex-direction: column;
   justify-content: center;

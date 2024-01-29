@@ -9,7 +9,7 @@
 
 
     <template #error="{ error }">
-      <ErrorMessage :error="error" :is-close-button="false"></ErrorMessage>
+      <ErrorCalendarMessage :error="error" :is-close-button="false"></ErrorCalendarMessage>
     </template>
     
   </NuxtErrorBoundary>

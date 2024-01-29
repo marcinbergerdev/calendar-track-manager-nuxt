@@ -1,14 +1,14 @@
 <template>
   <div class="notes-wrapper">
-    <NotesSortingButtons />
     <NotesSelector v-if="notes.isNoteSelector"></NotesSelector>
-
+    
+    <NotesSortingButtons />
 
     <NuxtErrorBoundary>
       <NotesTasks></NotesTasks>
 
       <template #error="{ error }">
-        <ErrorMessage :error="error" :is-close-button="false"></ErrorMessage>
+        <ErrorNotesMessage :error="error" :is-close-button="false"></ErrorNotesMessage>
       </template>
     </NuxtErrorBoundary>
   </div>

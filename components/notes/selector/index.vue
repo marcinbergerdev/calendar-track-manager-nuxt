@@ -3,7 +3,13 @@
     <div class="background" @click="notes.closeModal()"></div>
 
     <div class="selector-modal-container">
-      <NotesSelectorForm />
+      <NuxtErrorBoundary>
+        <NotesSelectorForm />
+
+        <template #error="{ error }">
+          <ErrorNotesMessage :error="error"></ErrorNotesMessage>
+        </template>
+      </NuxtErrorBoundary>
     </div>
   </Teleport>
 </template>
@@ -12,8 +18,6 @@
 import { useNotes } from "@/store/useNotes";
 
 const notes = useNotes();
-
-
 </script>
 
 <style scoped lang="scss">
@@ -49,5 +53,4 @@ const notes = useNotes();
     height: 80vh;
   }
 }
-
 </style>

@@ -64,8 +64,8 @@ defineProps<{
 
 .border-lt {
   background-color: transparent;
-  color: var(--auth-title-clr);
-  border: 2px solid var(--auth-title-clr);
+  color: var(--text-clr);
+  border: 2px solid var(--text-clr);
 }
 
 .filled {

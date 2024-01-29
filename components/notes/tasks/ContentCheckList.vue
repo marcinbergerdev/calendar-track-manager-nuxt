@@ -1,39 +1,28 @@
 <template>
   <ul class="task-checklist">
-    <li class="task-checklist-item">
-      <p class="task-checklist-item__text">1. Lorem ipsum dolor sit ametasdasdsadas asdasd assa d.</p>
+    <li class="task-checklist-item" v-if="!isChecklist">
+      <p class="task-checklist-item__emptyMessage">Brak zadania</p>
     </li>
-    <li class="task-checklist-item">
-      <p class="task-checklist-item__text">1. Lorem ipsum dolor sit amet.</p>
-    </li>
-    <li class="task-checklist-item">
-      <p class="task-checklist-item__text">1. Lorem ipsum dolor sit amet.</p>
-    </li>
-    <li class="task-checklist-item">
-      <p class="task-checklist-item__text">1. Lorem ipsum dolor sit amet.</p>
-    </li>
-    <li class="task-checklist-item">
-      <p class="task-checklist-item__text">1. Lorem ipsum dolor sit amet asdasd asdasddasd asdsa  das.</p>
-    </li>
-    <li class="task-checklist-item">
-      <p class="task-checklist-item__text">1. Lorem ipsum dolor sit amet asdasd asdasddasd asdsa  das.</p>
-    </li>
-    <li class="task-checklist-item">
-      <p class="task-checklist-item__text">1. Lorem ipsum dolor sit amet asdasd asdasddasd asdsa  das.</p>
-    </li>
-    <li class="task-checklist-item">
-      <p class="task-checklist-item__text">1. Lorem ipsum dolor sit amet asdasd asdasddasd asdsa  das.</p>
-    </li>
-    <li class="task-checklist-item">
-      <p class="task-checklist-item__text">1. Lorem ipsum dolor sit amet asdasd asdasddasd asdsa  das.</p>
-    </li>
-    <li class="task-checklist-item">
-      <p class="task-checklist-item__text">1. Lorem ipsum dolor sit amet asdasd asdasddasd asdsa  das.</p>
+
+    <li class="task-checklist-item" v-else v-for="(task, id) in tasks">
+      <p class="task-checklist-item__text">{{ id + 1 }}. {{ task.name }}</p>
     </li>
   </ul>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { Task } from "~/types/Notes";
+
+const { checklist } = defineProps<{
+  checklist: string | Task[];
+}>();
+
+const isChecklist = computed(() => Array.isArray(checklist));
+
+const tasks = computed(() => {
+  return isChecklist ? (checklist as Task[]) : [];
+});
+</script>
 
 <style scoped lang="scss">
 .task-checklist {
@@ -49,7 +38,8 @@
 }
 
 .task-checklist-item {
-  &__text {
+  &__text,
+  &__emptyMessage {
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;

@@ -1,7 +1,7 @@
 <template>
   <li class="note-item-create">
 
-    <BaseButton class="note-create-button" @click="openNoteSelector">
+    <BaseButton view="empty" class="note-create-button" @click="openNoteSelector">
       <svg
         class="note-create-button__icon"
         xmlns="http://www.w3.org/2000/svg"
@@ -26,22 +26,23 @@ const openNoteSelector = () => {
 }
 </script>
 
-
-
 <style scoped lang="scss">
 .note-item-create {
   width: min(30rem, 90%);
+
+
 }
 
 .note-create-button {
   display: grid;
   place-items: center;
-
+  
   width: 100%;
   border: 2px solid var(--text-clr);
   border-radius: 2rem;
 
   @media (width >= 670px) {
+
     padding: 1rem 1.5rem;
     height: 35rem;
     border-radius: 2.5rem;

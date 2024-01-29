@@ -1,13 +1,24 @@
 <template>
   <label for="message">Event</label>
-  <textarea name="message" id="message" placeholder="message..."></textarea>
+
+  <textarea
+    name="message"
+    id="message"
+    placeholder="message..."
+    v-model.trim="noteMessage"
+    @input="$emit('update-note-content', noteMessage)"
+  ></textarea>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+defineEmits<{
+  (e: "update-note-content", message: string): void;
+}>();
+
+const noteMessage = ref("");
+</script>
 
 <style scoped lang="scss">
-
-
 label {
   font-size: 2.3rem;
   color: var(--text-clr);
@@ -24,7 +35,7 @@ textarea {
   border: 0;
   outline: 2px solid var(--text-clr);
   resize: none;
-  
+
   &:focus {
     box-shadow: 0px 0px 10px rgba(#fff, 0.8);
   }

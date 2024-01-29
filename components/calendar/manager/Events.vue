@@ -6,7 +6,7 @@
 
 
       <template #error="{ error }">
-        <ErrorMessage :error="error"></ErrorMessage>
+        <ErrorCalendarMessage :error="error"></ErrorCalendarMessage>
       </template>
 
     </NuxtErrorBoundary>

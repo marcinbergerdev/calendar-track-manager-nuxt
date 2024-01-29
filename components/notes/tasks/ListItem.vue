@@ -1,5 +1,5 @@
 <template>
-  <li class="task-item">
+  <li class="task-item" :style="setBackgroundColor">
     <BaseButton view="empty" class="task-item__edit">
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -18,9 +18,11 @@
       </svg>
     </BaseButton>
 
+
     <section class="task-message-title">
-      <h2 class="task-message-title__name">Zakupy</h2>
+      <h2 class="task-message-title__name">{{ title }}</h2>
     </section>
+
 
     <BaseButton view="empty" class="task-item__check">
       <svg
@@ -42,10 +44,12 @@
       </svg>
     </BaseButton>
 
+
     <section class="task-message">
-      <NotesTasksContentMessage></NotesTasksContentMessage>
-      <!-- <NotesTasksContentCheckList></NotesTasksContentCheckList> -->
+      <NotesTasksContentMessage v-if="noteType === 'message'" :message="content"></NotesTasksContentMessage>
+      <NotesTasksContentCheckList v-else :checklist="content"></NotesTasksContentCheckList>
     </section>
+
 
     <BaseButton view="empty" class="task-item__delete">
       <svg
@@ -65,23 +69,19 @@
 </template>
 
 <script setup lang="ts">
-const checklist = ref([
-  {
-    id: 0,
-    title: "Zakupy",
-    tasks: [
-      { id: 0, description: "mleko i jajka", isCheck: false },
-      { id: 1, description: "ser", isCheck: false },
-      { id: 2, description: "banany", isCheck: false },
-      { id: 3, description: "colka", isCheck: false },
-      { id: 4, description: "szynke", isCheck: false },
-      { id: 5, description: "zupe", isCheck: false },
-      { id: 6, description: "cytryne", isCheck: false },
-      { id: 7, description: "majonez", isCheck: false },
-    ],
-    type: "checklist",
-  },
-]);
+import { Task } from '~/types/Notes';
+
+const { color } = defineProps<{
+  id: string;
+  title: string;
+  content: string | Task[];
+  color: string;
+  noteType: string;
+}>();
+
+const setBackgroundColor = computed(() => {
+  return { "background-color": color };
+});
 </script>
 
 <style scoped lang="scss">
@@ -97,7 +97,6 @@ const checklist = ref([
   padding: 1rem 1.5rem;
   width: min(30rem, 90%);
   height: 35rem;
-  background-color: cadetblue;
   border-radius: 2.5rem;
 
   &__edit,
@@ -135,10 +134,14 @@ const checklist = ref([
 }
 
 .task-message-title {
+  width: 10rem;
   grid-area: title;
   place-self: center;
-
+  
   &__name {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     font-size: 2.3rem;
     color: var(--text-clr);
   }

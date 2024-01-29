@@ -1,8 +1,8 @@
 <template>
   <li class="selector-task">
-    <p class="selector-task__title">{{te}}Zakupy</p>
+    <p class="selector-task__title">{{ name }}</p>
 
-    <BaseButton view="empty" class="selector-delete-task">
+    <BaseButton  type="button" view="empty" class="selector-delete-task" @click="$emit('delete-task', id)">
       <svg
         class="selector-delete-task__icon"
         xmlns="http://www.w3.org/2000/svg"
@@ -20,16 +20,13 @@
 </template>
 
 <script setup lang="ts">
-
 defineProps<{
-  te: number
+  id: number;
+  name: string;
 }>();
-
-
 </script>
 
 <style scoped lang="scss">
-
 .selector-task {
   display: flex;
   align-items: center;
