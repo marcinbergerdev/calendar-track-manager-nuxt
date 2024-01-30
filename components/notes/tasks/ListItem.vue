@@ -18,11 +18,9 @@
       </svg>
     </BaseButton>
 
-
     <section class="task-message-title">
       <h2 class="task-message-title__name">{{ title }}</h2>
     </section>
-
 
     <BaseButton view="empty" class="task-item__check">
       <svg
@@ -44,12 +42,16 @@
       </svg>
     </BaseButton>
 
-
     <section class="task-message">
-      <NotesTasksContentMessage v-if="noteType === 'message'" :message="content"></NotesTasksContentMessage>
-      <NotesTasksContentCheckList v-else :checklist="content"></NotesTasksContentCheckList>
+      <NotesTasksContentMessage
+        v-if="noteType === 'message'"
+        :message="content"
+      ></NotesTasksContentMessage>
+      <NotesTasksContentCheckList
+        v-else
+        :checklist="content"
+      ></NotesTasksContentCheckList>
     </section>
-
 
     <BaseButton view="empty" class="task-item__delete" @click="deleteNote">
       <svg
@@ -69,10 +71,8 @@
 </template>
 
 <script setup lang="ts">
-import { NuxtError } from 'nuxt/app';
-import { Task } from '~/types/Notes';
-
-
+import { NuxtError } from "nuxt/app";
+import { Task } from "~/types/Notes";
 
 const { id, color } = defineProps<{
   id: string;
@@ -82,27 +82,23 @@ const { id, color } = defineProps<{
   noteType: string;
 }>();
 
-const updateUserTasks = inject('update-user-tasks', () => {});
+const updateUserTasks = inject("update-user-tasks", () => {});
 
 const setBackgroundColor = computed(() => {
   return { "background-color": color };
 });
 
-
-
 const deleteNote = async () => {
   await deleteUserNoteHandler();
-}
+};
 
 
 
-const deleteUserNoteHandler = async() => {
-
-  try{
+const deleteUserNoteHandler = async () => {
+  try {
     await deleteUserNoteFetch(id);
     updateUserTasks();
-
-  }catch(err: unknown){
+  } catch (err: unknown) {
     if (typeof err === "string") {
     } else if (err === Object || err !== null) {
       throw createError(err as Partial<NuxtError>);
@@ -110,8 +106,7 @@ const deleteUserNoteHandler = async() => {
       throw createError("Something goes wrong!, try later.");
     }
   }
-
-}
+};
 </script>
 
 <style scoped lang="scss">
@@ -168,7 +163,7 @@ const deleteUserNoteHandler = async() => {
   max-width: 80%;
   grid-area: title;
   place-self: center;
-  
+
   &__name {
     white-space: nowrap;
     overflow: hidden;

@@ -118,22 +118,20 @@ const handleNoteContent = (content: string | Task[]) => {
 };
 
 const saveNote = async () => {
-  const emptyNoteTitle = "Brak tytuł";
-  const validatedNoteContent = formContentValidation(noteContent.value);
+  const validatedNoteTitle = formInputValidation("Brak tytuł", noteContent.value) as string;
+  const validatedNoteContent = formInputValidation("Brak zadania", noteContent.value);
 
   saveUserNote(
     toggleOptions.value,
-    noteTitle.value || emptyNoteTitle,
+    validatedNoteTitle,
     colorVariant.value,
     validatedNoteContent
   );
 };
 
-const formContentValidation = (content: string | Task[]) => {
-  const emptyContentMessage = "Brak zadania";
-
+const formInputValidation = (message: string, content: string | Task[]) => {
   if (content === "" || content.length === 0) {
-    return emptyContentMessage;
+    return message;
   }
 
   return content;
