@@ -2,7 +2,7 @@ import { defineStore } from "pinia";
 import { NoteResponse } from "~/types/Notes";
 
 export const useNotes = defineStore("notes", () => {
-
+   const tasks = ref<NoteResponse[]>([]);
    const isNoteSelector = ref(false);
 
    const colors = [
@@ -19,5 +19,5 @@ export const useNotes = defineStore("notes", () => {
       isNoteSelector.value = false;
    };
 
-   return { colors, isNoteSelector, closeModal };
+   return { tasks, colors, isNoteSelector, closeModal };
 });

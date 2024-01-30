@@ -1,13 +1,13 @@
 <template>
   <div class="notes-wrapper">
-    <NotesSelector
-      v-if="notes.isNoteSelector"
-    ></NotesSelector>
+    <NotesSelector v-if="notes.isNoteSelector"></NotesSelector>
 
     <NotesSortingButtons />
+    <NotesTasksAddButton />
 
     <NuxtErrorBoundary>
-      <NotesTasks :tasks="tasks"></NotesTasks>
+      <BaseLoadingSpinner mode="notes-spinner" :is-background="false" v-if="isSpinner"/>
+      <NotesTasks v-else></NotesTasks>
 
       <template #error="{ error }">
         <ErrorNotesMessage :error="error" :is-close-button="false"></ErrorNotesMessage>
@@ -19,15 +19,19 @@
 <script setup lang="ts">
 import { useNotes } from "@/store/useNotes";
 import { NuxtError } from "nuxt/app";
-import { NoteResponse } from "@/types/Notes";
 
 const notes = useNotes();
-const tasks = ref<NoteResponse[]>([]);
+const isSpinner = ref(false);
 
 const getUserNotes = async () => {
   try {
+    isSpinner.value = true;
+
     const response = await getUserNotesFetch();
-    tasks.value = response;
+    notes.tasks = response;
+
+    isSpinner.value = false;
+
   } catch (err: unknown) {
     if (typeof err === "string") {
     } else if (err === Object || err !== null) {
@@ -61,5 +65,9 @@ onMounted(async () => {
   &::-webkit-scrollbar-thumb {
     background-color: var(--primary-clr);
   }
+}
+
+.notes-spinner{
+
 }
 </style>

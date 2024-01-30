@@ -1,11 +1,9 @@
 <template>
+  <p v-if="isEmptyTasksList" class="tasks-empty-list">Your list is empty.</p>
+
   <ul class="tasks-list">
-    <NotesTasksAddButton></NotesTasksAddButton>
-
-    <li v-if="false"><p class="tasks-empty-list">Your list is empty.</p></li>
-
     <NotesTasksListItem
-      v-for="({ color, content, isChecked, option, title }, id) in tasks"
+      v-for="({ color, content, isChecked, option, title }, id) in notes.tasks"
       :key="id"
       :id="id"
       :title="title"
@@ -13,16 +11,17 @@
       :color="color"
       :note-type="option"
       :isChecked="isChecked"
-      v-else
     ></NotesTasksListItem>
   </ul>
 </template>
 
 <script setup lang="ts">
-import { NoteResponse } from "@/types/Notes";
-defineProps<{
-  tasks: NoteResponse;
-}>();
+import { useNotes } from "@/store/useNotes";
+const notes = useNotes();
+
+const isEmptyTasksList = computed(() => {
+  return !!notes.tasks ? false : true;
+});
 </script>
 
 <style scoped lang="scss">
@@ -38,7 +37,6 @@ defineProps<{
   justify-content: center;
   gap: 5rem 3rem;
 
-  margin-top: 6rem;
   width: 100%;
 }
 </style>
