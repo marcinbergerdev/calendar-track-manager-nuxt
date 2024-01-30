@@ -26,6 +26,7 @@ const isEmptyTasksList = computed(() => {
 
 <style scoped lang="scss">
 .tasks-empty-list {
+  text-align: center;
   font-size: 2rem;
   color: var(--text-clr);
 }

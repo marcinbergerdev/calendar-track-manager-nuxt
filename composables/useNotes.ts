@@ -54,3 +54,11 @@ export const saveUserNotesMessageFetch = async (
    });
 };
 
+export const deleteUserNoteFetch = async (noteId: string) => {
+   const userId = useCookie("userUidStatus");
+   const db = getDatabase();
+
+   return await remove(
+      ref(db, `users/${userId.value}/notes/${noteId}`)
+   );
+};

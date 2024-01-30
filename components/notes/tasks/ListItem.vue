@@ -51,7 +51,7 @@
     </section>
 
 
-    <BaseButton view="empty" class="task-item__delete">
+    <BaseButton view="empty" class="task-item__delete" @click="deleteNote">
       <svg
         class="task-item__delete-icon"
         xmlns="http://www.w3.org/2000/svg"
@@ -69,9 +69,12 @@
 </template>
 
 <script setup lang="ts">
+import { NuxtError } from 'nuxt/app';
 import { Task } from '~/types/Notes';
 
-const { color } = defineProps<{
+
+
+const { id, color } = defineProps<{
   id: string;
   title: string;
   content: string | Task[];
@@ -79,9 +82,36 @@ const { color } = defineProps<{
   noteType: string;
 }>();
 
+const updateUserTasks = inject('update-user-tasks', () => {});
+
 const setBackgroundColor = computed(() => {
   return { "background-color": color };
 });
+
+
+
+const deleteNote = async () => {
+  await deleteUserNoteHandler();
+}
+
+
+
+const deleteUserNoteHandler = async() => {
+
+  try{
+    await deleteUserNoteFetch(id);
+    updateUserTasks();
+
+  }catch(err: unknown){
+    if (typeof err === "string") {
+    } else if (err === Object || err !== null) {
+      throw createError(err as Partial<NuxtError>);
+    } else {
+      throw createError("Something goes wrong!, try later.");
+    }
+  }
+
+}
 </script>
 
 <style scoped lang="scss">
