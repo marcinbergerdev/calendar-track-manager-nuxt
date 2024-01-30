@@ -5,7 +5,7 @@
     <li v-if="false"><p class="tasks-empty-list">Your list is empty.</p></li>
 
     <NotesTasksListItem
-      v-for="({ color, content, isChecked, option, title}, id) in tasks"
+      v-for="({ color, content, isChecked, option, title }, id) in tasks"
       :key="id"
       :id="id"
       :title="title"
@@ -19,30 +19,10 @@
 </template>
 
 <script setup lang="ts">
-import { NuxtError } from "nuxt/app";
 import { NoteResponse } from "@/types/Notes";
-
-const tasks = ref<NoteResponse[]>([]);
-
-
-const getUserNotes = async () => {
-  try {
-    const response = await getUserNotesFetch();
-    tasks.value = response;
-
-  } catch (err: unknown) {
-    if (typeof err === "string") {
-    } else if (err === Object || err !== null) {
-      throw createError(err as Partial<NuxtError>);
-    } else {
-      throw createError("Something goes wrong!, try later.");
-    }
-  }
-};
-
-onMounted(async () => {
-  await getUserNotes();
-});
+defineProps<{
+  tasks: NoteResponse;
+}>();
 </script>
 
 <style scoped lang="scss">

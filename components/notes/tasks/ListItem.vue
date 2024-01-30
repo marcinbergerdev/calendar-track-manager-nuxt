@@ -91,13 +91,14 @@ const setBackgroundColor = computed(() => {
     "editButton title checkButton"
     "noteMessage noteMessage noteMessage"
     "deleteButton deleteButton deleteButton";
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: 12% 76% 12%;
   grid-template-rows: 1fr 4fr 1fr;
 
   padding: 1rem 1.5rem;
   width: min(30rem, 90%);
   height: 35rem;
   border-radius: 2.5rem;
+  color: var(--text-clr);
 
   &__edit,
   &__check,
@@ -134,7 +135,7 @@ const setBackgroundColor = computed(() => {
 }
 
 .task-message-title {
-  width: 10rem;
+  max-width: 80%;
   grid-area: title;
   place-self: center;
   
@@ -142,14 +143,12 @@ const setBackgroundColor = computed(() => {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    font-size: 2.3rem;
-    color: var(--text-clr);
+    font-size: 1.8rem;
   }
 }
 
 .task-message {
   grid-area: noteMessage;
-  color: var(--text-clr);
   overflow: hidden;
 }
 </style>

@@ -16,7 +16,6 @@
 
 <script setup lang="ts">
 import { useNotes } from "@/store/useNotes";
-
 const notes = useNotes();
 </script>
 

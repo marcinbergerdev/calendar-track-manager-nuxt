@@ -90,6 +90,7 @@ const toggleOptions = ref("message");
 const noteTitle = ref("");
 const colorVariant = ref("grey");
 const noteContent = ref<string | Task[]>("");
+const updateUserTasks = inject("update-user-tasks", () => {});
 
 const renderingManagerOptions = computed(() => {
   if (toggleOptions.value === "checklist") return NotesSelectorCheckList;
@@ -146,6 +147,7 @@ const saveUserNote = async (
 ) => {
   try {
     await saveUserNotesMessageFetch(toggleOptions, noteTitle, colorVariant, noteContent);
+    updateUserTasks();
   } catch (err: unknown) {
     if (typeof err === "string") {
     } else if (err === Object || err !== null) {
@@ -153,6 +155,8 @@ const saveUserNote = async (
     } else {
       throw createError("Something goes wrong!, try later.");
     }
+  } finally{
+    notes.closeModal();
   }
 };
 </script>
