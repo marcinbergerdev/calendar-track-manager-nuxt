@@ -118,10 +118,10 @@ const handleNoteContent = (content: string | Task[]) => {
 };
 
 const saveNote = async () => {
-  const validatedNoteTitle = formInputValidation("Brak tytuł", noteContent.value) as string;
+  const validatedNoteTitle = formInputValidation("Brak tytuł",noteContent.value) as string;
   const validatedNoteContent = formInputValidation("Brak zadania", noteContent.value);
 
-  saveUserNote(
+  await saveUserNote(
     toggleOptions.value,
     validatedNoteTitle,
     colorVariant.value,
@@ -146,6 +146,7 @@ const saveUserNote = async (
   try {
     await saveUserNotesMessageFetch(toggleOptions, noteTitle, colorVariant, noteContent);
     updateUserTasks();
+    notes.closeModal();
   } catch (err: unknown) {
     if (typeof err === "string") {
     } else if (err === Object || err !== null) {
@@ -153,8 +154,6 @@ const saveUserNote = async (
     } else {
       throw createError("Something goes wrong!, try later.");
     }
-  } finally{
-    notes.closeModal();
   }
 };
 </script>

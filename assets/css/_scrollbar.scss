@@ -1,7 +1,6 @@
 .date-selector-container,
 .events-error-container,
-.selector-checklist,
-.notes-error-box {
+.selector-checklist {
    &::-webkit-scrollbar {
       width: 0.8rem;
    }
@@ -20,7 +19,8 @@
    }
 }
 
-.notes-wrapper {
+.notes-wrapper,
+.error-box {
    &::-webkit-scrollbar {
       width: 0.8rem;
    }

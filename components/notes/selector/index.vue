@@ -7,7 +7,7 @@
         <NotesSelectorForm />
 
         <template #error="{ error }">
-          <ErrorNotesMessage :error="error"></ErrorNotesMessage>
+          <ErrorNotesMessage view="error-selector-form" :error="error"></ErrorNotesMessage>
         </template>
       </NuxtErrorBoundary>
     </div>
@@ -40,7 +40,7 @@ const notes = useNotes();
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 2;
+  z-index: 15;
 
   width: min(95rem, 100%);
   height: 100vh;

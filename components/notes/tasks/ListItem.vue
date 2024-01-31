@@ -92,8 +92,6 @@ const deleteNote = async () => {
   await deleteUserNoteHandler();
 };
 
-
-
 const deleteUserNoteHandler = async () => {
   try {
     await deleteUserNoteFetch(id);
