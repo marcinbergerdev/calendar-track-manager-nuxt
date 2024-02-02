@@ -1,7 +1,7 @@
 <template>
-  <form class="selector-form" @submit.prevent="saveNote">
-    <header class="selector-header" :class="setToggleOnSlidingZipper">
-      <div class="selector-input-box">
+  <form class="editor-form" @submit.prevent="saveNote">
+    <header class="editor-form-header" :class="setToggleOnSlidingZipper">
+      <div class="editor-input-box">
         <label for="taskMessage">Message</label>
         <input
           type="radio"
@@ -12,7 +12,7 @@
         />
       </div>
 
-      <div class="selector-input-box">
+      <div class="editor-input-box">
         <label for="tasks">Checklist</label>
         <input
           type="radio"
@@ -24,8 +24,8 @@
       </div>
     </header>
 
-    <div class="selector-form-content">
-      <section class="selector-title">
+    <div class="editor-content">
+      <section class="content-title">
         <label for="title">Title</label>
         <input
           type="text"
@@ -36,7 +36,7 @@
         />
       </section>
 
-      <section class="selector-colors-variant">
+      <section class="content-colors-variant">
         <div class="variants-box" v-for="(variant, id) in notes.colors" :key="id">
           <label
             :for="variant.name"
@@ -54,23 +54,44 @@
         </div>
       </section>
 
-      <section class="selector-content-options">
-        <Component :is="renderingManagerOptions" @update-note-content="handleNoteContent">
-        </Component>
+      <section class="content-options">
+        <NotesManagerEditorFormMessage
+          v-if="toggleOptions !== 'checklist'"
+          @update-message="updateMessageInput"
+        />
+        <NotesManagerEditorFormChecklist
+          @update-checklist="updateChecklistInput"
+          v-else
+        />
       </section>
 
-      <section class="selector-interaction">
+      <section class="content-interaction">
         <BaseButton
           view="border-lt"
-          class="selector-interaction__button"
+          class="content-interaction__button"
           type="button"
           @click="notes.closeModal()"
         >
           Close
         </BaseButton>
 
-        <BaseButton view="border-lt" class="selector-interaction__button" type="submit">
+        <BaseButton
+          view="border-lt"
+          class="content-interaction__button"
+          type="submit"
+          v-if="!notes.selectedTask"
+        >
           Save
+        </BaseButton>
+
+        <BaseButton
+          view="border-lt"
+          class="content-interaction__button"
+          type="button"
+          v-else
+          @click="editNote"
+        >
+          Edit
         </BaseButton>
       </section>
     </div>
@@ -82,20 +103,15 @@ import { NuxtError } from "nuxt/app";
 import { Task } from "@/types/Notes";
 import { useNotes } from "@/store/useNotes";
 
-const NotesSelectorMessage = resolveComponent("NotesSelectorMessage");
-const NotesSelectorCheckList = resolveComponent("NotesSelectorCheckList");
 const notes = useNotes();
 
+const taskId = ref("");
 const toggleOptions = ref("message");
 const noteTitle = ref("");
 const colorVariant = ref("grey");
 const noteContent = ref<string | Task[]>("");
-const updateUserTasks = inject("update-user-tasks", () => {});
 
-const renderingManagerOptions = computed(() => {
-  if (toggleOptions.value === "checklist") return NotesSelectorCheckList;
-  return NotesSelectorMessage;
-});
+const updateUserTasks = inject("update-user-tasks", () => {});
 
 const setToggleOnSlidingZipper = computed(() => {
   return { "checklist-active": toggleOptions.value === "checklist" };
@@ -113,12 +129,35 @@ const setBackgroundColor = computed(() => {
   };
 });
 
-const handleNoteContent = (content: string | Task[]) => {
-  noteContent.value = content;
+const updateMessageInput = (message: string) => {
+  noteContent.value = message;
+};
+
+const updateChecklistInput = (checklist: Task[]) => {
+  noteContent.value = checklist;
+};
+
+const setTaskDataIfEditedIsSelected = () => {
+  const selectedTask = notes.selectedTask;
+
+  if (!!selectedTask && typeof selectedTask !== null) {
+    taskId.value = selectedTask.id;
+    toggleOptions.value = selectedTask.noteType;
+    noteTitle.value = selectedTask.title;
+    colorVariant.value = selectedTask.color;
+    noteContent.value = selectedTask.content;
+  }
+};
+
+const formInputValidation = (message: string, content: string | Task[]) => {
+  if (content === "" || content.length === 0) {
+    return message;
+  }
+  return content;
 };
 
 const saveNote = async () => {
-  const validatedNoteTitle = formInputValidation("Brak tytuł",noteContent.value) as string;
+  const validatedNoteTitle = formInputValidation("Brak tytuł", noteTitle.value) as string;
   const validatedNoteContent = formInputValidation("Brak zadania", noteContent.value);
 
   await saveUserNote(
@@ -127,14 +166,6 @@ const saveNote = async () => {
     colorVariant.value,
     validatedNoteContent
   );
-};
-
-const formInputValidation = (message: string, content: string | Task[]) => {
-  if (content === "" || content.length === 0) {
-    return message;
-  }
-
-  return content;
 };
 
 const saveUserNote = async (
@@ -156,10 +187,60 @@ const saveUserNote = async (
     }
   }
 };
+
+const editNote = async () => {
+  const validatedNoteTitle = formInputValidation("Brak tytuł", noteTitle.value) as string;
+  const validatedNoteContent = formInputValidation("Brak zadania", noteContent.value);
+  
+  await editUserNote(
+    taskId.value,
+    toggleOptions.value,
+    validatedNoteTitle,
+    colorVariant.value,
+    validatedNoteContent
+  );
+};
+
+const editUserNote = async (
+  taskId: string,
+  toggleOptions: string,
+  noteTitle: string,
+  colorVariant: string,
+  noteContent: string | Task[]
+) => {
+  try {
+    await editUserNoteDataFetch(
+      taskId,
+      toggleOptions,
+      noteTitle,
+      colorVariant,
+      noteContent
+    );
+    updateUserTasks();
+    notes.closeModal();
+  } catch (err: unknown) {
+    if (typeof err === "string") {
+    } else if (err === Object || err !== null) {
+      throw createError(err as Partial<NuxtError>);
+    } else {
+      throw createError("Something goes wrong!, try later.");
+    }
+  }
+};
+
+watch(toggleOptions, () => {
+  if (toggleOptions.value === "message") {
+    noteContent.value = "";
+  }
+});
+
+onMounted(() => {
+  setTaskDataIfEditedIsSelected();
+});
 </script>
 
 <style scoped lang="scss">
-.selector-form {
+.editor-form {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -176,7 +257,7 @@ const saveUserNote = async (
   }
 }
 
-.selector-header {
+.editor-form-header {
   position: relative;
   display: flex;
   align-items: center;
@@ -209,7 +290,7 @@ const saveUserNote = async (
   }
 }
 
-.selector-input-box {
+.editor-input-box {
   input {
     display: none;
   }
@@ -221,7 +302,7 @@ const saveUserNote = async (
   }
 }
 
-.selector-form-content {
+.editor-content {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -231,7 +312,7 @@ const saveUserNote = async (
   width: min(100%, 85%);
 }
 
-.selector-title {
+.content-title {
   display: flex;
   flex-direction: column;
   gap: 1rem 0;
@@ -256,7 +337,7 @@ const saveUserNote = async (
     }
   }
 }
-.selector-colors-variant {
+.content-colors-variant {
   display: flex;
   flex-flow: wrap row;
   justify-content: center;
@@ -285,7 +366,7 @@ const saveUserNote = async (
   box-shadow: 0px 0px 10px rgba(#fff, 0.8);
 }
 
-.selector-content-options {
+.content-options {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -301,7 +382,7 @@ const saveUserNote = async (
   }
 }
 
-.selector-interaction {
+.content-interaction {
   display: flex;
   gap: 0 3rem;
 

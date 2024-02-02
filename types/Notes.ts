@@ -3,10 +3,17 @@ export type Task = {
    name: string;
 };
 
-
 export type NoteResponse = {
   [key: string]: Note
 }
+
+export type NoteSelected = {
+   id: string;
+   title: string;
+   content: string | Task[];
+   color: string;
+   noteType: string  
+};
 
 export type Note = {
    option: string;
@@ -15,5 +22,7 @@ export type Note = {
    color: string;
    isChecked: boolean;
 };
+
+
 
 

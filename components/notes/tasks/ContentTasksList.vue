@@ -13,14 +13,14 @@
 <script setup lang="ts">
 import { Task } from "~/types/Notes";
 
-const { checklist } = defineProps<{
-  checklist: string | Task[];
+const { tasksList } = defineProps<{
+  tasksList: string | Task[];
 }>();
 
-const isChecklist = computed(() => Array.isArray(checklist));
+const isChecklist = computed(() => Array.isArray(tasksList));
 
 const tasks = computed(() => {
-  return isChecklist ? (checklist as Task[]) : [];
+  return isChecklist ? (tasksList as Task[]) : [];
 });
 </script>
 

@@ -1,6 +1,6 @@
 <template>
   <li class="task-item" :style="setBackgroundColor">
-    <BaseButton view="empty" class="task-item__edit">
+    <BaseButton view="empty" class="task-item__edit" @click="insertTaskDataAndOpenEditor">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="1em"
@@ -42,15 +42,16 @@
       </svg>
     </BaseButton>
 
-    <section class="task-message">
+    <section class="task-content" @click="notes.openAndSetModal('details')">
       <NotesTasksContentMessage
         v-if="noteType === 'message'"
         :message="content"
       ></NotesTasksContentMessage>
-      <NotesTasksContentCheckList
+
+      <NotesTasksContentTasksList
         v-else
-        :checklist="content"
-      ></NotesTasksContentCheckList>
+        :tasks-list="content"
+      ></NotesTasksContentTasksList>
     </section>
 
     <BaseButton view="empty" class="task-item__delete" @click="deleteNote">
@@ -72,9 +73,12 @@
 
 <script setup lang="ts">
 import { NuxtError } from "nuxt/app";
+import { useNotes } from "~/store/useNotes";
 import { Task } from "~/types/Notes";
 
-const { id, color } = defineProps<{
+const notes = useNotes();
+
+const { id, title, content, color, noteType } = defineProps<{
   id: string;
   title: string;
   content: string | Task[];
@@ -105,6 +109,31 @@ const deleteUserNoteHandler = async () => {
     }
   }
 };
+
+const insertTaskDataAndOpenEditor = () => {
+  let editedTask: string | Task[] = [];
+
+  
+  if(Array.isArray(content)){
+    editedTask = content.map(task => task);
+  }
+
+  if(typeof content === 'string'){
+    editedTask = content;
+  }
+
+  notes.selectedTask = {
+    id: id,
+    title: title,
+    content: editedTask,
+    color: color,
+    noteType: noteType,
+  };
+
+  notes.openAndSetModal("editor");
+};
+
+
 </script>
 
 <style scoped lang="scss">
@@ -170,8 +199,12 @@ const deleteUserNoteHandler = async () => {
   }
 }
 
-.task-message {
+.task-content {
   grid-area: noteMessage;
   overflow: hidden;
+
+  @media (width >= 768px) {
+    cursor: pointer;
+  }
 }
 </style>

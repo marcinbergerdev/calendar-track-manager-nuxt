@@ -32,22 +32,23 @@
       <p class="selector-empty-checklist">Your list is empty.</p>
     </li>
 
-    <NotesSelectorCheckListItem
+    <NotesManagerEditorFormChecklistItem
       v-for="({ name }, id) in checklist"
       :key="id"
       :id="id"
       :name="name"
-      v-else
       @delete-task="deleteTask"
-    ></NotesSelectorCheckListItem>
+    ></NotesManagerEditorFormChecklistItem>
   </ul>
 </template>
 
 <script setup lang="ts">
 import { Task } from "@/types/Notes";
+import { useNotes } from "~/store/useNotes";
+const notes = useNotes();
 
 const emit = defineEmits<{
-  (e: "update-note-content", content: Task[]): void;
+  (e: "update-checklist", checklist: Task[]): void;
 }>();
 
 const checklist = ref<Task[]>([]);
@@ -57,21 +58,27 @@ const addTaskHandler = () => {
   checklist.value.push({
     name: taskName.value,
   });
-  resetAddInput();
+};
+
+const setChecklistIfEditedIsSelected = () => {
+  const selectedTask = notes.selectedTask;
+
+  if (!!selectedTask && Array.isArray(selectedTask.content)) {
+    checklist.value = selectedTask.content;
+    return;
+  }
 };
 
 const deleteTask = (id: number) => {
-  let updatedCheckList: Task[] = [...checklist.value];
-  updatedCheckList.splice(id, 1)
-  checklist.value = updatedCheckList;
-};
-
-const resetAddInput = () => {
-  taskName.value = "";
+  checklist.value.splice(id, 1);
 };
 
 watchEffect(() => {
-  emit("update-note-content", checklist.value);
+  emit("update-checklist", checklist.value);
+});
+
+onMounted(() => {
+  setChecklistIfEditedIsSelected();
 });
 </script>
 

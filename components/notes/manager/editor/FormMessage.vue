@@ -1,29 +1,37 @@
 <template>
-  <label for="message">Event</label>
-
   <textarea
     name="message"
     id="message"
     placeholder="message..."
     v-model.trim="noteMessage"
-    @input="$emit('update-note-content', noteMessage)"
+    @input="$emit('update-message', noteMessage)"
   ></textarea>
 </template>
 
 <script setup lang="ts">
-defineEmits<{
-  (e: "update-note-content", message: string): void;
-}>();
+import { useNotes } from "~/store/useNotes";
+const notes = useNotes();
 
 const noteMessage = ref("");
+
+defineEmits<{
+  (e: "update-message", message: string): void;
+}>();
+
+const setMessageIfEditedIsSelected = () => {
+  const selectedTask = notes.selectedTask;
+
+  if (!!selectedTask && typeof selectedTask.content === "string") {
+    noteMessage.value = selectedTask.content;
+  }
+};
+
+onMounted(() => {
+  setMessageIfEditedIsSelected();
+});
 </script>
 
 <style scoped lang="scss">
-label {
-  font-size: 2.3rem;
-  color: var(--text-clr);
-}
-
 textarea {
   padding: 0.9rem 1.5rem;
   width: 100%;

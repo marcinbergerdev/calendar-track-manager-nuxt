@@ -1,9 +1,13 @@
 import { defineStore } from "pinia";
-import { NoteResponse } from "~/types/Notes";
+import { NoteResponse ,NoteSelected, Task } from "~/types/Notes";
 
 export const useNotes = defineStore("notes", () => {
-   const tasks = ref<NoteResponse[]>([]);
-   const isNoteSelector = ref(false);
+   const isManager = ref(false);
+   const isSpinner = ref(false);
+   const isComponent = ref<"editor" | "details">("editor");
+
+   const selectedTask = ref<NoteSelected | null>(null);
+   
 
    const colors = [
       { name: "grey", color: "#BCBCBC" },
@@ -15,9 +19,23 @@ export const useNotes = defineStore("notes", () => {
       { name: "black", color: "#161616" },
    ];
 
-   const closeModal = () => {
-      isNoteSelector.value = false;
+   const openAndSetModal = (component: "editor" | "details") => {
+      isManager.value = true;
+      isComponent.value = component;
    };
 
-   return { tasks, colors, isNoteSelector, closeModal };
+   const closeModal = () => {
+      isManager.value = false;
+      selectedTask.value = null;
+   };
+
+   return {
+      selectedTask,
+      colors,
+      isManager,
+      isSpinner,
+      isComponent,
+      openAndSetModal,
+      closeModal,
+   };
 });

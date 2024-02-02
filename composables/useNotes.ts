@@ -15,10 +15,7 @@ export const getUserNotesFetch = async () => {
 
       const db = getDatabase();
 
-      const selectedEvents = ref(
-         db,
-         `users/${userId.value}/notes`
-      );
+      const selectedEvents = ref(db, `users/${userId.value}/notes`);
 
       onValue(
          selectedEvents,
@@ -54,11 +51,29 @@ export const saveUserNotesMessageFetch = async (
    });
 };
 
+export const editUserNoteDataFetch = async (
+   taskId: string,
+   option: string,
+   title: string,
+   color: string,
+   content: string | Task[]
+) => {
+   const userId = useCookie("userUidStatus");
+
+   const db = getDatabase();
+
+   await update(ref(db, `users/${userId.value}/notes/${taskId}`), {
+      taskId,
+      option,
+      title,
+      color,
+      content,
+   });
+};
+
 export const deleteUserNoteFetch = async (noteId: string) => {
    const userId = useCookie("userUidStatus");
    const db = getDatabase();
 
-   return await remove(
-      ref(db, `users/${userId.value}/notes/${noteId}`)
-   );
+   return await remove(ref(db, `users/${userId.value}/notes/${noteId}`));
 };

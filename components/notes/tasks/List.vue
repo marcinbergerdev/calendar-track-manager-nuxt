@@ -1,9 +1,10 @@
 <template>
-  <p v-if="isEmptyTasksList" class="tasks-empty-list">Your list is empty.</p>
+  <BaseLoadingSpinner mode="notes-spinner" :is-background="false" v-if="notes.isSpinner" />
+  <!-- <p v-if="isEmptyTasksList" class="tasks-empty-list">Your list is empty.</p> -->
 
-  <ul class="tasks-list">
+  <ul v-else class="tasks-list">
     <NotesTasksListItem
-      v-for="({ color, content, isChecked, option, title }, id) in notes.tasks"
+      v-for="({ color, content, isChecked, option, title }, id) in tasks"
       :key="id"
       :id="id"
       :title="title"
@@ -16,13 +17,14 @@
 </template>
 
 <script setup lang="ts">
-import { useNotes } from "@/store/useNotes";
+import { useNotes } from "~/store/useNotes";
+import { NoteResponse } from '~/types/Notes';
 
 const notes = useNotes();
 
-const isEmptyTasksList = computed(() => {
-  return !!notes.tasks ? false : true;
-});
+defineProps<{
+  tasks: NoteResponse
+}>();
 </script>
 
 <style scoped lang="scss">
@@ -39,6 +41,7 @@ const isEmptyTasksList = computed(() => {
   justify-content: center;
   gap: 5rem 3rem;
 
+  padding: 3rem 0;
   width: 100%;
 }
 </style>

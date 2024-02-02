@@ -1,6 +1,6 @@
 <template>
   <section class="note-item-create">
-    <BaseButton view="empty" class="note-create-button" @click="openNoteSelector">
+    <BaseButton view="empty" class="note-create-button" @click="notes.openAndSetModal('editor')">
       <svg
         class="note-create-button__icon"
         xmlns="http://www.w3.org/2000/svg"
@@ -15,12 +15,14 @@
 </template>
 
 <script setup lang="ts">
-import { useNotes } from "@/store/useNotes";
+import { useNotes } from '~/store/useNotes';
 
 const notes = useNotes();
 
+
+
 const openNoteSelector = () => {
-  notes.isNoteSelector = true;
+  console.log('działa przycisk');
 };
 </script>
 
@@ -28,11 +30,10 @@ const openNoteSelector = () => {
 .note-item-create {
   display: flex;
   justify-content: center;
-
   margin: 4rem 0;
-  width: 100%;
 
   @media (width >= 768px) {
+    margin: 4rem 2rem;
     justify-content: flex-start;
   }
 }
