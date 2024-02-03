@@ -58,6 +58,7 @@ const addTaskHandler = () => {
   checklist.value.push({
     name: taskName.value,
   });
+  taskName.value = '';
 };
 
 const setChecklistIfEditedIsSelected = () => {

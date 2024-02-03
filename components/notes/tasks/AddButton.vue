@@ -16,14 +16,7 @@
 
 <script setup lang="ts">
 import { useNotes } from '~/store/useNotes';
-
 const notes = useNotes();
-
-
-
-const openNoteSelector = () => {
-  console.log('działa przycisk');
-};
 </script>
 
 <style scoped lang="scss">
