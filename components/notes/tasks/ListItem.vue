@@ -1,6 +1,6 @@
 <template>
   <li class="task-item" :style="setBackgroundColor">
-    <BaseButton view="empty" class="task-item__edit" @click="insertTaskDataAndOpenEditor">
+    <BaseButton view="empty" class="task-item__edit" @click="insertTaskDataAndOpenManager('editor')">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="1em"
@@ -22,6 +22,7 @@
       <h2 class="task-message-title__name">{{ title }}</h2>
     </section>
 
+
     <BaseButton view="empty" class="task-item__check">
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -42,7 +43,7 @@
       </svg>
     </BaseButton>
 
-    <section class="task-content" @click="notes.openAndSetModal('details')">
+    <section class="task-content" @click="insertTaskDataAndOpenManager('details')">
       <NotesTasksContentMessage
         v-if="noteType === 'message'"
         :message="content"
@@ -96,21 +97,7 @@ const deleteNote = async () => {
   await deleteUserNoteHandler();
 };
 
-const deleteUserNoteHandler = async () => {
-  try {
-    await deleteUserNoteFetch(id);
-    updateUserTasks();
-  } catch (err: unknown) {
-    if (typeof err === "string") {
-    } else if (err === Object || err !== null) {
-      throw createError(err as Partial<NuxtError>);
-    } else {
-      throw createError("Something goes wrong!, try later.");
-    }
-  }
-};
-
-const insertTaskDataAndOpenEditor = () => {
+const insertTaskDataAndOpenManager = (option: "editor" | "details") => {
   let editedTask: string | Task[] = [];
 
   
@@ -130,10 +117,23 @@ const insertTaskDataAndOpenEditor = () => {
     noteType: noteType,
   };
 
-  notes.openAndSetModal("editor");
+  notes.openAndSetModal(option);
 };
 
 
+const deleteUserNoteHandler = async () => {
+  try {
+    await deleteUserNoteFetch(id);
+    updateUserTasks();
+  } catch (err: unknown) {
+    if (typeof err === "string") {
+    } else if (err === Object || err !== null) {
+      throw createError(err as Partial<NuxtError>);
+    } else {
+      throw createError("Something goes wrong!, try later.");
+    }
+  }
+};
 </script>
 
 <style scoped lang="scss">

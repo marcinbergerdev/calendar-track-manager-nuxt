@@ -39,6 +39,9 @@ defineProps<{
   &__title {
     font-size: 1.5rem;
     color: var(--text-clr);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }
 

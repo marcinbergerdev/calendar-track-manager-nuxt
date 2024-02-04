@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { NoteResponse ,NoteSelected, Task } from "~/types/Notes";
+import { NoteSelected } from "~/types/Notes";
 
 export const useNotes = defineStore("notes", () => {
    const isManager = ref(false);
