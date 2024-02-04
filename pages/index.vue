@@ -1,9 +1,7 @@
 <template>
   <ClientOnly>
-
     <div class="calendar-wrapper">
       <section class="calendar-container">
-
         <CalendarDateIndicator :updated-date="updateCurrentDate"></CalendarDateIndicator>
 
         <div class="calendar-days">
@@ -15,10 +13,8 @@
             :next-month="updateNextDate"
           ></CalendarDaysContainer>
         </div>
-        
       </section>
     </div>
-
   </ClientOnly>
 </template>
 
@@ -28,42 +24,38 @@ const dayjs = useDayjs();
 
 const updatePreviousDate = computed(() => {
   const monthCounter = -1;
-  return updateDate(monthCounter);
+  const previousMonth = updateDate(monthCounter);
+  return previousMonth;
 });
 
 const updateCurrentDate = computed(() => {
   const monthCounter = 0;
   const currentMonth = updateDate(monthCounter);
-
-  dateSelector.value.month = currentMonth.month();
-  dateSelector.value.year = currentMonth.year();
-
   return currentMonth;
 });
 
 const updateNextDate = computed(() => {
   const monthCounter = 1;
-  return updateDate(monthCounter);
+  const nextMonth = updateDate(monthCounter);
+  return nextMonth;
 });
 
 const updateDate = (monthCounter: number) => {
   const date = dateSelector.value;
-  if (!!date.year) {
-    return setDateFromSelector(date.year, date.month, monthCounter);
-  }
-  return setDate(monthCounter, date.month);
+  return setDate(date.year, date.month, monthCounter);
 };
 
-const setDateFromSelector = (year: number, month: number, monthCounter: number) => {
+const setDate = (year: number, month: number, monthCounter: number) => {
   return dayjs().set("year", year).set("month", month).add(monthCounter, "month");
 };
 
-const setDate = (monthCounter: number, month: number) => {
-  return dayjs().add(monthCounter + month, "month");
+const setCurrentDate = () => {
+  dateSelector.value.year = dayjs().year();
+  dateSelector.value.month = dayjs().month();
 };
 
 onMounted(() => {
-  dateSelector.value.year = dayjs().year();
+  setCurrentDate();
 });
 </script>
 
