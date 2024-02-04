@@ -1,6 +1,10 @@
 <template>
-  <li class="task-item" :style="setBackgroundColor">
-    <BaseButton view="empty" class="task-item__edit" @click="insertTaskDataAndOpenManager('editor')">
+  <li :style="setBackgroundColor" class="task-item" :class="isNoteChecked">
+    <BaseButton
+      view="empty"
+      class="task-item__edit"
+      @click="insertTaskDataAndOpenManager('editor')"
+    >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="1em"
@@ -22,8 +26,7 @@
       <h2 class="task-message-title__name">{{ title }}</h2>
     </section>
 
-
-    <BaseButton view="empty" class="task-item__check">
+    <BaseButton view="empty" class="task-item__check" @click="toggleCompletion">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="1em"
@@ -79,12 +82,13 @@ import { Task } from "~/types/Notes";
 
 const notes = useNotes();
 
-const { id, title, content, color, noteType } = defineProps<{
+const { id, title, content, color, noteType, isChecked } = defineProps<{
   id: string;
   title: string;
   content: string | Task[];
   color: string;
   noteType: string;
+  isChecked: boolean;
 }>();
 
 const updateUserTasks = inject("update-user-tasks", () => {});
@@ -92,20 +96,23 @@ const updateUserTasks = inject("update-user-tasks", () => {});
 const setBackgroundColor = computed(() => {
   return { "background-color": color };
 });
-
-const deleteNote = async () => {
-  await deleteUserNoteHandler();
-};
+const isNoteChecked = computed(() => {
+  return { "note-checked": isChecked };
+});
 
 const insertTaskDataAndOpenManager = (option: "editor" | "details") => {
+  insertTaskData();
+  notes.openAndSetModal(option);
+};
+
+const insertTaskData = () => {
   let editedTask: string | Task[] = [];
 
-  
-  if(Array.isArray(content)){
-    editedTask = content.map(task => task);
+  if (Array.isArray(content)) {
+    editedTask = content.map((task) => task);
   }
 
-  if(typeof content === 'string'){
+  if (typeof content === "string") {
     editedTask = content;
   }
 
@@ -115,18 +122,39 @@ const insertTaskDataAndOpenManager = (option: "editor" | "details") => {
     content: editedTask,
     color: color,
     noteType: noteType,
+    isChecked: isChecked,
   };
-
-  notes.openAndSetModal(option);
 };
 
+const toggleCompletion = async () => {
+  await toggleCompletionFetch(id, isChecked);
+};
 
-const deleteUserNoteHandler = async () => {
+const toggleCompletionFetch = async (noteId: string, isNoteChecked: boolean) => {
   try {
-    await deleteUserNoteFetch(id);
+    await toggleNoteCompletionFetch(noteId, isNoteChecked);
     updateUserTasks();
   } catch (err: unknown) {
     if (typeof err === "string") {
+    } else if (err === Object || err !== null) {
+      throw createError(err as Partial<NuxtError>);
+    } else {
+      throw createError("Something goes wrong!, try later.");
+    }
+  }
+};
+
+const deleteNote = async () => {
+  await deleteUserNoteHandler(id);
+};
+
+const deleteUserNoteHandler = async (noteId: string) => {
+  try {
+    await deleteUserNoteFetch(noteId);
+    updateUserTasks();
+  } catch (err: unknown) {
+    if (typeof err === "string") {
+      throw createError(err);
     } else if (err === Object || err !== null) {
       throw createError(err as Partial<NuxtError>);
     } else {
@@ -184,6 +212,10 @@ const deleteUserNoteHandler = async () => {
       color: var(--error-clr);
     }
   }
+}
+
+.note-checked{
+  opacity: 0.5;
 }
 
 .task-message-title {

@@ -71,9 +71,20 @@ export const editUserNoteDataFetch = async (
    });
 };
 
-export const deleteUserNoteFetch = async (noteId: string) => {
+export const toggleNoteCompletionFetch = async (noteId: string, isChecked: boolean) => {
    const userId = useCookie("userUidStatus");
    const db = getDatabase();
 
+   return await update(
+      ref(db, `users/${userId.value}/notes/${noteId}`),
+      {
+         isChecked:  !isChecked,
+      }
+   );
+};
+
+export const deleteUserNoteFetch = async (noteId: string) => {
+   const userId = useCookie("userUidStatus");
+   const db = getDatabase();
    return await remove(ref(db, `users/${userId.value}/notes/${noteId}`));
 };

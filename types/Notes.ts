@@ -12,7 +12,8 @@ export type NoteSelected = {
    title: string;
    content: string | Task[];
    color: string;
-   noteType: string  
+   noteType: string;
+   isChecked: boolean;
 };
 
 export type Note = {
