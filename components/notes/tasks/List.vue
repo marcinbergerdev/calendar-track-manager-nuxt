@@ -1,7 +1,9 @@
 <template>
   <BaseLoadingSpinner mode="notes-spinner" :is-background="false" v-if="notes.isSpinner" />
-  <!-- <p v-if="isEmptyTasksList" class="tasks-empty-list">Your list is empty.</p> -->
 
+
+  <p v-if="!tasks" class="tasks-empty-list">Your list is empty.</p>
+  
   <ul v-else class="tasks-list">
     <NotesTasksListItem
       v-for="({ color, content, isChecked, option, title }, id) in tasks"
