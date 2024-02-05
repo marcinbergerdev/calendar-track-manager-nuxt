@@ -7,7 +7,14 @@
 
   <p v-else-if="emptyList" class="tasks-empty-list">Your list is empty.</p>
 
-  <Sortable v-else class="tasks-list" :list="convertedTasks" item-key="id" tag="ul">
+  <Sortable
+    class="tasks-list"
+    v-else
+    tag="ul"
+    item-key="id"
+    :list="convertedTasks"
+    @sort="updateTasksOrder"
+  >
     <template #item="{ element }">
       <NotesTasksListItem
         :id="element[0]"
@@ -19,29 +26,49 @@
       ></NotesTasksListItem>
     </template>
   </Sortable>
-
 </template>
 
 <script setup lang="ts">
 import { useNotes } from "~/store/useNotes";
-import { NoteResponse, ConvertedTasksList} from "~/types/Notes";
+import { NoteResponse, ConvertedTasksList } from "~/types/Notes";
 import { Sortable } from "sortablejs-vue3";
 
 const notes = useNotes();
 
 const { tasksResponse } = defineProps<{
-  tasksResponse: NoteResponse;  
+  tasksResponse: NoteResponse;
 }>();
 
 const convertedTasks = computed(() => {
-  if(!tasksResponse) return []
-  const selectedTasks: ConvertedTasksList = Object.entries(tasksResponse).map((task) => task);
+  if (!tasksResponse) return [];
+  const selectedTasks: ConvertedTasksList = Object.entries(tasksResponse).map(
+    (task) => task
+  );
   return selectedTasks;
 });
 
 const emptyList = computed(() => {
   return convertedTasks.value.length === 0 ? true : false;
 });
+
+const moveItemInArray = (convertedTasks: ConvertedTasksList, from: number, to: number) => {
+  const newConvertedTasks = Object.assign(convertedTasks);
+
+  const task = newConvertedTasks.splice(from, 1)[0];
+  nextTick(() => newConvertedTasks.splice(to, 0, task));
+  setNewSortedList(newConvertedTasks);
+};
+
+const setNewSortedList = (newConvertedTasks: ConvertedTasksList) => {
+  console.log(newConvertedTasks);
+}
+
+
+const updateTasksOrder = (event: any) => {
+  moveItemInArray(convertedTasks.value, event.oldIndex, event.newIndex);
+};
+
+
 
 </script>
 

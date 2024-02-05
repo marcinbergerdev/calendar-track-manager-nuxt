@@ -1,5 +1,7 @@
 <template>
   <li :style="setBackgroundColor" class="task-item" :class="isNoteChecked">
+
+    
     <BaseButton
       view="empty"
       class="task-item__edit"
@@ -21,10 +23,11 @@
         />
       </svg>
     </BaseButton>
-
-    <section class="task-message-title">
+    
+    <p>{{ id }}</p>
+    <!-- <section class="task-message-title">
       <h2 class="task-message-title__name">{{ title }}</h2>
-    </section>
+    </section> -->
 
     <BaseButton view="empty" class="task-item__check" @click="toggleCompletion">
       <svg
