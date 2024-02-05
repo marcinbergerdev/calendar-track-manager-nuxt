@@ -4,8 +4,10 @@ export type Task = {
 };
 
 export type NoteResponse = {
-  [key: string]: Note
-}
+   [key: string]: Note;
+};
+
+export type ConvertedTasksList = [string, Note][];
 
 export type NoteSelected = {
    id: string;
@@ -23,7 +25,3 @@ export type Note = {
    color: string;
    isChecked: boolean;
 };
-
-
-
-

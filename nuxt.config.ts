@@ -24,6 +24,9 @@ export default defineNuxtConfig({
             },
          },
       },
+      define: {
+         __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: false,
+      },
    },
 
    modules: [
@@ -34,7 +37,6 @@ export default defineNuxtConfig({
       "@nuxtjs/color-mode",
       "@nuxt/image",
       "dayjs-nuxt",
-      "sortablejs"
    ],
 
    pinia: {

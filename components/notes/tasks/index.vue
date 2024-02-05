@@ -4,7 +4,7 @@
 
     <NotesTasksAddButton></NotesTasksAddButton>
 
-    <NotesTasksList :tasks="tasks"></NotesTasksList>
+    <NotesTasksList :tasks-response="tasksResponse"></NotesTasksList>
   </div>
 </template>
 
@@ -15,14 +15,14 @@ const notes = useNotes();
 
 import { NuxtError } from "nuxt/app";
 
-const tasks = ref<NoteResponse[]>([]);
+const tasksResponse = ref<NoteResponse[]>([]);
 
 const getUserNotes = async () => {
   try {
     notes.isSpinner = true;
 
     const response = await getUserNotesFetch();
-    tasks.value = response;
+    tasksResponse.value = response;
 
     notes.isSpinner = false;
   } catch (err: unknown) {
