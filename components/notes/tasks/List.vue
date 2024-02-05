@@ -21,6 +21,12 @@
 <script setup lang="ts">
 import { useNotes } from "~/store/useNotes";
 import { NoteResponse } from '~/types/Notes';
+import { Sortable } from "sortablejs-vue3";
+
+
+  
+
+
 
 const notes = useNotes();
 

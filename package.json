@@ -29,6 +29,7 @@
     "firebase": "^10.4.0",
     "pinia": "^2.1.6",
     "sortablejs": "^1.15.2",
+    "sortablejs-vue3": "^1.2.11",
     "vue-uuid": "^3.0.0"
   }
 }
