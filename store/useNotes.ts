@@ -7,16 +7,15 @@ export const useNotes = defineStore("notes", () => {
    const isComponent = ref<"editor" | "details">("editor");
 
    const selectedTask = ref<NoteSelected | null>(null);
-   
 
    const colors = [
-      { name: "grey", color: "#BCBCBC" },
-      { name: "purple", color: "#AF31CE" },
-      { name: "yellow", color: "#FFBB24" },
-      { name: "red", color: "#CA3F2C" },
-      { name: "green", color: "#68C023" },
-      { name: "blue", color: "#2159E9" },
-      { name: "black", color: "#161616" },
+      { name: "#808080" },
+      { name: "#821C4D" },
+      { name: "#248279" },
+      { name: "#102546" },
+      { name: "#1D801D" },
+      { name: "#1C1C7D" },
+      { name: "#161616" },
    ];
 
    const openAndSetModal = (component: "editor" | "details") => {

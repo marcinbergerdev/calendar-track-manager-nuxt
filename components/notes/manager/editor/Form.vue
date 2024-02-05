@@ -40,7 +40,7 @@
         <div class="variants-box" v-for="(variant, id) in notes.colors" :key="id">
           <label
             :for="variant.name"
-            :style="setBackgroundColor(variant.color)"
+            :style="setBackgroundColor(variant.name)"
             :class="setActiveVariant(variant.name)"
           ></label>
 
@@ -108,7 +108,7 @@ const notes = useNotes();
 const taskId = ref("");
 const toggleOptions = ref("message");
 const noteTitle = ref("");
-const colorVariant = ref("grey");
+const colorVariant = ref("#808080");
 const noteContent = ref<string | Task[]>("");
 
 const updateUserTasks = inject("update-user-tasks", () => {});
@@ -180,6 +180,7 @@ const saveUserNote = async (
     notes.closeModal();
   } catch (err: unknown) {
     if (typeof err === "string") {
+      throw createError(err);
     } else if (err === Object || err !== null) {
       throw createError(err as Partial<NuxtError>);
     } else {
@@ -220,6 +221,7 @@ const editUserNote = async (
     notes.closeModal();
   } catch (err: unknown) {
     if (typeof err === "string") {
+      throw createError(err);
     } else if (err === Object || err !== null) {
       throw createError(err as Partial<NuxtError>);
     } else {

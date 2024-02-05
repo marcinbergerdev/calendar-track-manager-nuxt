@@ -36,7 +36,7 @@ const notes = useNotes();
   justify-content: center;
 
   width: min(30rem, 100%);
-  border: 2px solid var(--text-clr);
+  border: 3px solid var(--auth-title-clr);
   border-radius: 2rem;
   
   @media (width >= 768px) {
@@ -47,6 +47,7 @@ const notes = useNotes();
   &__icon {
     width: 4rem;
     height: 4rem;
+    color: var(--auth-title-clr);
   }
 }
 </style>

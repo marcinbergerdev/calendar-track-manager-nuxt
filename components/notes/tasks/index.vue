@@ -27,6 +27,7 @@ const getUserNotes = async () => {
     notes.isSpinner = false;
   } catch (err: unknown) {
     if (typeof err === "string") {
+      throw createError(err);
     } else if (err === Object || err !== null) {
       throw createError(err as Partial<NuxtError>);
     } else {

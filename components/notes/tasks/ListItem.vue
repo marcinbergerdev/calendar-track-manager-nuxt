@@ -136,6 +136,7 @@ const toggleCompletionFetch = async (noteId: string, isNoteChecked: boolean) => 
     updateUserTasks();
   } catch (err: unknown) {
     if (typeof err === "string") {
+      throw createError(err);
     } else if (err === Object || err !== null) {
       throw createError(err as Partial<NuxtError>);
     } else {
@@ -173,6 +174,7 @@ const deleteUserNoteHandler = async (noteId: string) => {
     "deleteButton deleteButton deleteButton";
   grid-template-columns: 12% 76% 12%;
   grid-template-rows: 1fr 4fr 1fr;
+  gap: 1.5rem 0;
 
   padding: 1rem 1.5rem;
   width: min(30rem, 90%);
@@ -233,8 +235,6 @@ const deleteUserNoteHandler = async (noteId: string) => {
 
 .task-content {
   grid-area: noteMessage;
-  overflow: hidden;
-
   @media (width >= 768px) {
     cursor: pointer;
   }
