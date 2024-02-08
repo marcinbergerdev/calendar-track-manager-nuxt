@@ -24,10 +24,9 @@
       </svg>
     </BaseButton>
     
-    <p>{{ id }}</p>
-    <!-- <section class="task-message-title">
+    <section class="task-message-title">
       <h2 class="task-message-title__name">{{ title }}</h2>
-    </section> -->
+    </section>
 
     <BaseButton view="empty" class="task-item__check" @click="toggleCompletion">
       <svg
@@ -85,8 +84,9 @@ import { Task } from "~/types/Notes";
 
 const notes = useNotes();
 
-const { id, title, content, color, noteType, isChecked } = defineProps<{
-  id: string;
+const { noteId, id, title, content, color, noteType, isChecked } = defineProps<{
+  noteId: string;
+  id: number,
   title: string;
   content: string | Task[];
   color: string;
@@ -120,22 +120,22 @@ const insertTaskData = () => {
   }
 
   notes.selectedTask = {
-    id: id,
-    title: title,
+    noteId,
+    title,
     content: editedTask,
-    color: color,
-    noteType: noteType,
-    isChecked: isChecked,
+    color,
+    noteType,
+    isChecked,
   };
 };
 
 const toggleCompletion = async () => {
-  await toggleCompletionFetch(id, isChecked);
+  await toggleCompletionFetch();
 };
 
-const toggleCompletionFetch = async (noteId: string, isNoteChecked: boolean) => {
+const toggleCompletionFetch = async () => {
   try {
-    await toggleNoteCompletionFetch(noteId, isNoteChecked);
+    await toggleNoteCompletionFetch(noteId, isChecked);
     updateUserTasks();
   } catch (err: unknown) {
     if (typeof err === "string") {
@@ -149,10 +149,10 @@ const toggleCompletionFetch = async (noteId: string, isNoteChecked: boolean) => 
 };
 
 const deleteNote = async () => {
-  await deleteUserNoteHandler(id);
+  await deleteUserNoteHandler();
 };
 
-const deleteUserNoteHandler = async (noteId: string) => {
+const deleteUserNoteHandler = async () => {
   try {
     await deleteUserNoteFetch(noteId);
     updateUserTasks();

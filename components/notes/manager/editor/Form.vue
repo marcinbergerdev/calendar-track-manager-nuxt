@@ -141,7 +141,7 @@ const setTaskDataIfEditedIsSelected = () => {
   const selectedTask = notes.selectedTask;
 
   if (!!selectedTask && typeof selectedTask !== null) {
-    taskId.value = selectedTask.id;
+    taskId.value = selectedTask.noteId;
     toggleOptions.value = selectedTask.noteType;
     noteTitle.value = selectedTask.title;
     colorVariant.value = selectedTask.color;
@@ -149,33 +149,29 @@ const setTaskDataIfEditedIsSelected = () => {
   }
 };
 
-const formInputValidation = (message: string, content: string | Task[]) => {
-  if (content === "" || content.length === 0) {
-    return message;
-  }
-  return content;
-};
-
 const saveNote = async () => {
-  const validatedNoteTitle = formInputValidation("Brak tytuł", noteTitle.value) as string;
-  const validatedNoteContent = formInputValidation("Brak zadania", noteContent.value);
+  const idIncreased = setIdIncreasing();
+  const titleValidated = formInputValidation("Brak tytuł", noteTitle.value) as string;
+  const contentValidated = formInputValidation("Brak zadania", noteContent.value);
 
   await saveUserNote(
+    idIncreased,
     toggleOptions.value,
-    validatedNoteTitle,
+    titleValidated,
     colorVariant.value,
-    validatedNoteContent
+    contentValidated
   );
 };
 
 const saveUserNote = async (
+  idValidated: number,
   toggleOptions: string,
   noteTitle: string,
   colorVariant: string,
   noteContent: string | Task[]
 ) => {
   try {
-    await saveUserNotesMessageFetch(toggleOptions, noteTitle, colorVariant, noteContent);
+    await saveUserNotesMessageFetch(idValidated, toggleOptions, noteTitle, colorVariant, noteContent);
     updateUserTasks();
     notes.closeModal();
   } catch (err: unknown) {
@@ -190,15 +186,15 @@ const saveUserNote = async (
 };
 
 const editNote = async () => {
-  const validatedNoteTitle = formInputValidation("Brak tytuł", noteTitle.value) as string;
-  const validatedNoteContent = formInputValidation("Brak zadania", noteContent.value);
+  const titleValidated = formInputValidation("Brak tytuł", noteTitle.value) as string;
+  const contentValidated = formInputValidation("Brak zadania", noteContent.value);
   
   await editUserNote(
     taskId.value,
     toggleOptions.value,
-    validatedNoteTitle,
+    titleValidated,
     colorVariant.value,
-    validatedNoteContent
+    contentValidated
   );
 };
 
@@ -228,6 +224,22 @@ const editUserNote = async (
       throw createError("Something goes wrong!, try later.");
     }
   }
+};
+
+
+const setIdIncreasing = () => {
+  const tasks = notes.tasks;
+  if(!tasks) return 0
+
+  const convertedTasks = Object.entries(tasks);
+  return convertedTasks.length++;
+};
+
+const formInputValidation = (message: string, content: string | Task[]) => {
+  if (content === "" || content.length === 0) {
+    return message;
+  }
+  return content;
 };
 
 watch(toggleOptions, () => {

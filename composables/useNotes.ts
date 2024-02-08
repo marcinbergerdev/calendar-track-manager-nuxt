@@ -31,6 +31,7 @@ export const getUserNotesFetch = async () => {
 };
 
 export const saveUserNotesMessageFetch = async (
+   id: number,
    toggleOptions: string,
    noteTitle: string,
    colorVariant: string,
@@ -43,6 +44,7 @@ export const saveUserNotesMessageFetch = async (
    const newEventList = push(eventList);
 
    return await set(newEventList, {
+      id: id,
       option: toggleOptions,
       title: noteTitle,
       color: colorVariant,
@@ -71,20 +73,35 @@ export const editUserNoteDataFetch = async (
    });
 };
 
-export const toggleNoteCompletionFetch = async (noteId: string, isChecked: boolean) => {
+export const toggleNoteCompletionFetch = async (
+   noteId: string,
+   isChecked: boolean
+) => {
    const userId = useCookie("userUidStatus");
    const db = getDatabase();
 
-   return await update(
-      ref(db, `users/${userId.value}/notes/${noteId}`),
-      {
-         isChecked:  !isChecked,
-      }
-   );
+   return await update(ref(db, `users/${userId.value}/notes/${noteId}`), {
+      isChecked: !isChecked,
+   });
 };
+
 
 export const deleteUserNoteFetch = async (noteId: string) => {
    const userId = useCookie("userUidStatus");
    const db = getDatabase();
    return await remove(ref(db, `users/${userId.value}/notes/${noteId}`));
 };
+
+
+
+
+export const saveSortedTasksFetch = async (list: any) => {
+   const userId = useCookie("userUidStatus");
+
+   const db = getDatabase();
+
+   await update(ref(db, `users/${userId.value}/notes`), list);
+};
+
+
+

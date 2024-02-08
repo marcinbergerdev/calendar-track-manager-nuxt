@@ -37,6 +37,7 @@ export default defineNuxtConfig({
       "@nuxtjs/color-mode",
       "@nuxt/image",
       "dayjs-nuxt",
+      "nuxt-lodash"
    ],
 
    pinia: {

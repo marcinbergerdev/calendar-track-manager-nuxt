@@ -7,10 +7,10 @@ export type NoteResponse = {
    [key: string]: Note;
 };
 
-export type ConvertedTasksList = [string, Note][];
+export type ConvertedNotesList = [string, Note][];
 
 export type NoteSelected = {
-   id: string;
+   noteId: string;
    title: string;
    content: string | Task[];
    color: string;
@@ -19,6 +19,7 @@ export type NoteSelected = {
 };
 
 export type Note = {
+   id: number,
    option: string;
    title: string;
    content: string | Task[];

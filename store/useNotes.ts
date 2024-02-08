@@ -1,11 +1,12 @@
 import { defineStore } from "pinia";
-import { NoteSelected } from "~/types/Notes";
+import { NoteSelected, NoteResponse} from "~/types/Notes";
 
 export const useNotes = defineStore("notes", () => {
    const isManager = ref(false);
    const isSpinner = ref(false);
    const isComponent = ref<"editor" | "details">("editor");
 
+   const tasks = ref<NoteResponse[] | null>(null);
    const selectedTask = ref<NoteSelected | null>(null);
 
    const colors = [
@@ -29,6 +30,7 @@ export const useNotes = defineStore("notes", () => {
    };
 
    return {
+      tasks,
       selectedTask,
       colors,
       isManager,
