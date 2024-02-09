@@ -34,28 +34,28 @@ import { useNotes } from "~/store/useNotes";
 import { NoteResponse, ConvertedNotesList } from "~/types/Notes";
 import { Sortable } from "sortablejs-vue3";
 
-const { tasksResponse } = defineProps<{
-  tasksResponse: NoteResponse | null;
+const { notesList } = defineProps<{
+  notesList: NoteResponse | null;
 }>();
 
 const notes = useNotes();
-const notesList = ref<ConvertedNotesList>([]);
+const selectedNotes = ref<ConvertedNotesList>([]);
 
 const updateUserTasks = inject("update-user-tasks", async () => {});
 
 const updatedTasks = computed(() => {
-  return notesList.value;
+  return selectedNotes.value;
 });
 
 const emptyList = computed(() => {
-  return notesList.value.length === 0 ? true : false;
+  return selectedNotes.value.length === 0 ? true : false;
 });
 
 const updateTasksOrder = (event: any) => {
-  const newNotes = useCloneDeep(notesList.value);
+  const newNotes = useCloneDeep(selectedNotes.value);
   const movedNotes = moveItemInArray(newNotes, event.oldIndex, event.newIndex);
-  const updatedTasks = changeNotesId(movedNotes);
-  updateNotes(updatedTasks);
+  const updatedNotes = changeNotesId(movedNotes);
+  updateNotes(updatedNotes);
 };
 
 const moveItemInArray = (newNotes: ConvertedNotesList, from: number, to: number) => {
@@ -71,23 +71,22 @@ const changeNotesId = (newNotes: ConvertedNotesList) => {
   });
 };
 
-const updateNotes = async (updatedTasks: ConvertedNotesList) => {
-  const convertedTaskToObject = Object.fromEntries(updatedTasks);
+const updateNotes = async (updatedNotes: ConvertedNotesList) => {
+  const convertedTaskToObject = Object.fromEntries(updatedNotes);
   await saveSortedTasksFetch(convertedTaskToObject);
   updateUserTasks();
-  notesList.value = updatedTasks;
+  selectedNotes.value = updatedNotes;
 }
 
-const tasksListConvertToArray = () => {
-  if (!!tasksResponse) {
-    const convertedTasks = Object.entries(tasksResponse).map((task) => task);
+const tasksListConvertToArray = (response: NoteResponse | null) => {
+  if (!!response) {
+    const convertedTasks = Object.entries(response).map((task) => task);
     return convertedTasks;
   }
-  return [];
 };
 
-const tasksSorting = (selectedTasks: ConvertedNotesList) => {
-  const sortedTasks = selectedTasks.sort((a, b) => {
+const notesSorting = (convertedTasks: ConvertedNotesList) => {
+  const sortedTasks = convertedTasks.sort((a, b) => {
     const firstElement = a[1].id;
     const secondElement = b[1].id;
     return firstElement - secondElement;
@@ -96,11 +95,12 @@ const tasksSorting = (selectedTasks: ConvertedNotesList) => {
   return sortedTasks;
 };
 
-watchEffect(() => {
-  const convertedTasks: ConvertedNotesList = tasksListConvertToArray();
-  const sortedTask = tasksSorting(convertedTasks);
-  notesList.value = sortedTask;
+watch(() => notesList, (response) => {
+  const convertedTasks: ConvertedNotesList = tasksListConvertToArray(response) || [];
+  const sortedTask = notesSorting(convertedTasks);
+  selectedNotes.value = sortedTask;
 });
+
 </script>
 
 <style scoped lang="scss">

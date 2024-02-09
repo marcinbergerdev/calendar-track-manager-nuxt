@@ -4,7 +4,7 @@
 
     <NotesTasksAddButton></NotesTasksAddButton>
 
-    <NotesTasksList :tasks-response="notes.tasks"></NotesTasksList>
+    <NotesTasksList :notes-list="notes.notesList"></NotesTasksList>
   </div>
 </template>
 
@@ -19,7 +19,7 @@ const getUserNotes = async () => {
     notes.isSpinner = true;
 
     const response = await getUserNotesFetch();
-    notes.tasks = response;
+    notes.notesList = response;
 
     notes.isSpinner = false;
   } catch (err: unknown) {

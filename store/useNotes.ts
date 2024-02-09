@@ -6,7 +6,7 @@ export const useNotes = defineStore("notes", () => {
    const isSpinner = ref(false);
    const isComponent = ref<"editor" | "details">("editor");
 
-   const tasks = ref<NoteResponse[] | null>(null);
+   const notesList = ref<NoteResponse[] | null>(null);
    const selectedTask = ref<NoteSelected | null>(null);
 
    const colors = [
@@ -30,7 +30,7 @@ export const useNotes = defineStore("notes", () => {
    };
 
    return {
-      tasks,
+      notesList,
       selectedTask,
       colors,
       isManager,
