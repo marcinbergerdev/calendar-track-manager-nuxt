@@ -18,7 +18,7 @@ const events = useEditor();
 
 const { error, isCloseButton = true } = defineProps<{
   error: Object;
-  isCloseButton: boolean;
+  isCloseButton?: boolean;
 }>();
 
 const handleError = () => {

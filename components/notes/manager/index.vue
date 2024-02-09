@@ -5,12 +5,10 @@
     <div class="manager-container">
       <NuxtErrorBoundary>
 
-    
         <div class="manager-box">
           <NotesManagerEditorForm v-if="notes.isComponent !== 'details'"></NotesManagerEditorForm>
           <NotesManagerDetails v-else></NotesManagerDetails>
         </div>
-
 
 
         <template #error="{ error }">

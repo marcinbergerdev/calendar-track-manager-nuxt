@@ -1,8 +1,7 @@
 <template>
   <BaseLoadingSpinner mode="event" :is-background="false" v-if="isLoadingSpinner" />
 
-
-  <div class="events-empty-message-container" v-if="isEmpty">
+  <div class="events-empty-message-container" v-if="isEventsEmpty">
     <p class="events-empty-message-container__message">Add your events...</p>
 
     <BaseButton
@@ -13,7 +12,6 @@
       add event
     </BaseButton>
   </div>
-
 
   <ul class="events-list" v-else>
     <CalendarManagerEventsItem
@@ -37,12 +35,13 @@
 <script setup lang="ts">
 import { Events, EventsList } from "@/types/Date";
 import { useEditor } from "@/store/useEditor";
+import { NuxtError } from "nuxt/app";
 
 const editor = useEditor();
 const events = ref<EventsList[]>([]);
 
 const isLoadingSpinner = ref(false);
-const isEmpty = ref(false);
+const isEventsEmpty = ref(false);
 
 const redirectToEventEditor = () => {
   editor.openEditor();
@@ -53,22 +52,24 @@ const getUserEvents = async () => {
 
   if (!!selectedDay.id && !!selectedDay.year) {
     try {
+
       const response = await getUserEventsFetch(selectedDay.year, selectedDay.id);
 
-      if (!response) {
-        setEmptyMessageHandler();
-        return;
-      }
-
+      if(response === null) return isEventsEmpty.value = true;
       sortingEventsByHour(response);
-    } catch (err: any) {
-      throw createError(err);
+
+    } catch (err: unknown) {
+
+      if (typeof err === "string") {
+        throw createError(err);
+      } else if (err === Object || err !== null) {
+        throw createError(err as Partial<NuxtError>);
+      } else {
+        throw createError("Something goes wrong!, try later.");
+      }
+      
     }
   }
-};
-
-const setEmptyMessageHandler = () => {
-  isEmpty.value = true;
 };
 
 const sortingEventsByHour = (response: Events) => {
@@ -96,10 +97,8 @@ const updateEventListAfterDeleting = () => {
   getUserEvents();
 };
 
-onMounted(async () => {
-  isLoadingSpinner.value = true;
+onMounted(async() => {
   await getUserEvents();
-  isLoadingSpinner.value = false;
 });
 </script>
 
