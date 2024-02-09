@@ -13,6 +13,7 @@
     tag="ul"
     item-key="id"
     :list="updatedTasks"
+    :options="dragAndDropDelayReaction"
     @sort="updateTasksOrder"
   >
     <template #item="{ element }">
@@ -38,6 +39,7 @@ const { notesList } = defineProps<{
   notesList: NoteResponse | null;
 }>();
 
+const { width } = useWindowSize();
 const notes = useNotes();
 const selectedNotes = ref<ConvertedNotesList>([]);
 
@@ -49,6 +51,14 @@ const updatedTasks = computed(() => {
 
 const emptyList = computed(() => {
   return selectedNotes.value.length === 0 ? true : false;
+});
+
+const dragAndDropDelayReaction = computed(() => {
+  const delayMobile = 100;
+  const delayDesktop = 0;
+
+  const selectedDelay = width.value > 768 ? delayDesktop : delayMobile;
+  return {delay: selectedDelay};
 });
 
 const updateTasksOrder = (event: any) => {
@@ -76,7 +86,7 @@ const updateNotes = async (updatedNotes: ConvertedNotesList) => {
   await saveSortedTasksFetch(convertedTaskToObject);
   updateUserTasks();
   selectedNotes.value = updatedNotes;
-}
+};
 
 const tasksListConvertToArray = (response: NoteResponse | null) => {
   if (!!response) {
@@ -95,12 +105,14 @@ const notesSorting = (convertedTasks: ConvertedNotesList) => {
   return sortedTasks;
 };
 
-watch(() => notesList, (response) => {
-  const convertedTasks: ConvertedNotesList = tasksListConvertToArray(response) || [];
-  const sortedTask = notesSorting(convertedTasks);
-  selectedNotes.value = sortedTask;
-});
-
+watch(
+  () => notesList,
+  (response) => {
+    const convertedTasks: ConvertedNotesList = tasksListConvertToArray(response) || [];
+    const sortedTask = notesSorting(convertedTasks);
+    selectedNotes.value = sortedTask;
+  }
+);
 </script>
 
 <style scoped lang="scss">

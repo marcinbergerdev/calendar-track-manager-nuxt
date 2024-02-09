@@ -185,9 +185,14 @@ const deleteUserNoteHandler = async () => {
   border-radius: 2.5rem;
   color: var(--text-clr);
 
+  @media (width >= 768px) {
+    cursor: pointer;
+  }
+
   &__edit,
   &__check,
   &__delete {
+    font-size: 3.2rem;
     @media (width >= 950px) {
       font-size: 2.7rem;
     }
@@ -238,8 +243,5 @@ const deleteUserNoteHandler = async () => {
 
 .task-content {
   grid-area: noteMessage;
-  @media (width >= 768px) {
-    cursor: pointer;
-  }
 }
 </style>
