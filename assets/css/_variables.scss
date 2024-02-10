@@ -1,12 +1,16 @@
 :root {
    --white: #fff;
    --black: #000;
+
+   --blue-ltr: #dce5ff;
+   --blue-lt: #2697FF;
    --blue: #263d8a;
-   --blue-lt: #dce5ff;
+
    --grey-lt: #d0d0d0;
-   --grey: #393e46;
    --grey-ltr: #838383;
+   --grey: #393e46;
    --grey-dk: #222831;
+
    --red: #CE1818;
    --green: #198F51;
 
@@ -22,9 +26,10 @@
    --hamburger-clr: var(--white);
    
    --primary-clr: var(--blue);
-   --bg-clr: var(--blue-lt);
+   --bg-clr: var(--blue-ltr);
    --text-clr: var(--white);
    --text-clr-drk: var(--grey-dk);
+   --edit-clr: var(--blue-lt);
    --success-clr: var(--green);
    --error-clr: var(--red);
 
@@ -42,6 +47,7 @@
    --bg-clr: var(--grey);
    --text-clr: var(--grey-lt);
    --text-clr-drk: var(--grey-lt);
+   --edit-clr: var(--blue-lt);
    --success-clr: var(--green);
    --error-clr: var(--red);
 
