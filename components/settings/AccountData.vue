@@ -5,7 +5,12 @@
 
       <div class="settings-details-box">
         <span class="settings-details-box__data">jankkowalski@op.pl</span>
-        <BaseButton view="empty" class="settings-details-box__button">Zmień</BaseButton>
+        <BaseButton
+          view="empty"
+          class="settings-details-box__button"
+          @click="$emit('setOption', 'email')"
+          >Zmień</BaseButton
+        >
       </div>
     </div>
 
@@ -14,7 +19,12 @@
 
       <div class="settings-details-box">
         <span class="settings-details-box__data">••••••••</span>
-        <BaseButton view="empty" class="settings-details-box__button">Zmień</BaseButton>
+        <BaseButton
+          view="empty"
+          class="settings-details-box__button"
+          @click="$emit('set-option', 'password')"
+          >Zmień</BaseButton
+        >
       </div>
     </div>
   </article>
@@ -39,7 +49,7 @@
     font-size: 1.8rem;
   }
 
-  @media(width >= 768px){
+  @media (width >= 768px) {
     width: 40rem;
   }
 }

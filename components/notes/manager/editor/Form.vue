@@ -228,7 +228,7 @@ const editUserNote = async (
 
 
 const setIdIncreasing = () => {
-  const tasks = notes.tasks;
+  const tasks = notes.notesList;
   if(!tasks) return 0
 
   const convertedTasks = Object.entries(tasks);
