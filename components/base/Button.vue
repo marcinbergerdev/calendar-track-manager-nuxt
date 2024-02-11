@@ -29,7 +29,8 @@ defineProps<{
 .filled,
 .filled-lt,
 .filled-drk,
-.border-lt {
+.border-lt,
+.border-error  {
   opacity: 0.7;
 
   &:hover {
@@ -66,6 +67,14 @@ defineProps<{
   background-color: transparent;
   color: var(--text-clr);
   border: 2px solid var(--text-clr);
+}
+
+.border-error {
+  background-color: transparent;
+  color: var(--error-clr);
+  border: 1px solid var(--error-clr);
+  transition: 0.15s ease-in-out;
+  
 }
 
 .filled {

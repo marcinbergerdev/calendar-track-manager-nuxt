@@ -1,50 +1,65 @@
 <template>
-<article>
-  <div class="setting-user-data">
-    <span class="setting-user-data__title">Adres e-mail</span>
+  <article class="settings-data-container">
+    <div class="settings-data-box">
+      <span class="settings-data-box__title">Adres e-mail</span>
 
-    <div class="setting-change-box">
-      <span class="setting-change-box__data">jankkowalski@op.pl</span>
-      <BaseButton view="empty" class="setting-change-box__button">Zmień</BaseButton>
+      <div class="settings-details-box">
+        <span class="settings-details-box__data">jankkowalski@op.pl</span>
+        <BaseButton view="empty" class="settings-details-box__button">Zmień</BaseButton>
+      </div>
     </div>
-  </div>
 
-  <div class="setting-user-data">
-    <span class="setting-user-data__title">Hasło</span>
+    <div class="settings-data-box">
+      <span class="settings-data-box__title">Hasło</span>
 
-    <div class="setting-change-box">
-      <span class="setting-change-box__data">••••••••</span>
-      <BaseButton view="empty" class="setting-change-box__button">Zmień</BaseButton>
+      <div class="settings-details-box">
+        <span class="settings-details-box__data">••••••••</span>
+        <BaseButton view="empty" class="settings-details-box__button">Zmień</BaseButton>
+      </div>
     </div>
-  </div>
-</article>
+  </article>
 </template>
 
 <script setup lang="ts"></script>
 
 <style scoped lang="scss">
+.settings-data-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4rem 0;
+  width: 100%;
+}
 
+.settings-data-box {
+  width: 100%;
 
+  &__title {
+    font-size: 1.8rem;
+  }
 
-.setting-user-data{
-  &__title{
-
+  @media(width >= 768px){
+    width: 40rem;
   }
 }
 
-.setting-change-box{
-  &__data{
+.settings-details-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 1rem;
+  padding: 1rem 1.5rem;
+  border: 1px solid var(--text-clr-drk);
+  border-radius: 2rem;
 
+  &__data {
+    font-size: 1.4rem;
   }
 
-  &__button{
+  &__button {
     font-size: 1.5rem;
     color: var(--edit-clr);
   }
 }
-
-
-
-
-
 </style>
