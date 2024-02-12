@@ -30,8 +30,6 @@
   </div>
 </template>
 
-<script setup lang="ts"></script>
-
 <style scoped lang="scss">
 .modal-overlay {
   position: absolute;
@@ -43,24 +41,19 @@
   width: 100%;
   height: 100vh;
   
-  
   @media(width >= 768px){
     background-color: rgba(#000, 0.5);
   }
-  
 }
 
 .settings-modal-container {
-
   display: flex;
   flex-direction: column;
-
   width: 100%; 
   height: 100vh;
   background-color: var(--bg-clr);
   overflow: auto;
 
-  
   @media(width >= 768px){
     max-width: 50rem;
     height: auto;
@@ -72,7 +65,6 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  
   padding: 1.5rem;
   background-color: var(--primary-clr);
   color: var(--text-clr);
@@ -84,7 +76,6 @@
   &__title{
     font-size: 2rem;
   }
-
 }
 
 
@@ -100,7 +91,4 @@
   border: 1px solid var(--text-clr-drk);
   border-radius: 50%;
 }
-
-
-
 </style>

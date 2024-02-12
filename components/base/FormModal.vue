@@ -48,6 +48,7 @@ const closeModal = () => {
 const confirmModal = () => {
   navigateTo("/");
   closeModal();
+  resetModal()
 };
 
 const resetModal = () => {

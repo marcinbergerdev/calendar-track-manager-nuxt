@@ -1,8 +1,8 @@
 <template>
-  <h2 class="setting-header">Dane Konta</h2>
+  <header>
+    <h2 class="setting-header">Dane Konta</h2>
+  </header>
 </template>
-
-<script setup lang="ts"></script>
 
 <style scoped lang="scss">
 .setting-header {

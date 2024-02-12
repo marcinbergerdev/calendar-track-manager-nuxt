@@ -1,10 +1,12 @@
-import { useModal } from "~/store/useModal";
 import {
    getAuth,
    createUserWithEmailAndPassword,
    signInWithEmailAndPassword,
    onAuthStateChanged,
+   updatePassword,
+   deleteUser,
 } from "firebase/auth";
+import { useModal } from "~/store/useModal";
 
 export const createUserAccount = async (email: string, password: string) => {
    const auth = getAuth();
@@ -63,6 +65,44 @@ export const userUpdateStatus = () => {
          // console.log('error');
       }
    });
+};
+
+export const changeUserPassword = async (newPassword: string) => {
+   const auth = getAuth();
+   const user = auth.currentUser;
+   const modal = useModal();
+
+   if (!!user) {
+      await updatePassword(user, newPassword)
+         .then(() => {
+            modal.setValues({
+               title: "Success!",
+               content: "Successfully changed the password",
+               confirm: true,
+            });
+            modal.isModal = true;
+         })
+         .catch((error) => {
+            return error;
+         });
+   }
+};
+
+export const deleteUserAccount = async () => {
+   const auth = getAuth();
+   const user = auth.currentUser;
+   const userUidStatus = useCookie("userUidStatus");
+
+   if (!!user) {
+      await deleteUser(user)
+         .then(() => {
+            userUidStatus.value = "false";
+            navigateTo("/login");
+         })
+         .catch((error) => {
+            return error;
+         });
+   }
 };
 
 export const signOutUser = () => {

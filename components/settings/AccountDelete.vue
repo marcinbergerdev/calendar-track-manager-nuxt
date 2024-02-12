@@ -5,13 +5,33 @@
       W momencie gdy usuniesz konto, utracisz wszystkie zapisane zamówienia jak i dane.
       Upewnij się, że chcesz usunąć konto - Niestety nie będziemy mogli go przywrócic.
     </p>
-    <BaseButton view="border-error" class="settings-account-delete__button"
+
+    <BaseButton
+      view="border-error"
+      class="settings-account-delete__button"
+      @click="deleteAccountHandler"
       >Usuń konto</BaseButton
     >
   </article>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { NuxtError } from "nuxt/app";
+
+const deleteAccountHandler = async () => {
+  try {
+   await deleteUserAccount();
+  } catch (err: unknown) {
+    if (typeof err === "string") {
+      throw createError(err);
+    } else if (err === Object || err !== null) {
+      throw createError(err as Partial<NuxtError>);
+    } else {
+      throw createError("Something goes wrong!, try later.");
+    }
+  }
+};
+</script>
 
 <style scoped lang="scss">
 .settings-account-delete {

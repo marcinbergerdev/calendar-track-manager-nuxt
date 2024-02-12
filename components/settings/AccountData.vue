@@ -1,20 +1,6 @@
 <template>
   <article class="settings-data-container">
     <div class="settings-data-box">
-      <span class="settings-data-box__title">Adres e-mail</span>
-
-      <div class="settings-details-box">
-        <span class="settings-details-box__data">jankkowalski@op.pl</span>
-        <BaseButton
-          view="empty"
-          class="settings-details-box__button"
-          @click="$emit('setOption', 'email')"
-          >Zmień</BaseButton
-        >
-      </div>
-    </div>
-
-    <div class="settings-data-box">
       <span class="settings-data-box__title">Hasło</span>
 
       <div class="settings-details-box">

@@ -167,7 +167,7 @@ watchEffect(async () => {
   if (!!editor.recordedEvents) setClassToRecordedEvents(editor.recordedEvents);
 });
 
-watchEffect(async () => {
+onMounted(async () => {
   const events = await getUserSavedEvents(dateSelector.value.year);
   editor.recordedEvents = events;
 });
