@@ -10,8 +10,8 @@
 
 <script setup lang="ts">
 import { useNotes } from "~/store/useNotes";
-const notes = useNotes();
 
+const notes = useNotes();
 const noteMessage = ref("");
 
 defineEmits<{

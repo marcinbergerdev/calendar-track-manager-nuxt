@@ -43,7 +43,6 @@ const emit = defineEmits<{
 }>();
 
 const isLoadingSpinner = useLoadingSpinner();
-
 const email = ref<string>("");
 const password = ref<string>("");
 const testEmail = ref<string>("test@test.com");
@@ -64,5 +63,3 @@ const authLoginInit = async (email: string, password: string) => {
   isLoadingSpinner.value = false;
 };
 </script>
-
-<style scoped lang="scss"></style>

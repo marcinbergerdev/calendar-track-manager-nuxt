@@ -45,12 +45,12 @@
 <script setup lang="ts">
 import { Task } from "@/types/Notes";
 import { useNotes } from "~/store/useNotes";
-const notes = useNotes();
 
 const emit = defineEmits<{
   (e: "update-checklist", checklist: Task[]): void;
 }>();
 
+const notes = useNotes();
 const checklist = ref<Task[]>([]);
 const taskName = ref("");
 

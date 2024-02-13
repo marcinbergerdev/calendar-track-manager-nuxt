@@ -1,6 +1,7 @@
 <template>
   <Transition :name="monthAnimationName" mode="out-in">
     <ul class="days-list" :key="currentMonth.month()">
+
       <CalendarDaysItem
         v-for="{
           id,
@@ -21,6 +22,7 @@
         :is-selected="id === editor.selectedDay.id"
         :is-event="isEvent"
       ></CalendarDaysItem>
+      
     </ul>
   </Transition>
 

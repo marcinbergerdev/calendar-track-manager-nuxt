@@ -18,7 +18,6 @@
 
 <script setup lang="ts">
 const { locale } = useI18n();
-
 const globalLang = useCookie("lang");
 const selectedLanguage = ref(globalLang);
 

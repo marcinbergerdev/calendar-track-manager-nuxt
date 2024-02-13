@@ -41,7 +41,6 @@ import { useModal } from "~/store/useModal";
 
 const { t } = useI18n();
 const modal = useModal();
-
 const userNewPassword = ref("");
 const userConfirmPassword = ref("");
 const isErrorMessage = ref(false);

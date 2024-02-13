@@ -45,5 +45,3 @@ const signUpHandler = () => {
   createUserAccount(email.value, password.value);
 };
 </script>
-
-<style scoped lang="scss"></style>

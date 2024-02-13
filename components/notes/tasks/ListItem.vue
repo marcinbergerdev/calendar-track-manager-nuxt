@@ -85,7 +85,7 @@ import { Task } from "~/types/Notes";
 const {t} = useI18n();
 const notes = useNotes();
 
-const { noteId, id, title, content, color, noteType, isChecked } = defineProps<{
+const { noteId, title, content, color, noteType, isChecked } = defineProps<{
   noteId: string;
   id: number,
   title: string;
