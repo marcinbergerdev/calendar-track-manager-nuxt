@@ -12,6 +12,7 @@
 import { useNotes } from "~/store/useNotes";
 import { NuxtError } from "nuxt/app";
 
+const { t } = useI18n();
 const notes = useNotes();
 
 const getUserNotes = async () => {
@@ -28,7 +29,7 @@ const getUserNotes = async () => {
     } else if (err === Object || err !== null) {
       throw createError(err as Partial<NuxtError>);
     } else {
-      throw createError("Something goes wrong!, try later.");
+      throw createError(t("settings.modal.errorMessage"));
     }
   } finally {
     notes.isSpinner = false;

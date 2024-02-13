@@ -2,14 +2,14 @@
   <BaseLoadingSpinner mode="event" :is-background="false" v-if="isLoadingSpinner" />
 
   <div class="events-empty-message-container" v-if="isEventsEmpty">
-    <p class="events-empty-message-container__message">Add your events...</p>
+    <p class="events-empty-message-container__message">{{ $t('calendar.events.empty.list') }}</p>
 
     <BaseButton
       view="filled-drk"
       class="events-empty-message-container__button"
       @click="redirectToEventEditor"
     >
-      add event
+    {{ $t('calendar.events.empty.addEventButton') }}
     </BaseButton>
   </div>
 
@@ -28,7 +28,7 @@
   </ul>
 
   <BaseButton view="filled-drk" class="events-exit" @click="editor.closeEditorAndEvent()"
-    >Wyjdź</BaseButton
+    >{{ $t('calendar.events.empty.closeList') }}</BaseButton
   >
 </template>
 
@@ -37,6 +37,7 @@ import { Events, EventsList } from "@/types/Date";
 import { useEditor } from "@/store/useEditor";
 import { NuxtError } from "nuxt/app";
 
+const { t } = useI18n(); 
 const editor = useEditor();
 const events = ref<EventsList[]>([]);
 
@@ -65,7 +66,7 @@ const getUserEvents = async () => {
       } else if (err === Object || err !== null) {
         throw createError(err as Partial<NuxtError>);
       } else {
-        throw createError("Something goes wrong!, try later.");
+        throw createError(t("settings.modal.errorMessage"));
       }
       
     }
@@ -110,6 +111,7 @@ onMounted(async() => {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding: 0 1rem;
 
   &__message {
     font-size: 1.6rem;

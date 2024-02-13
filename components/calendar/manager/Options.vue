@@ -6,12 +6,13 @@
       class="option-container__button editButton"
       @click="openEditor"
     >
-      Edytuj
+      {{$t('calendar.options.editButton')}}
     </BaseButton>
 
 
     <BaseButton view="empty" class="option-container__button" @click="openEventList">
-      Zobacz
+      {{$t('calendar.options.checkButton')}}
+  
     </BaseButton>
 
   </section>

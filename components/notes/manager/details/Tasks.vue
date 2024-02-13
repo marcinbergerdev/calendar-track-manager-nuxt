@@ -7,8 +7,10 @@
 </template>
 
 <script setup lang="ts">
+import { Task } from '~/types/Notes';
+
 defineProps<{
-  tasks: any;
+  tasks: Task[];
 }>();
 </script>
 

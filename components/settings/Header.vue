@@ -1,6 +1,6 @@
 <template>
   <header>
-    <h2 class="setting-header">Dane Konta</h2>
+    <h2 class="setting-header">{{ $t('settings.title') }}</h2>
   </header>
 </template>
 

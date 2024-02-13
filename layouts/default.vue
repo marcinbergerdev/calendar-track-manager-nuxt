@@ -6,7 +6,9 @@
   </main>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+  useLanguageI18n();
+</script>
 
 <style scoped lang="scss">
 .main-content-container {

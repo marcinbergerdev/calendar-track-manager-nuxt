@@ -4,7 +4,7 @@
   
 <script setup lang="ts">
   defineProps<{
-    message: any
+    message: string
   }>();
 </script>
   

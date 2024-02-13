@@ -1,11 +1,11 @@
 <template>
-  <FormKit type="form" submit-label="Sign up" @submit="signUpHandler">
-    <h3 class="formkit-form__title">Sign up</h3>
+  <FormKit type="form" :submit-label="$t('auth.signUp.button')" @submit="signUpHandler">
+    <h3 class="formkit-form__title">{{ $t("auth.signUp.title") }}</h3>
     <FormKit
       type="email"
       name="email"
       validation="required|email"
-      placeholder="e-mail address"
+      :placeholder="$t('auth.signUp.email')"
       v-model="email"
     ></FormKit>
 
@@ -13,7 +13,7 @@
       type="password"
       name="password"
       validation="required:trim|?length:6"
-      placeholder="password"
+      :placeholder="$t('auth.signUp.password')"
       v-model="password"
     />
     <FormKit
@@ -21,15 +21,15 @@
       name="password_confirm"
       validation="required:trim|confirm|?length:6"
       validation-label="Password confirmation"
-      placeholder="confirm password"
+      :placeholder="$t('auth.signUp.passwordConfirm')"
     />
   </FormKit>
 
   <div class="redirect-box">
-    <p class="redirect-box__text">If you have an account log in here!</p>
-    <BaseButton :link="true" path="/login" view="border" class="redirect-box__link"
-      >Log in</BaseButton
-    >
+    <p class="redirect-box__text">{{ $t("auth.infoText.redirectToLogin") }}</p>
+    <BaseButton :link="true" path="/login" view="border" class="redirect-box__link">{{
+      $t("auth.redirectToLogin")
+    }}</BaseButton>
   </div>
 </template>
 

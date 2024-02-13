@@ -86,6 +86,7 @@ const { eventId, title, note, time, isCompleted, isNotification } = defineProps<
   isNotification: boolean;
 }>();
 
+const { t } = useI18n(); 
 const editor = useEditor();
 const isSelectedEvent = editor.selectedEvent;
 const setNewEventDataInputs = editor.setNewEventDataInput;
@@ -97,15 +98,15 @@ const eventChecked = computed(() => {
 });
 
 const titleEmptyValidation = computed(() => {
-  return title || "Brak tytułu";
+  return title || t('calendar.events.empty.title');
 });
 
 const noteEmptyValidation = computed(() => {
-  return note || "Brak notatki...";
+  return note || t('calendar.events.empty.note');
 });
 
 const timeEmptyValidation = computed(() => {
-  return time || "Brak godz.";
+  return time || t('calendar.events.empty.time');
 });
 
 const deleteSelectedEvent = async () => {

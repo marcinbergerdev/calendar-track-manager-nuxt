@@ -1,12 +1,12 @@
 <template>
-  <FormKit type="form" submit-label="Log in" @submit="logInHandler">
-    <h3 class="formkit-form__title">Log in</h3>
+  <FormKit type="form" :submit-label="$t('auth.logIn.button')" @submit="logInHandler">
+    <h3 class="formkit-form__title">{{ $t("auth.logIn.title") }}</h3>
 
     <FormKit
       type="email"
       name="email"
       validation="required|length:5|email"
-      placeholder="e-mail address"
+      :placeholder="$t('auth.logIn.email')"
       v-model="email"
     ></FormKit>
 
@@ -14,23 +14,23 @@
       type="password"
       name="password"
       validation="required:trim|length:5"
-      placeholder="password"
+      :placeholder="$t('auth.logIn.password')"
       v-model="password"
     />
   </FormKit>
 
   <div class="redirect-box">
-    <p class="redirect-box__text">or</p>
-    <p class="redirect-box__text">You don't have an account yet?</p>
+    <p class="redirect-box__text">{{ $t("auth.infoText.or") }}</p>
+    <p class="redirect-box__text">{{ $t("auth.infoText.redirectToSignup") }}</p>
 
-    <BaseButton :link="true" path="/signup" view="border" class="redirect-box__link"
-      >Sign up</BaseButton
-    >
+    <BaseButton :link="true" path="/signup" view="border" class="redirect-box__link">{{
+      $t("auth.redirectToSignup")
+    }}</BaseButton>
   </div>
 
-  <BaseButton @click="logInTestUserHandler" view="border" class="redirect-box__link"
-    >Try test account</BaseButton
-  >
+  <BaseButton @click="logInTestUserHandler" view="border" class="redirect-box__link">{{
+    $t("auth.testAccount")
+  }}</BaseButton>
 </template>
 
 <script setup lang="ts">

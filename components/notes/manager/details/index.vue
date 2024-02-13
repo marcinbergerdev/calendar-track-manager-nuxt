@@ -12,7 +12,7 @@
         view="border-lt"
         class="details-interaction__button"
         @click="notes.closeModal()"
-        >Close</BaseButton
+        >{{$t('notes.closeButton')}}</BaseButton
       >
     </section>
   </div>

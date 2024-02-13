@@ -1,5 +1,5 @@
 <template>
-  <BaseButton view="empty" @click="signOut">sign out</BaseButton>
+  <BaseButton view="empty" @click="signOut">{{$t('nav.signOut')}}</BaseButton>
 </template>
 
 <script setup lang="ts">

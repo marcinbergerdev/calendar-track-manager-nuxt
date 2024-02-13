@@ -3,7 +3,7 @@
     <input
       class="editor-title__input"
       type="text"
-      placeholder="Tytuł..."
+      :placeholder="$t('calendar.editor.form.title')"
       v-model.trim="eventTitle"
     />
 
@@ -70,7 +70,7 @@
             d="M4 19v-2h2v-7q0-2.075 1.25-3.687T10.5 4.2v-.7q0-.625.438-1.062T12 2q.625 0 1.063.438T13.5 3.5v.7q2 .5 3.25 2.113T18 10v7h2v2zm8 3q-.825 0-1.412-.587T10 20h4q0 .825-.587 1.413T12 22"
           />
         </svg>
-        <p class="notifications-title__text">Powiadomienia</p>
+        <p class="notifications-title__text">{{$t('calendar.editor.form.notification')}}</p>
       </div>
 
 
@@ -82,7 +82,7 @@
   <section class="editor-text">
     <article class="editor-note">
 
-      <label class="editor-note__title" for="message">Notatka:</label>
+      <label class="editor-note__title" for="message">{{ $t('calendar.editor.form.note') }}</label>
       <textarea
         class="editor-note__message"
         name="message"
@@ -99,7 +99,7 @@
         view="filled-drk"
         class="editor-actions__button"
         @click="editor.closeEditorAndEvent()">
-        Wyjdź
+        {{$t('calendar.editor.form.closeButton')}}
       </BaseButton>
 
 
@@ -107,7 +107,7 @@
         view="filled-drk"
         class="editor-actions__button"
         @click="saveAndRefreshEvents">
-        Zapisz
+        {{$t('calendar.editor.form.saveButton')}}
       </BaseButton>
 
     </article>
@@ -119,12 +119,12 @@
         view="filled-drk"
         class="editor-actions__button"
         @click="editor.openEventList()">
-        Back
+        {{$t('calendar.editor.form.backButton')}}
       </BaseButton>
 
 
       <BaseButton view="filled-drk" class="editor-actions__button" @click="editEvents">
-        Edytuj
+        {{$t('calendar.editor.form.editButton')}}
       </BaseButton>
 
     </article>

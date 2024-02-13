@@ -82,6 +82,7 @@ import { NuxtError } from "nuxt/app";
 import { useNotes } from "~/store/useNotes";
 import { Task } from "~/types/Notes";
 
+const {t} = useI18n();
 const notes = useNotes();
 
 const { noteId, id, title, content, color, noteType, isChecked } = defineProps<{
@@ -143,7 +144,7 @@ const toggleCompletionFetch = async () => {
     } else if (err === Object || err !== null) {
       throw createError(err as Partial<NuxtError>);
     } else {
-      throw createError("Something goes wrong!, try later.");
+      throw createError(t("settings.modal.errorMessage"));
     }
   }
 };
@@ -162,7 +163,7 @@ const deleteUserNoteHandler = async () => {
     } else if (err === Object || err !== null) {
       throw createError(err as Partial<NuxtError>);
     } else {
-      throw createError("Something goes wrong!, try later.");
+      throw createError(t("settings.modal.errorMessage"));
     }
   }
 };

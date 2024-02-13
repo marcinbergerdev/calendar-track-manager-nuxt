@@ -37,9 +37,10 @@ export default defineNuxtConfig({
       "@nuxtjs/color-mode",
       "@nuxt/image",
       "dayjs-nuxt",
-      "nuxt-lodash"
+      "nuxt-lodash",
+      "@nuxtjs/i18n",
    ],
-
+   
    pinia: {
       autoImports: ["defineStore", ["defineStore", "definePiniaStore"]],
    },

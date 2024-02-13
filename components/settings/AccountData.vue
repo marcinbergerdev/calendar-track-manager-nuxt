@@ -1,7 +1,7 @@
 <template>
   <article class="settings-data-container">
     <div class="settings-data-box">
-      <span class="settings-data-box__title">Hasło</span>
+      <span class="settings-data-box__title">{{ $t("settings.password") }}</span>
 
       <div class="settings-details-box">
         <span class="settings-details-box__data">••••••••</span>
@@ -9,7 +9,7 @@
           view="empty"
           class="settings-details-box__button"
           @click="$emit('set-option', 'password')"
-          >Zmień</BaseButton
+          >{{ $t("settings.change") }}</BaseButton
         >
       </div>
     </div>
@@ -20,6 +20,7 @@
 
 <style scoped lang="scss">
 .settings-data-container {
+  grid-area: data;
   flex: 1;
   display: flex;
   flex-direction: column;

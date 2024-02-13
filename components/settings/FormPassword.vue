@@ -4,14 +4,14 @@
       <input
         class="settings-form-box__input"
         type="password"
-        placeholder="New password"
+        :placeholder="$t('settings.modal.newPassword')"
         v-model.trim="userNewPassword"
       />
 
       <input
         class="settings-form-box__input"
         type="password"
-        placeholder="Confirm password"
+        :placeholder="$t('settings.modal.confirmPassword')"
         v-model.trim="userConfirmPassword"
       />
 
@@ -20,9 +20,9 @@
       </p>
     </div>
 
-    <BaseButton type="submit" view="filled" class="settings-form__modal-button"
-      >Save</BaseButton
-    >
+    <BaseButton type="submit" view="filled" class="settings-form__modal-button">{{
+      $t("settings.modal.saveButton")
+    }}</BaseButton>
   </form>
 
   <Teleport to="body">
@@ -39,12 +39,13 @@
 import { NuxtError } from "nuxt/app";
 import { useModal } from "~/store/useModal";
 
+const { t } = useI18n();
 const modal = useModal();
 
 const userNewPassword = ref("");
 const userConfirmPassword = ref("");
 const isErrorMessage = ref(false);
-const errorMessage = ref("");
+const errorMessage = ref();
 
 const changePasswordHandler = async () => {
   const newPassword = inputValidation();
@@ -55,10 +56,10 @@ const changePasswordHandler = async () => {
 
 const inputValidation = () => {
   if (userNewPassword.value.length < 6 || userConfirmPassword.value.length < 6) {
-    errorMessage.value = "your password should contain 6 characters!";
+    errorMessage.value = t("settings.modal.errorContainMessage");
     isErrorMessage.value = true;
   } else if (userNewPassword.value !== userConfirmPassword.value) {
-    errorMessage.value = "your passwords are different!";
+    errorMessage.value = t("settings.modal.errorDifferentMessage");
     isErrorMessage.value = true;
   } else {
     isErrorMessage.value = false;
@@ -75,7 +76,7 @@ const changePassword = async (newPassword: string) => {
     } else if (err === Object || err !== null) {
       throw createError(err as Partial<NuxtError>);
     } else {
-      throw createError("Something goes wrong!, try later.");
+      throw createError(t("settings.modal.errorMessage"));
     }
   }
 };

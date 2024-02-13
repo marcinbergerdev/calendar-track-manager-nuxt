@@ -7,7 +7,7 @@
       class="events-close-error"
       v-if="isCloseButton"
       @click="handleError"
-      >Close</BaseButton
+      >{{ $t("error.closeButton") }}</BaseButton
     >
   </div>
 </template>

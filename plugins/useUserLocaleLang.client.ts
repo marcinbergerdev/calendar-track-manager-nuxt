@@ -1,5 +1,10 @@
 export default defineNuxtPlugin(() => {
    const dayjs = useDayjs();
-   const selectedUserLocalLang = navigator.language || navigator.languages[0];
-   dayjs.locale(selectedUserLocalLang);
+   const lang = useCookie("lang");
+
+   if (!lang.value) {
+      lang.value = 'en';
+   }
+
+   dayjs.locale(lang.value);
 });

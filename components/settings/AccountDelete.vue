@@ -1,16 +1,16 @@
 <template>
   <article class="settings-account-delete">
-    <h3 class="settings-account-delete__title">Usuń konto</h3>
+    <h3 class="settings-account-delete__title">{{ $t("settings.deleteTitle") }}</h3>
     <p class="settings-account-delete__message">
-      W momencie gdy usuniesz konto, utracisz wszystkie zapisane zamówienia jak i dane.
-      Upewnij się, że chcesz usunąć konto - Niestety nie będziemy mogli go przywrócic.
+      {{ $t("settings.deleteMessage") }}
     </p>
 
     <BaseButton
       view="border-error"
       class="settings-account-delete__button"
       @click="deleteAccountHandler"
-      >Usuń konto</BaseButton
+    >
+      {{ $t("settings.deleteButton") }}</BaseButton
     >
   </article>
 </template>
@@ -20,7 +20,7 @@ import { NuxtError } from "nuxt/app";
 
 const deleteAccountHandler = async () => {
   try {
-   await deleteUserAccount();
+    await deleteUserAccount();
   } catch (err: unknown) {
     if (typeof err === "string") {
       throw createError(err);
@@ -35,6 +35,7 @@ const deleteAccountHandler = async () => {
 
 <style scoped lang="scss">
 .settings-account-delete {
+  grid-area: delete;
   flex: 1;
   display: flex;
   flex-direction: column;

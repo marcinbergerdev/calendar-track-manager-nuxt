@@ -10,12 +10,11 @@
     ></BaseFormModal>
 
     <AuthHeader />
-
     <main class="auth-content-container">
 
       <section class="auth-box">
         <header class="auth-box-header">
-          <h2 class="auth-box-header__title">Welcome</h2>
+          <h2 class="auth-box-header__title">{{$t('auth.welcome')}}</h2>
         </header>
         
         <slot />
@@ -28,6 +27,7 @@
 <script setup lang="ts">
 import { useModal } from "~/store/useModal";
 
+useLanguageI18n();
 const isLoadingSpinner = useLoadingSpinner();
 const modal = useModal();
 

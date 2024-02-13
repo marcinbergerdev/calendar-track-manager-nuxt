@@ -19,7 +19,7 @@
       </span>
 
 
-      <span class="animation-icon-box__text">Dodawanie...</span>
+      <span class="animation-icon-box__text">{{ $t('calendar.editor.loading') }}</span>
 
     </div>
   </section>

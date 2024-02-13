@@ -1,21 +1,19 @@
 <template>
   <div class="settings-container">
     <SettingsHeader />
-
     <section class="settings-account-data-container">
       <SettingsAccountData @set-option="setDataOption" />
+      <SettingsLanguageSelector></SettingsLanguageSelector>
       <SettingsAccountDelete />
     </section>
 
     <Teleport to="body">
       <SettingsOptionsModal v-if="isSettingsModal" @close-modal="closeModal">
-      
-        <template #header> Hasło </template>
+        <template #header> {{ $t("settings.modal.title") }} </template>
 
         <template #default>
           <SettingsFormPassword />
         </template>
-
       </SettingsOptionsModal>
     </Teleport>
   </div>
@@ -57,9 +55,14 @@ const closeModal = () => {
   overflow: auto;
 
   @media (width > 768px) {
-    flex-direction: row;
+    display: grid;
+    grid-template-areas:
+      "data delete"
+      "language .";
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 2fr;
     align-items: flex-start;
-    justify-content: space-around;
+    justify-items: center;
     gap: 0 4rem;
     margin-top: 5rem;
   }

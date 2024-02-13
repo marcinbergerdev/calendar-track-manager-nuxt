@@ -2,7 +2,7 @@
   <form class="editor-form" @submit.prevent="saveNote">
     <header class="editor-form-header" :class="setToggleOnSlidingZipper">
       <div class="editor-input-box">
-        <label for="taskMessage">Message</label>
+        <label for="taskMessage">{{ $t("notes.editor.selectorMessage") }}</label>
         <input
           type="radio"
           id="taskMessage"
@@ -13,7 +13,7 @@
       </div>
 
       <div class="editor-input-box">
-        <label for="tasks">Checklist</label>
+        <label for="tasks">{{ $t("notes.editor.selectorChecklist") }}</label>
         <input
           type="radio"
           id="tasks"
@@ -26,12 +26,12 @@
 
     <div class="editor-content">
       <section class="content-title">
-        <label for="title">Title</label>
+        <label for="title">{{ $t("notes.editor.title") }}</label>
         <input
           type="text"
           id="title"
           name="title"
-          placeholder="title"
+          :placeholder="$t('notes.editor.title')"
           v-model.trim="noteTitle"
         />
       </section>
@@ -72,7 +72,7 @@
           type="button"
           @click="notes.closeModal()"
         >
-          Close
+          {{ $t("notes.closeButton") }}
         </BaseButton>
 
         <BaseButton
@@ -81,7 +81,7 @@
           type="submit"
           v-if="!notes.selectedTask"
         >
-          Save
+          {{ $t("notes.editor.saveButton") }}
         </BaseButton>
 
         <BaseButton
@@ -91,7 +91,7 @@
           v-else
           @click="editNote"
         >
-          Edit
+          {{ $t("notes.editor.editButton") }}
         </BaseButton>
       </section>
     </div>
@@ -103,8 +103,8 @@ import { NuxtError } from "nuxt/app";
 import { Task } from "@/types/Notes";
 import { useNotes } from "@/store/useNotes";
 
+const { t } = useI18n();
 const notes = useNotes();
-
 const taskId = ref("");
 const toggleOptions = ref("message");
 const noteTitle = ref("");
@@ -151,8 +151,12 @@ const setTaskDataIfEditedIsSelected = () => {
 
 const saveNote = async () => {
   const idIncreased = setIdIncreasing();
-  const titleValidated = formInputValidation("Brak tytuł", noteTitle.value) as string;
-  const contentValidated = formInputValidation("Brak zadania", noteContent.value);
+
+  const emptyTitle = t("notes.editor.emptyTitle");
+  const emptyContent = t("notes.editor.emptyContent");
+
+  const titleValidated = formInputValidation(emptyTitle, noteTitle.value) as string;
+  const contentValidated = formInputValidation(emptyContent, noteContent.value);
 
   await saveUserNote(
     idIncreased,
@@ -171,7 +175,13 @@ const saveUserNote = async (
   noteContent: string | Task[]
 ) => {
   try {
-    await saveUserNotesMessageFetch(idValidated, toggleOptions, noteTitle, colorVariant, noteContent);
+    await saveUserNotesMessageFetch(
+      idValidated,
+      toggleOptions,
+      noteTitle,
+      colorVariant,
+      noteContent
+    );
     updateUserTasks();
     notes.closeModal();
   } catch (err: unknown) {
@@ -180,15 +190,18 @@ const saveUserNote = async (
     } else if (err === Object || err !== null) {
       throw createError(err as Partial<NuxtError>);
     } else {
-      throw createError("Something goes wrong!, try later.");
+      throw createError(t("settings.modal.errorMessage"));
     }
   }
 };
 
 const editNote = async () => {
-  const titleValidated = formInputValidation("Brak tytuł", noteTitle.value) as string;
-  const contentValidated = formInputValidation("Brak zadania", noteContent.value);
-  
+  const emptyTitle = t("notes.editor.emptyTitle");
+  const emptyContent = t("notes.editor.emptyContent");
+
+  const titleValidated = formInputValidation(emptyTitle, noteTitle.value) as string;
+  const contentValidated = formInputValidation(emptyContent, noteContent.value);
+
   await editUserNote(
     taskId.value,
     toggleOptions.value,
@@ -221,24 +234,28 @@ const editUserNote = async (
     } else if (err === Object || err !== null) {
       throw createError(err as Partial<NuxtError>);
     } else {
-      throw createError("Something goes wrong!, try later.");
+      throw createError(t("settings.modal.errorMessage"));
     }
   }
 };
 
-
 const setIdIncreasing = () => {
   const tasks = notes.notesList;
-  if(!tasks) return 0
+  if (!tasks) return 0;
 
   const convertedTasks = Object.entries(tasks);
   return convertedTasks.length++;
 };
 
 const formInputValidation = (message: string, content: string | Task[]) => {
-  if (content === "" || content.length === 0) {
+  if ((Array.isArray(content) && content.length === 0)) {
     return message;
   }
+
+  if(typeof content === "string" && content === ''){
+    return message;
+  }
+
   return content;
 };
 
@@ -275,7 +292,7 @@ onMounted(() => {
   position: relative;
   display: flex;
   align-items: center;
-  gap: 0 2rem;
+  gap: 0 3.5rem;
 
   padding: 1rem 2rem;
   font-size: 1.6rem;

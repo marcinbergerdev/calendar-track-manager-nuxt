@@ -1,7 +1,9 @@
 <template>
   <ul class="task-checklist">
     <li class="task-checklist-item" v-if="!isChecklist">
-      <p class="task-checklist-item__emptyMessage">Brak zadania</p>
+      <p class="task-checklist-item__emptyMessage">
+        {{ $t("notes.tasks.emptyContent") }}
+      </p>
     </li>
 
     <li class="task-checklist-item" v-else v-for="(task, id) in tasks">

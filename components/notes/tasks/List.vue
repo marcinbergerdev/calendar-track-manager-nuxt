@@ -5,7 +5,7 @@
     v-if="notes.isSpinner"
   />
 
-  <p v-else-if="emptyList" class="tasks-empty-list">Your list is empty.</p>
+  <p v-else-if="emptyList" class="tasks-empty-list">{{$t('notes.tasks.emptyList')}}</p>
 
   <Sortable
     class="tasks-list"

@@ -1,11 +1,11 @@
 <template>
-  <h3 class="selector-checklist-title">Tasks</h3>
+  <h3 class="selector-checklist-title">{{ $t("notes.editor.taskTitle") }}</h3>
 
   <div view="empty" class="selector-add-task">
     <input
       class="selector-add-task__addInput"
       type="text"
-      placeholder="Add..."
+      :placeholder="$t('notes.editor.addTask')"
       v-model="taskName"
     />
 
@@ -29,7 +29,7 @@
 
   <ul class="selector-checklist">
     <li v-if="checklist.length === 0">
-      <p class="selector-empty-checklist">Your list is empty.</p>
+      <p class="selector-empty-checklist">{{ $t("notes.tasks.emptyList") }}</p>
     </li>
 
     <NotesManagerEditorFormChecklistItem
@@ -58,7 +58,7 @@ const addTaskHandler = () => {
   checklist.value.push({
     name: taskName.value,
   });
-  taskName.value = '';
+  taskName.value = "";
 };
 
 const setChecklistIfEditedIsSelected = () => {

@@ -2,7 +2,7 @@
   <textarea
     name="message"
     id="message"
-    placeholder="message..."
+    :placeholder="$t('notes.tasks.emptyList')"
     v-model.trim="noteMessage"
     @input="$emit('update-message', noteMessage)"
   ></textarea>
