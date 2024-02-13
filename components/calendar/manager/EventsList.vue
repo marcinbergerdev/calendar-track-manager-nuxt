@@ -2,14 +2,16 @@
   <BaseLoadingSpinner mode="event" :is-background="false" v-if="isLoadingSpinner" />
 
   <div class="events-empty-message-container" v-if="isEventsEmpty">
-    <p class="events-empty-message-container__message">{{ $t('calendar.events.empty.list') }}</p>
+    <p class="events-empty-message-container__message">
+      {{ $t("calendar.events.empty.list") }}
+    </p>
 
     <BaseButton
       view="filled-drk"
       class="events-empty-message-container__button"
       @click="redirectToEventEditor"
     >
-    {{ $t('calendar.events.empty.addEventButton') }}
+      {{ $t("calendar.events.empty.addEventButton") }}
     </BaseButton>
   </div>
 
@@ -27,8 +29,11 @@
     ></CalendarManagerEventsItem>
   </ul>
 
-  <BaseButton view="filled-drk" class="events-exit" @click="editor.closeEditorAndEvent()"
-    >{{ $t('calendar.events.empty.closeList') }}</BaseButton
+  <BaseButton
+    view="filled-drk"
+    class="events-exit"
+    @click="editor.closeEditorAndEvent()"
+    >{{ $t("calendar.events.empty.closeList") }}</BaseButton
   >
 </template>
 
@@ -37,9 +42,10 @@ import { Events, EventsList } from "@/types/Date";
 import { useEditor } from "@/store/useEditor";
 import { NuxtError } from "nuxt/app";
 
-const { t } = useI18n(); 
+const { t } = useI18n();
 const editor = useEditor();
 const events = ref<EventsList[]>([]);
+const dateSelector = useSelectedData();
 
 const isLoadingSpinner = ref(false);
 const isEventsEmpty = ref(false);
@@ -53,14 +59,11 @@ const getUserEvents = async () => {
 
   if (!!selectedDay.id && !!selectedDay.year) {
     try {
-
       const response = await getUserEventsFetch(selectedDay.year, selectedDay.id);
 
-      if(response === null) return isEventsEmpty.value = true;
+      if (response === null) return (isEventsEmpty.value = true);
       sortingEventsByHour(response);
-
     } catch (err: unknown) {
-
       if (typeof err === "string") {
         throw createError(err);
       } else if (err === Object || err !== null) {
@@ -68,7 +71,6 @@ const getUserEvents = async () => {
       } else {
         throw createError(t("settings.modal.errorMessage"));
       }
-      
     }
   }
 };
@@ -98,7 +100,29 @@ const updateEventListAfterDeleting = () => {
   getUserEvents();
 };
 
-onMounted(async() => {
+const getUserSavedEvents = async (year: number) => {
+  try {
+    const response = await getUserListOfSavedEventsInSelectedYear(year);
+    return response;
+  } catch (err: unknown) {
+    if (typeof err === "string") {
+      throw createError(err);
+    } else if (err === Object || err !== null) {
+      throw createError(err as Partial<NuxtError>);
+    } else {
+      throw createError(t("settings.modal.errorMessage"));
+    }
+  }
+};
+
+watchEffect(async () => {
+  if (isEventsEmpty.value) {
+    const events = await getUserSavedEvents(dateSelector.value.year);
+    editor.recordedEvents = events;
+  }
+});
+
+onMounted(async () => {
   await getUserEvents();
 });
 </script>
