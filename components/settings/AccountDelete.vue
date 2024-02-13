@@ -18,6 +18,8 @@
 <script setup lang="ts">
 import { NuxtError } from "nuxt/app";
 
+const { t } = useI18n();
+
 const deleteAccountHandler = async () => {
   try {
     await deleteUserAccount();
@@ -27,7 +29,7 @@ const deleteAccountHandler = async () => {
     } else if (err === Object || err !== null) {
       throw createError(err as Partial<NuxtError>);
     } else {
-      throw createError("Something goes wrong!, try later.");
+      throw createError(t("settings.modal.errorMessage"));
     }
   }
 };

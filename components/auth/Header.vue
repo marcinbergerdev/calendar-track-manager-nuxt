@@ -6,8 +6,6 @@
   </header>
 </template>
 
-<script setup lang="ts"></script>
-
 <style scoped lang="scss">
 .auth-header {
   justify-content: space-between;

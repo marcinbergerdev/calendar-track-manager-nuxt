@@ -27,7 +27,7 @@
       </Transition>
 
 
-      <CalendarDateSelector></CalendarDateSelector>
+      <CalendarDateSelector />
 
 
       <BaseButton class="calendar-selector__button next" @click="setNextMonth">

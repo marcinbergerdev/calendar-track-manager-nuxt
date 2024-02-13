@@ -23,5 +23,4 @@ defineProps<{
   currentMonth: Dayjs;
   nextMonth: Dayjs;
 }>();
-
 </script>

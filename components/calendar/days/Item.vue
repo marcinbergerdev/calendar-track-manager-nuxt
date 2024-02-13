@@ -20,7 +20,6 @@
 
 <script setup lang="ts">
 import { useEditor } from "../../../store/useEditor";
-const editor = useEditor();
 
 const {
   id,
@@ -41,6 +40,8 @@ const {
   isSelected: boolean;
   isEvent?: boolean;
 }>();
+
+const editor = useEditor();
 
 const setClasses = computed(() => {
   const classes = [];

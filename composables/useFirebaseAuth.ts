@@ -73,6 +73,11 @@ export const changeUserPassword = async (newPassword: string) => {
    const modal = useModal();
 
    if (!!user) {
+      if (user.email === "test@test.com") {
+         alert("Warning! - Only for test!");
+         return;
+      }
+
       await updatePassword(user, newPassword)
          .then(() => {
             modal.setValues({
@@ -94,6 +99,11 @@ export const deleteUserAccount = async () => {
    const userUidStatus = useCookie("userUidStatus");
 
    if (!!user) {
+      if (user.email === "test@test.com") {
+         alert("Warning! - Only for test!");
+         return;
+      }
+
       await deleteUser(user)
          .then(() => {
             userUidStatus.value = "false";

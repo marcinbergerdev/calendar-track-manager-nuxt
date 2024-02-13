@@ -68,9 +68,6 @@ const openEventList = () => {
       background-color: var(--bg-clr);
       border-radius: 2rem;
     }
-
-    @media (width >= 950px) {
-    }
   }
 }
 </style>

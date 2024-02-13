@@ -139,12 +139,10 @@ import { useEditor } from "../../../store/useEditor";
 
 const editor = useEditor();
 const dateSelector = useSelectedData();
-
 const eventTitle = ref("");
 const eventTime = ref("");
 const eventNote = ref("");
 const isEventNotification = ref(true);
-
 const isAddedAnimation = ref(false);
 
 const calculateNotificationStatus = computed(() => {
@@ -317,7 +315,6 @@ onMounted(() => {
   grid-template-rows: 1fr;
   grid-template-columns: 1fr 2fr;
   gap: 1rem 0;
-
   margin-top: 3rem;
 }
 
@@ -325,7 +322,6 @@ onMounted(() => {
   position: relative;
   grid-area: switch;
   justify-self: flex-end;
-
   width: 6.7rem;
   height: 2.9rem;
   border-radius: 2rem;
@@ -343,7 +339,6 @@ onMounted(() => {
     right: 24px;
     transform: translateY(-50%);
     transition: transform 0.3s ease-in-out;
-
     height: 80%;
     color: var(--text-clr);
     border-radius: 3rem;

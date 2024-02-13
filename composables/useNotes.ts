@@ -85,15 +85,11 @@ export const toggleNoteCompletionFetch = async (
    });
 };
 
-
 export const deleteUserNoteFetch = async (noteId: string) => {
    const userId = useCookie("userUidStatus");
    const db = getDatabase();
    return await remove(ref(db, `users/${userId.value}/notes/${noteId}`));
 };
-
-
-
 
 export const saveSortedTasksFetch = async (list: any) => {
    const userId = useCookie("userUidStatus");
@@ -102,6 +98,3 @@ export const saveSortedTasksFetch = async (list: any) => {
 
    await update(ref(db, `users/${userId.value}/notes`), list);
 };
-
-
-
