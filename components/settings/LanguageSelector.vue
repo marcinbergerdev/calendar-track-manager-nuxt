@@ -18,7 +18,10 @@
 
 <script setup lang="ts">
 const { locale } = useI18n();
-const globalLang = useCookie("lang");
+const globalLang = useCookie("lang", {
+  sameSite: 'strict',
+  maxAge: 2592000, // 30 days in seconds
+});
 const selectedLanguage = ref(globalLang);
 
 watch(selectedLanguage, (lang) => {
