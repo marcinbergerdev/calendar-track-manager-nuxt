@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { SelectedDay, EventElement, Events} from "@/types/Date";
+import { SelectedDay, EventElement, Events } from "@/types/Date";
 
 export const useEditor = defineStore("editor", () => {
    const selectedDay = reactive<SelectedDay>({});
@@ -43,8 +43,8 @@ export const useEditor = defineStore("editor", () => {
       if (isEditor.value || isEvents.value) {
          isEvents.value = false;
          isEditor.value = false;
-         setDefaultValueForSelectedDay();
       }
+      setDefaultValueForSelectedDay();
    };
 
    const setDefaultValueForSelectedDay = () => {
