@@ -10,7 +10,6 @@
 ## Tech stack
   - TypeScript.
   - Nuxt 3.
-  - Unit Testing.
   - Firebase.
 
 
